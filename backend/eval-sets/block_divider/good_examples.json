@@ -1,0 +1,379 @@
+{
+  "agent_id": "block_divider",
+  "agent_name": "Block Divider — LLM Stage",
+  "version": "1.0",
+  "examples": [
+    {
+      "example_id": "bd_good_001",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "source_h2_sections": [
+          "Why Not One SDLC for All?",
+          "What are Software Development Models?",
+          "Waterfall Model",
+          "Agile Model",
+          "V-Model"
+        ],
+        "source_word_count_estimate": 1100,
+        "learning_objectives": [
+          "Understand why different projects need different development approaches",
+          "Know the three most commonly used software development models",
+          "Understand how the Waterfall model works and when to use it",
+          "Understand how Agile works and its popular frameworks",
+          "Understand the V-Model and when to use it"
+        ]
+      },
+      "output": {
+        "session_name": "Software Development Models",
+        "total_blocks": 5,
+        "heading_tree": [
+          { "level": 1, "text": "Software Development Models" },
+          { "level": 2, "text": "Why Not One SDLC for All?" },
+          { "level": 3, "text": "Types of Software Projects" },
+          { "level": 3, "text": "For Example" },
+          { "level": 3, "text": "Project Objectives Every Team Must Balance" },
+          { "level": 2, "text": "What are Software Development Models?" },
+          { "level": 2, "text": "Waterfall Model" },
+          { "level": 3, "text": "How it Works" },
+          { "level": 3, "text": "When to Use" },
+          { "level": 3, "text": "Advantages" },
+          { "level": 3, "text": "Disadvantages" },
+          { "level": 2, "text": "Agile Model" },
+          { "level": 3, "text": "Behind the Scenes — Two Key Teams" },
+          { "level": 3, "text": "Agile Workflow" },
+          { "level": 3, "text": "The Delay Problem" },
+          { "level": 3, "text": "When to Use Agile" },
+          { "level": 3, "text": "Advantages" },
+          { "level": 3, "text": "Disadvantages" },
+          { "level": 3, "text": "Popular Agile Frameworks" },
+          { "level": 3, "text": "Scrum" },
+          { "level": 3, "text": "Kanban" },
+          { "level": 2, "text": "V-Model" },
+          { "level": 3, "text": "Verification vs Validation" },
+          { "level": 3, "text": "When to Use" }
+        ],
+        "division_reasoning": "Block 1 merges 'Why Not One SDLC for All?' and 'What are Software Development Models?' because these two H2 sections are tightly coupled — the first builds the problem context, the second defines the solution. Combined word count is ~280 words, well within range. They form one complete introductory idea. Block 2 is the Waterfall Model — a standalone complete concept with its own how-it-works, when-to-use, advantages, and disadvantages (~210 words). Block 3 is the core Agile Model (concept + workflow + delay problem + when-to-use + advantages + disadvantages, ~320 words) — split here because the Agile section has 9 H3 sub-sections totalling over 600 words when Scrum and Kanban are included. Block 4 is Popular Agile Frameworks (Scrum + Kanban, ~280 words) — split from Agile core because framework details are a separate learnable unit. Block 5 is the V-Model — standalone complete concept (~160 words).",
+        "blocks": [
+          {
+            "block_id": 1,
+            "title": "Why Software Development Models Exist",
+            "h2_sections_included": [
+              "Why Not One SDLC for All?",
+              "What are Software Development Models?"
+            ],
+            "images": [],
+            "word_count_estimate": 280,
+            "learning_objectives_hint": [
+              "Understand why a single SDLC approach does not fit all projects",
+              "Define what software development models are",
+              "Identify the three most commonly used models"
+            ]
+          },
+          {
+            "block_id": 2,
+            "title": "Understanding the Waterfall Model",
+            "h2_sections_included": ["Waterfall Model"],
+            "images": [
+              {
+                "image_id": "img_b2_01",
+                "src": "https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/waterfall.png",
+                "alt": "Waterfall Model",
+                "caption": ""
+              }
+            ],
+            "word_count_estimate": 210,
+            "learning_objectives_hint": [
+              "Understand how the Waterfall model works step by step",
+              "Identify when to use the Waterfall model",
+              "List the advantages and disadvantages of Waterfall"
+            ]
+          },
+          {
+            "block_id": 3,
+            "title": "Understanding the Agile Model",
+            "h2_sections_included": ["Agile Model — core concept through Disadvantages"],
+            "images": [
+              {
+                "image_id": "img_b3_01",
+                "src": "https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/agile.png",
+                "alt": "Agile Model",
+                "caption": ""
+              }
+            ],
+            "word_count_estimate": 320,
+            "learning_objectives_hint": [
+              "Understand how the Agile model works through sprints",
+              "Identify when to use Agile",
+              "Understand the Dev and Ops team structure in Agile"
+            ]
+          },
+          {
+            "block_id": 4,
+            "title": "Popular Agile Frameworks — Scrum and Kanban",
+            "h2_sections_included": ["Popular Agile Frameworks", "Scrum", "Kanban"],
+            "images": [],
+            "word_count_estimate": 280,
+            "learning_objectives_hint": [
+              "Understand what Scrum is and its key roles",
+              "Understand how Kanban boards work",
+              "Distinguish between Scrum and Kanban as Agile frameworks"
+            ]
+          },
+          {
+            "block_id": 5,
+            "title": "Understanding the V-Model",
+            "h2_sections_included": ["V-Model"],
+            "images": [
+              {
+                "image_id": "img_b5_01",
+                "src": "https://s3.ap-south-1.amazonaws.com/new-assets.ccbp.in/frontend/loading-data/niat-course-projects/v%20model.png",
+                "alt": "V Model",
+                "caption": ""
+              }
+            ],
+            "word_count_estimate": 160,
+            "learning_objectives_hint": [
+              "Understand what the V-Model is and how it extends Waterfall",
+              "Distinguish between Verification and Validation",
+              "Identify when to use the V-Model"
+            ]
+          }
+        ]
+      },
+      "scores": {
+        "concept_boundary_correctness": 10,
+        "merge_split_rule_adherence": 10,
+        "block_count_range": 9,
+        "block_size_balance": 9,
+        "block_title_quality": 10,
+        "image_assignment_correctness": 10,
+        "content_completeness": 10,
+        "weighted_average": 9.8
+      },
+      "notes": "Near-perfect example. The key decisions: (1) merging the two intro H2s because they are conceptually inseparable at ~280 words combined, (2) splitting Agile from its frameworks because the full Agile section would exceed 600 words with 9 H3s, (3) keeping all V-Model H3s together because the section is small. Block titles are clear and learner-facing — not raw heading text."
+    },
+    {
+      "example_id": "bd_good_002",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Prompt Engineering",
+        "source_h2_sections": [
+          "Prompt Engineering Fundamentals",
+          "1. Prompt Engineering",
+          "3. Basic Prompt Structure",
+          "Example Prompt Templates",
+          "Tricks and Tips",
+          "Additional Exploration"
+        ],
+        "source_word_count_estimate": 1400,
+        "learning_objectives": [
+          "Understand what a prompt is and why prompt engineering matters",
+          "Know the RCATF framework components",
+          "Apply prompt templates to real scenarios",
+          "Use data-instruction separation techniques"
+        ]
+      },
+      "output": {
+        "session_name": "Prompt Engineering",
+        "total_blocks": 4,
+        "heading_tree": [
+          { "level": 2, "text": "Prompt Engineering Fundamentals" },
+          { "level": 2, "text": "1. Prompt Engineering" },
+          { "level": 3, "text": "Why Prompt Engineering?" },
+          { "level": 3, "text": "Be Clear and Direct" },
+          { "level": 2, "text": "3. Basic Prompt Structure" },
+          { "level": 3, "text": "The RCATF Framework" },
+          { "level": 3, "text": "Role" },
+          { "level": 3, "text": "Context" },
+          { "level": 3, "text": "Action/Task" },
+          { "level": 3, "text": "Format" },
+          { "level": 3, "text": "Tone" },
+          { "level": 2, "text": "Example Prompt Templates" },
+          { "level": 2, "text": "Tricks and Tips" },
+          { "level": 3, "text": "Separating Data from Instructions" },
+          { "level": 3, "text": "Why Separate Data from Instructions?" },
+          { "level": 2, "text": "Additional Exploration" }
+        ],
+        "division_reasoning": "Block 1 is 'Prompt Engineering Fundamentals' alone — it is a standalone intro section with its own examples (~180 words) and forms a complete entry point. Block 2 merges '1. Prompt Engineering' + 'Why Prompt Engineering?' + 'Be Clear and Direct' — all three answer the question 'what is prompt engineering and why does it matter'. Combined ~280 words, within range. Note: the title '1. Prompt Engineering' is cryptic so the block is given a descriptive learner-facing title. Block 3 is the full RCATF Framework section — all five component H3s (Role, Context, Action/Task, Format, Tone) must stay together because each component only makes sense as part of the complete framework (~420 words). Block 4 merges 'Example Prompt Templates' + 'Tricks and Tips' + 'Separating Data from Instructions' + 'Additional Exploration' — these are all practical application sections that together complete the session (~280 words combined).",
+        "blocks": [
+          {
+            "block_id": 1,
+            "title": "What is a Prompt and Why Does Clarity Matter",
+            "h2_sections_included": ["Prompt Engineering Fundamentals"],
+            "images": [],
+            "word_count_estimate": 180,
+            "learning_objectives_hint": [
+              "Define what a prompt is in the context of LLMs",
+              "Understand why better prompts produce better results"
+            ]
+          },
+          {
+            "block_id": 2,
+            "title": "What is Prompt Engineering and Why Does It Matter",
+            "h2_sections_included": [
+              "1. Prompt Engineering",
+              "Why Prompt Engineering?",
+              "Be Clear and Direct"
+            ],
+            "images": [],
+            "word_count_estimate": 280,
+            "learning_objectives_hint": [
+              "Define prompt engineering",
+              "Explain why prompt engineering produces better and more consistent results",
+              "Apply the principle of clear and direct instructions"
+            ]
+          },
+          {
+            "block_id": 3,
+            "title": "The RCATF Framework — Structuring Your Prompts",
+            "h2_sections_included": [
+              "3. Basic Prompt Structure",
+              "The RCATF Framework",
+              "Role",
+              "Context",
+              "Action/Task",
+              "Format",
+              "Tone"
+            ],
+            "images": [],
+            "word_count_estimate": 420,
+            "learning_objectives_hint": [
+              "List and explain all five components of the RCATF framework",
+              "Construct a well-structured prompt using Role, Context, Action, Format, and Tone"
+            ]
+          },
+          {
+            "block_id": 4,
+            "title": "Prompt Templates, Tips, and Further Exploration",
+            "h2_sections_included": [
+              "Example Prompt Templates",
+              "Tricks and Tips",
+              "Separating Data from Instructions",
+              "Why Separate Data from Instructions?",
+              "Additional Exploration"
+            ],
+            "images": [],
+            "word_count_estimate": 280,
+            "learning_objectives_hint": [
+              "Apply prompt templates to real scenarios",
+              "Use data-instruction separation to create reusable prompts",
+              "Identify resources for further prompt engineering exploration"
+            ]
+          }
+        ]
+      },
+      "scores": {
+        "concept_boundary_correctness": 10,
+        "merge_split_rule_adherence": 10,
+        "block_count_range": 9,
+        "block_size_balance": 9,
+        "block_title_quality": 10,
+        "image_assignment_correctness": 10,
+        "content_completeness": 10,
+        "weighted_average": 9.8
+      },
+      "notes": "Excellent example of title rephrasing. '1. Prompt Engineering' and '3. Basic Prompt Structure' are cryptic numbered headings — both are given clear learner-facing block titles. The RCATF framework is correctly kept together as one block despite having 7 H3s, because all five components are sub-elements of a single concept, not independent topics. The final block correctly aggregates four small closing sections that together complete the session."
+    },
+    {
+      "example_id": "bd_good_003",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Introduction to AI Agents",
+        "source_h2_sections": [
+          "What is an AI Agent?",
+          "Core Components of an AI Agent",
+          "How Agents Work — The ReAct Pattern",
+          "Building Your First Agent"
+        ],
+        "source_word_count_estimate": 720,
+        "learning_objectives": [
+          "Define what an AI agent is",
+          "Identify the three core components of an AI agent",
+          "Understand how the ReAct loop works",
+          "Know the steps to build a basic agent"
+        ]
+      },
+      "output": {
+        "session_name": "Introduction to AI Agents",
+        "total_blocks": 4,
+        "heading_tree": [
+          { "level": 2, "text": "What is an AI Agent?" },
+          { "level": 2, "text": "Core Components of an AI Agent" },
+          { "level": 3, "text": "AI Model" },
+          { "level": 3, "text": "Tools" },
+          { "level": 3, "text": "Memory" },
+          { "level": 2, "text": "How Agents Work — The ReAct Pattern" },
+          { "level": 3, "text": "Thought" },
+          { "level": 3, "text": "Action" },
+          { "level": 3, "text": "Observation" },
+          { "level": 2, "text": "Building Your First Agent" }
+        ],
+        "division_reasoning": "All four H2 sections are kept as separate blocks. 'What is an AI Agent?' (~150 words) is a clear standalone definition block — too conceptually distinct to merge with Components. 'Core Components' (~220 words, 3 H3s) is one tightly bound concept — all three components (AI Model, Tools, Memory) stay together. 'How Agents Work — ReAct Pattern' (~200 words, 3 H3s) is a complete distinct concept — the three loop steps are inseparable sub-parts of one idea. 'Building Your First Agent' (~180 words) is a standalone practical block. No merges because each section covers a clearly distinct concept. No splits because no section exceeds 300 words.",
+        "blocks": [
+          {
+            "block_id": 1,
+            "title": "What is an AI Agent?",
+            "h2_sections_included": ["What is an AI Agent?"],
+            "images": [],
+            "word_count_estimate": 150,
+            "learning_objectives_hint": [
+              "Define what an AI agent is",
+              "Distinguish an AI agent from a standard LLM"
+            ]
+          },
+          {
+            "block_id": 2,
+            "title": "The Three Core Components of an AI Agent",
+            "h2_sections_included": ["Core Components of an AI Agent"],
+            "images": [],
+            "word_count_estimate": 220,
+            "learning_objectives_hint": [
+              "Identify the three core components: AI Model, Tools, and Memory",
+              "Explain what each component does inside an agent"
+            ]
+          },
+          {
+            "block_id": 3,
+            "title": "How AI Agents Work — The ReAct Loop",
+            "h2_sections_included": ["How Agents Work — The ReAct Pattern"],
+            "images": [],
+            "word_count_estimate": 200,
+            "learning_objectives_hint": [
+              "Describe the three stages of the ReAct loop: Thought, Action, Observation",
+              "Explain how an agent iterates until it completes a task"
+            ]
+          },
+          {
+            "block_id": 4,
+            "title": "Building Your First AI Agent",
+            "h2_sections_included": ["Building Your First Agent"],
+            "images": [],
+            "word_count_estimate": 180,
+            "learning_objectives_hint": [
+              "List the steps to build a basic AI agent",
+              "Identify the tools needed to get started"
+            ]
+          }
+        ]
+      },
+      "scores": {
+        "concept_boundary_correctness": 10,
+        "merge_split_rule_adherence": 9,
+        "block_count_range": 9,
+        "block_size_balance": 9,
+        "block_title_quality": 9,
+        "image_assignment_correctness": 10,
+        "content_completeness": 10,
+        "weighted_average": 9.5
+      },
+      "notes": "Good example showing when NOT to merge even though sections are small. 'What is an AI Agent?' (~150 words) could technically be merged with 'Core Components' but the two are conceptually distinct enough to warrant separate blocks — definition vs components. The division reasoning clearly justifies why no merges were made. Note: 'What is an AI Agent?' is acceptable as a block title because the original H2 heading is already learner-facing and clear."
+    }
+  ]
+}

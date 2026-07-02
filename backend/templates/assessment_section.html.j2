@@ -1,0 +1,43 @@
+
+{# End-of-session DESCRIPTIVE assessment — read-through carousel of question + model answer.
+   Gated: you page through every card before Finish enables. No options, no grading. #}
+<div class="step" data-kind="assessment">
+  <div class="header">
+    <div class="header-accent assess"></div>
+    <div class="header-content">
+      <div class="badge">Session Assessment</div>
+      <h1>Check Your Understanding</h1>
+      <p>Read each question and its model answer, then Finish.</p>
+    </div>
+  </div>
+  <div class="quiz-block-wrapper">
+    <div class="assess-area" id="assess-area">
+      <div class="carousel-container">
+        <div class="carousel-track" id="assess-track">
+          {% for q in assessment %}
+          <div class="carousel-slide">
+            <div class="question-card assess-card">
+              <div class="q-progress-row"><span class="q-counter">Question {{ loop.index }} of {{ assessment|length }}</span></div>
+              <div class="question-text">{{ q.question }}</div>
+              <div class="assess-tags">
+                {% if q.question_type %}<span class="assess-tag">{{ q.question_type|capitalize }} answer</span>{% endif %}
+                {% if q.blooms_level %}<span class="assess-tag bloom">Bloom: {{ q.blooms_level }}</span>{% endif %}
+              </div>
+              <div class="assess-answer"><span class="assess-answer-label">Model answer</span><div class="assess-answer-body">{{ q.answer_html | safe }}</div></div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="assess-nav">
+        <button class="assess-nav-btn" id="assess-prev" onclick="assessNav(-1)">‹ Prev</button>
+        <span class="assess-counter" id="assess-counter">Question 1 of {{ assessment|length }}</span>
+        <button class="assess-nav-btn" id="assess-next" onclick="assessNav(1)">Next ›</button>
+      </div>
+    </div>
+  </div>
+  <div class="complete-card" id="complete-card" style="display:none;">
+    <h3>🎉 Session complete</h3>
+    <p>You've finished {{ title }}. Review any section by scrolling up.</p>
+  </div>
+</div>

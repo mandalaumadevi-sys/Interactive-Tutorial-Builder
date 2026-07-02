@@ -1,0 +1,102 @@
+{
+  "agent_id": "agent_content",
+  "agent_name": "Content Agent — Block Rewriter (Agent 1)",
+  "version": "1.0",
+  "examples": [
+    {
+      "example_id": "content_good_001",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "block_title": "Understanding the Waterfall Model",
+        "learning_objectives": [
+          "Understand how the Waterfall model works and when to use it"
+        ],
+        "images_in_block": [
+          { "image_id": "waterfall_flow", "alt": "Diagram of Waterfall phases flowing top to bottom" }
+        ],
+        "source_html": "<h2>Waterfall Model</h2><p>Step-by-step way of developing software where each phase must be completed before moving to the next.</p><ul><li>Requirement Analysis</li><li>Design</li><li>Development</li><li>Testing</li><li>Deployment</li><li>Maintenance</li></ul><p>Best suited when: requirements are clear and fixed; project is small or simple; customer won't change their mind often.</p><p>Advantages: Simple to understand and use; every phase has clear documentation. Disadvantages: No feedback until the end; hard to go back and fix earlier steps; costly to fix late mistakes.</p>"
+      },
+      "output": {
+        "content_html": "<div class=\"main-content\"><div class=\"section-label\"><h2>Understanding the Waterfall Model</h2><p>Model 1 of 3 — a one-direction, sequential approach</p></div><p>The <strong>Waterfall Model</strong> is a step-by-step way of building software where each phase must be fully completed before the next one begins. Work moves in one direction through the phases — once a phase is done, the team moves on to the next one.</p><h3>How it works</h3><p>The phases run in a fixed order — requirement analysis, then design, development, testing, deployment, and finally maintenance. Everything is planned at the start, and the team passes through each stage exactly once.</p><!--HF_ANIM:waterfall_flow--><h3>When to use it</h3><div class=\"when-card\"><h4>Best suited when:</h4><ul class=\"bullet-list\"><li class=\"bullet-item\"><span class=\"bullet-dot\"></span><span class=\"bullet-text\">Requirements are <strong>clear and fixed</strong> from the start</span></li><li class=\"bullet-item\"><span class=\"bullet-dot\"></span><span class=\"bullet-text\">The project is <strong>small or simple</strong></span></li></ul></div><h3>Advantages &amp; disadvantages</h3><div class=\"pros-cons-row\"><div class=\"pros-card\"><h4>Advantages</h4><ul class=\"bullet-list\"><li class=\"bullet-item\"><span class=\"bullet-dot green\"></span><span class=\"bullet-text\">Simple to understand, with clear documentation at every phase</span></li></ul></div><div class=\"cons-card\"><h4>Disadvantages</h4><ul class=\"bullet-list\"><li class=\"bullet-item\"><span class=\"bullet-dot red\"></span><span class=\"bullet-text\">No feedback until the very end, so fixing late mistakes is costly</span></li></ul></div></div></div>",
+        "image_decisions": [
+          { "image_id": "waterfall_flow", "decision": "send_to_agent2", "visual_type": "flowchart", "reason": "The sequential phase flow is the core concept of the block and is best shown as an animated diagram." }
+        ],
+        "concepts_defined": ["Waterfall Model", "sequential phases"],
+        "visual_patterns_used": ["flowchart"]
+      },
+      "scores": {
+        "accuracy": 10,
+        "clarity": 10,
+        "analogy_example_quality": 10,
+        "html_structure": 10,
+        "weighted_average": 10.0
+      },
+      "notes": "Strong example. Leads with the concept then explains it in connected prose, staying strictly within the source: every fact (phases, when-to-use, pros/cons) traces to the source, and because the source uses no analogy, none is invented (the wording reworks the source's own 'one phase before the next' description). Uses only house-style components inside .main-content, and places the animation marker at the natural 'how it works' point rather than dumping the source's phase bullets."
+    },
+    {
+      "example_id": "content_good_002",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "block_title": "Why Different Projects Need Different Models",
+        "learning_objectives": [
+          "Understand why different projects need different development approaches"
+        ],
+        "images_in_block": [],
+        "source_html": "<h2>Why Not One SDLC for All?</h2><p>Different software projects have different needs. A small app and a large banking system cannot be built the same way.</p><h2>What are Software Development Models?</h2><p>Software development models are different ways of arranging the phases of the SDLC to fit the needs of a project. The three most commonly used are the Waterfall Model, the Agile Model, and the V-Model.</p>"
+      },
+      "output": {
+        "content_html": "<div class=\"main-content\"><div class=\"section-label\"><h2>Why Different Projects Need Different Models</h2><p>One process does not fit every project</p></div><p>Not every software project should be built the same way. A small app and a large banking system have very different needs, so the same approach cannot suit both.</p><p>That is why we use <strong>software development models</strong> — different ways of arranging the phases of the Software Development Life Cycle (SDLC) to fit a project's needs. In this session we look at the three most commonly used: the <strong>Waterfall Model</strong>, the <strong>Agile Model</strong>, and the <strong>V-Model</strong>.</p></div>",
+        "image_decisions": [],
+        "concepts_defined": ["software development models", "SDLC"],
+        "visual_patterns_used": []
+      },
+      "scores": {
+        "accuracy": 10,
+        "clarity": 9,
+        "analogy_example_quality": 10,
+        "html_structure": 10,
+        "weighted_average": 9.7
+      },
+      "notes": "Merges the two short intro sections into one cohesive block and motivates the topic before naming the models, using only what the source states (the small-app vs banking-system contrast). The source offers no analogy, so none is invented. No images in the source, so image_decisions is correctly empty."
+    },
+    {
+      "example_id": "content_good_003",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "block_title": "Understanding the V-Model",
+        "learning_objectives": [
+          "Understand the V-Model and when to use it"
+        ],
+        "images_in_block": [
+          { "image_id": "vmodel_vshape", "alt": "V-shaped diagram mapping development phases to testing phases" }
+        ],
+        "source_html": "<h2>V-Model</h2><p>V-Model stands for Verification and Validation Model. It is an extension of Waterfall with a testing phase mapped to every development phase.</p><p>Best suited for projects where requirements are clear and quality is critical, such as medical or defence software.</p>"
+      },
+      "output": {
+        "content_html": "<div class=\"main-content\"><div class=\"section-label\"><h2>Understanding the V-Model</h2><p>Model 3 of 3 — testing planned alongside every step</p></div><p>The <strong>V-Model</strong> stands for <strong>Verification and Validation Model</strong>. It is an <strong>extension of the Waterfall Model</strong> — it keeps the same one-direction, sequential flow, but pairs a matching <strong>testing phase with every development phase</strong>.</p><p>If Waterfall is a straight line top to bottom, the V-Model bends that line into a V: the left side goes down through the development phases, and the right side comes back up through the test that verifies each one. So a test is planned the moment a phase is designed, not left until the end.</p><!--HF_ANIM:vmodel_vshape--><h3>When to use it</h3><div class=\"when-card\"><h4>Best suited when:</h4><ul class=\"bullet-list\"><li class=\"bullet-item\"><span class=\"bullet-dot\"></span><span class=\"bullet-text\">Requirements are <strong>clear</strong> and unlikely to change</span></li><li class=\"bullet-item\"><span class=\"bullet-dot\"></span><span class=\"bullet-text\">Quality is critical, such as <strong>medical or defence software</strong></span></li></ul></div></div>",
+        "image_decisions": [
+          { "image_id": "vmodel_vshape", "decision": "send_to_agent2", "visual_type": "flowchart", "reason": "The V-shape that maps each development phase to a test phase is the defining idea and benefits from an animated diagram." }
+        ],
+        "concepts_defined": ["V-Model", "verification and validation"],
+        "visual_patterns_used": ["flowchart"]
+      },
+      "scores": {
+        "accuracy": 10,
+        "clarity": 9,
+        "analogy_example_quality": 8,
+        "html_structure": 10,
+        "weighted_average": 9.3
+      },
+      "notes": "Accurately frames the V-Model as an extension of Waterfall (a fact in the source) and explains the V-shape with a connecting analogy to the previously taught Waterfall block. Keeps the when-to-use examples (medical/defence) straight from the source without embellishing. Animation marker sits right after the explanation of the shape."
+    }
+  ]
+}

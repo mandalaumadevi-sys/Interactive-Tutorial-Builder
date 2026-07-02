@@ -1,0 +1,52 @@
+{
+  "agent_id": "agent_content",
+  "agent_name": "Content Agent — Block Rewriter (Agent 1)",
+  "version": "1.0",
+  "pass_threshold": 7,
+  "dimensions": [
+    {
+      "id": "accuracy",
+      "name": "Faithfulness to the source block (source-only, nothing invented)",
+      "description": "Is the rewritten content faithful to the source curriculum block, using ONLY the information present in it? Are all facts, definitions, examples, analogies, numbers, advantages/disadvantages, and 'when to use' points drawn directly from the source? Were no facts, statistics, examples, analogies, or claims invented or added that are not present in the source? Rephrasing the source's wording for readability is allowed; adding new information is not.",
+      "weight": 0.35,
+      "anchors": {
+        "1": "The content invents facts, statistics, examples, analogies, or claims absent from the source (e.g. fabricated adoption percentages, made-up history, an outside example), or contradicts/misstates the source's definitions and pros/cons. A learner would come away with information the source never taught.",
+        "5": "Mostly faithful, but at least one detail is invented, embellished, or subtly misstated — for example an added example or analogy that does not appear in the source, an extra explanatory point, or a pro/con the source never listed.",
+        "10": "Every fact, definition, example, analogy, advantage, disadvantage, and 'when to use' point traces back to the source block. Wording may be rephrased, but no information is added. Where the source is silent, the content stays silent rather than guessing or filling gaps with outside knowledge."
+      }
+    },
+    {
+      "id": "clarity",
+      "name": "Learner-friendly prose (not copied bullets)",
+      "description": "Is the block written as connected, learner-facing prose that leads with the concept and explains it, rather than a verbatim dump of the source's bullets/slide text? Is it focused on one topic and easy to read in one pass?",
+      "weight": 0.3,
+      "anchors": {
+        "1": "The block is a raw paste of the source's bullet points or slide fragments with little or no connecting prose. There is no lead-in explanation; the learner just sees a list.",
+        "5": "Readable but uneven — some real prose, but at least one section is still a copied bullet dump, or the explanation is thin and assumes the learner already knows the concept.",
+        "10": "Clear, connected prose that leads with the concept and then explains it. Bullets are used sparingly and only for genuine lists (pros/cons, when-to-use). A learner understands the block in one read."
+      }
+    },
+    {
+      "id": "analogy_example_quality",
+      "name": "No invented analogies/examples (absence is fine)",
+      "description": "This dimension ONLY checks that the block does not INVENT analogies or examples, and that any analogy/example the SOURCE used is preserved. It is CONDITIONAL on the source: if the source contains NO analogy or example, the correct block has none — that is full marks, NOT a defect. Never penalise a block for not containing an analogy; only penalise inventing one, or dropping/garbling one the source actually had. We are converting existing PPT/material into HTML, so analogies appear only when the source had them.",
+      "weight": 0.15,
+      "anchors": {
+        "1": "The block invents an analogy or example not present in the source (e.g. a 'like a chef with too many recipes' analogy the source never used), OR drops/garbles a source analogy so its meaning is lost.",
+        "5": "Source analogies/examples are mostly preserved, but one source example is dropped without reason, OR a minor illustrative detail not in the source is added.",
+        "10": "EITHER the source used an analogy/example and the block preserves it (rephrasing fine), OR the source used none and the block correctly adds none. Nothing illustrative is invented. Absence of an analogy is a 10 — never marked down for it."
+      }
+    },
+    {
+      "id": "html_structure",
+      "name": "Valid house-style HTML",
+      "description": "Does the output use only the allowed house-style components and class names, wrapped in .main-content? Is the animation marker (or animation) placed sensibly? Are forbidden constructs (<html>/<head>/<style>/<script>, inline style=, <img>) absent?",
+      "weight": 0.2,
+      "anchors": {
+        "1": "Output violates the house style — emits <style>/<script>/<img> or inline style= attributes, omits the .main-content wrapper, or uses arbitrary class names the shell cannot render.",
+        "5": "Largely valid house-style HTML but with a minor issue — e.g. a stray inline style, a heading where a section-label was expected, or the animation marker placed awkwardly.",
+        "10": "Clean, valid house-style HTML using only the allowed components inside .main-content. The animation marker is placed at the natural 'how it works' point. No forbidden tags, inline styles, or images."
+      }
+    }
+  ]
+}

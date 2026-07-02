@@ -1,0 +1,594 @@
+# Introduction
+
+In the previous unit, we learned about **prompt engineering** and how to create clear prompts that help AI give better and more accurate answers. In this unit, we will focus on **AI workflows**, which are automated steps that use AI to complete tasks like creating content, analyzing data, and executing tasks automatically without needing human involvement.
+
+---
+
+Have you ever spent too much time posting on social media about your learning progress/edu/career updates?(writing explanations, adding tech hashtags,  formatting, posting, etc)
+
+What if you had a system that could handle all of this stuff automatically?
+
+# AI Workflows
+AI workflows are predefined sequences of steps that use artificial intelligence to complete tasks automatically
+
+##Automated Workflow
+
+An automated workflow typically follows the same structure:
+
+- **Input**: The starting point where data or a trigger enters the system.
+- **Tasks**: Steps performed in sequence (e.g., Task 1, Task 2, Task 3…).
+- **Output**: The final product or result.
+
+While some tasks may still require human involvement, particularly when judgment or approval is needed, the real efficiency boost occurs when AI handles repetitive middle steps. These are the tasks where humans usually waste time.
+
+**Simple Flow**  
+
+- **Task 1**: Human setup (e.g., upload a file, enter info)  
+- **Task 2**: AI handles repetitive work (summarize, write, format)  
+- **Task 3+**: Automatic follow-ups (approval, posting) → **Output**  
+
+You don’t need AI to do everything. You just place it in the right steps to save the most time.
+
+
+### Example: AI-Powered Social Media Content Automation
+
+In an AI-powered workflow, content from an article is automatically summarized and adapted for social media posts. Here’s how the process works:
+
+- **Listing the Articles**: Identifying content to be summarized.
+- **Summarization**: Condensing articles into key points.
+- **Generate Platform-Specific Content**: Tailoring content for specific social media platforms.
+- **Auto-Post to Social Media**: Automatically posting the content on social media.
+
+Once set up, it’s a one-click process.
+
+##Workflow vs Manual Process
+
+- ###Manual Process
+    Involves reading articles, writing posts, creating different versions for various platforms, and manually posting them.
+    
+**Read Article Manually ** →  **Write LinkedIn Post** →  **Create Instagram Post** →  **Create Twitter Version** → **Post on All Platforms**
+    
+    Time Taken: **30-45** minutes per article.
+
+- ###AI Workflow Process
+    Involves adding a link to an article in a Google Sheet, which then triggers the workflow to create content suitable for multiple platforms and post it.
+    
+  **Add Article to Sheet** →  **Auto-generate Content** → **Post Everywhere Simultaneously** →  **Send Confirmations**
+    
+    Time Taken: Less than **2 **minutes of human effort.
+
+##Applications
+<details>
+<summary><strong>Customer Service</strong></summary><br>
+
+We've all experienced customer service where we get an instant reply — almost like someone was waiting for our message. Chances are, that "someone" was AI.
+
+Here’s how it works:
+1. A customer sends a query.
+2. The system routes it to the right department (sales, support, billing) automatically.
+3. If it’s a common question, AI sends a personalized reply immediately.
+4. If follow-up is needed, the system schedules a call or raises a ticket.
+
+Tools like **Zendesk**, **Atlassian**, and **HubSpot** already use AI to handle these tasks at scale, allowing support teams to focus on complex issues that need a human touch.
+
+</details>
+
+<details>
+<summary><strong>Social Media Content Creation & Scheduling</strong></summary>
+Managing content for a brand, blog, or personal profile can feel never-ending with the need for tailored posts on different platforms. An AI workflow can help streamline this by:
+
+1. **Pulling Content**: Automatically pulling content from your blog or event calendar.
+2. **Generating Captions**: Crafting platform-specific captions — LinkedIn gets a professional tone, Instagram gets catchy lines, Twitter gets short, punchy text.
+3. **Creating Visuals**: generate simple visuals.
+4. **Scheduling Posts**: Automatically scheduling posts across all platforms.
+5. **Tracking Engagement**: Monitoring likes, shares, and comments to analyze performance and get tips on what’s working.
+
+This means you can have the same system creating content, learning what works, and continuously improving — essentially giving you a smart, full-time social media team powered by AI workflows.
+
+</details>
+
+<details>
+<summary><strong>E-Commerce Operations</strong></summary>
+
+In e-commerce, like during a big Walmart sale, millions of orders come in at once. AI workflows keep things running smoothly by:
+
+1. **New Order**: Order is received.
+2. **Inventory Update**: Inventory updates automatically — no manual counting.
+3. **Shipping Label**: Generated instantly based on the updated inventory.
+4. **Confirmation**: Customer receives an email or SMS confirmation immediately.
+
+Without automation, Walmart would need a huge team working around the clock. With AI workflows, the entire process happens at machine speed with minimal delay.
+
+</details>
+
+## Key Aspects of AI Workflows
+
+1. **Predefined Paths**  
+   The steps are fixed and follow the exact sequence you’ve set. No deviations unless you change them.
+
+2. **Human Decision-Making**  
+   If the AI output isn’t quite right, we step in. We adjust prompts, tweak steps, or give it feedback so it learns.
+   
+---
+
+# Building AI-Powered Social Media Content Automation Workflow
+
+You don't always need to code everything from scratch to build an AI workflow. There are platforms available that make the process faster, ranging from those that require coding knowledge to completely no-code solutions.
+
+Here are some examples:
+
+- **Make.com**: A visual platform for connecting apps and automating workflows with AI integration.
+- **n8n.io**: Open-source workflow automation tool with a visual interface.
+- **Zapier**: Popular automation platform that now integrates with AI services.
+- **Power Automate**: Microsoft’s workflow tool with AI capabilities.
+- **Workato**: Enterprise-grade automation platform with robust AI capabilities.
+
+##Using n8n
+- n8n is a workflow automation platform that enables users to automate tasks with ease
+- It also allows us to connect with popular services like Google Sheets, Slack, Twitter, GitHub, and hundreds more
+
+---
+
+#Building Blocks
+
+###Nodes
+Each step in the workflow is represented by a node that performs specific actions such as retrieving, transforming, or sending data
+
+Nodes You Might See in Workflows
+
+- **Chat Trigger**: This starts the workflow when a user interacts in a chat or sends a command.
+
+- **Social Media Nodes**: These manage and interact with platforms like LinkedIn, Twitter, Instagram.
+
+- **SplitInBatches**: Useful when you have a large set of data and need to break it into smaller, manageable chunks for processing.
+
+- **Google Sheets Trigger**: Reads from and writes data to Google Sheets automatically.  
+  *Example*: Adding a new row to a sheet could trigger an entire workflow.
+
+- **Slack Node**: Sends messages or interacts with your Slack workspace.
+
+- **Gmail Node**: Reads emails, downloads attachments, or triggers when new emails arrive.
+
+- **HTTP Request Node**: Allows n8n to talk to almost any web service that has an API.
+
+###Connections
+A connection establishes a link between nodes to route data through the workflow.
+
+---
+
+#Creating an AI Workflow for Social Media Content Automation
+
+##Pre-requisites
+- **N8n Account**: <a href="https://n8n.io" target="_blank">n8n.io</a>
+- **Google Account**
+- **LinkedIn Account**
+- **X Account** (formerly Twitter)
+
+## Step-by-Step Guide
+
+
+<details>
+<summary><strong>Add Google Sheets Trigger</strong></summary>
+
+
+- This guide walks through setting up Google APIs with OAuth 2.0 authentication for n8n automation workflows.
+
+    <details>
+    <summary><strong>Step 1: Google Cloud Project Setup</strong></summary>
+
+    #### Create a New Project
+    - Log in to the <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a>  
+    - Click on the `Select a project` dropdown at the top of the page  
+    - Select `New Project`  
+    - Enter a project name and select the location  
+    - Click `Create`   
+
+   <MultiLineNote> Ensure you have selected the project you've created in the dropdown before proceeding.
+    </MultiLineNote> 
+
+    #### Enable Required APIs
+    - In the Google Cloud Console, navigate to `APIs & Services` > `Library`  
+    - Search for the specific Google API you need (`Gmail`, `Sheets`, `Drive`, `Calendar`, etc.)  
+    - Click on the API from the results  
+    - Click `ENABLE` button   
+
+    <MultiLineWarning text="Important">
+    Some integrations need additional APIs:  
+    - **Google Docs/Sheets/Slides** → Also enable **Google Drive API**  
+    - **Google Vertex AI** → Also enable **Cloud Resource Manager API**  
+    - **Google Perspective** → Requires separate access request  
+    - **Google Ads** → Requires Developer Token  
+    </MultiLineWarning>
+    
+
+    </details>
+
+    <details>
+    <summary><strong>Step 2: OAuth 2.0 Configuration</strong></summary>
+    
+    ####OAuth Consent Screen Setup
+        
+    - Go to `APIs & Services` > `OAuth consent screen`  
+    - Click `Get started` to begin configuration  
+    - Fill in the basic information:  
+      - `App name`: Your application name  
+      - `User support email`: Your email address  
+    - For `Audience`, choose `External` (for any user with a Google account)  
+    - Add your contact email in the developer contact information  
+    - Read and accept Google's User Data Policy  
+    - Click `Create`  
+
+    
+    ---
+    
+    ####Configure Branding and Domains
+    
+    - In the left menu, select `Branding`  
+    - In the `Authorized domains` section, click `Add domain`:  
+      - Add `ccbp.in` (your n8n instance domain)  
+    - Click `Save` at the bottom  
+
+    
+    ---
+    
+    #### Create OAuth 2.0 Credentials
+    
+    - Navigate to `APIs & Services` > `Credentials`  
+    - Click `Create Credentials` > `OAuth client ID`  
+    - Select `Web application` as the application type  
+    - Update the name to something recognizable  
+    - Add authorized redirect URL:  
+      - `https://workflow.ccbp.in/rest/oauth2-credential/callback`  
+    
+      To get this URL follow Step 3  
+    
+    - Click `Create`  
+    - Save the `Client ID` and `Client Secret` — you'll need these for n8n  
+
+    </details>
+
+    <details>
+    <summary><strong>Step 3: n8n Integration Setup</strong></summary>
+    
+    ####Add OAuth2 Credential in n8n
+    
+    - Open your n8n workflow  
+    - Click `+` to add new node  
+    - Search for `Google Sheets Trigger`  
+    - Select `Google Sheets Trigger`  
+    - Click `Create New Credential`  
+    - Select `OAuth2` authentication  
+    - Copy the `OAuth Redirect URL` from n8n (should be `https://workflow.ccbp.in/rest/oauth2-credential/callback`)  
+    - Fill in the credential details:  
+      - `Client ID`: From Google Cloud Console  
+      - `Client Secret`: From Google Cloud Console  
+    - Click `Sign in with Google`  
+    - Select your Gmail account from the list of available accounts  
+    - You may see a security warning screen. Click `Advanced` at the bottom left  
+    - Click `Go to earlywave (unsafe)` link that appears  
+    - Review the permissions requested by the application  
+    - Click `Select all` to grant all necessary permissions  
+    - Click `Continue` or `Allow` to proceed  
+    - Click `Save` to store the credential in n8n  
+
+    </details>
+
+    <details>
+    <summary><strong>Step 4: Publish Your App (Important!)</strong></summary>
+    
+    ####For Production Use
+    
+    - Go back to `APIs & Services` > `OAuth consent screen`  
+    - Navigate to the `Audience` section  
+    - Find the `Publishing status`  
+    - Click `PUBLISH APP`  
+    - Confirm publication  
+
+    
+    <MultiLineNote>Publishing your app ensures stable authentication without expiration issues.  
+    </MultiLineNote>
+
+    </details>
+
+    <details>
+    <summary><strong>Common Issues and Solutions</strong></summary><br>
+    
+    **Issue**: `Google hasn't verified this app` warning  
+    - **Solution**: Create OAuth credentials from the same account you want to authenticate, or follow Google's verification process  
+    
+    **Issue**: `Access blocked` error  
+    - **Solution**: Ensure OAuth consent screen is properly configured and published  
+    
+    **Issue**: `Invalid redirect URI` error  
+    - **Solution**: Verify the redirect URI in Google Cloud Console matches exactly:  
+      `https://workflow.ccbp.in/rest/oauth2-credential/callback`  
+    
+    </details>
+
+    <details>
+    <summary><strong>Supported Google APIs</strong></summary><br>
+    
+    This setup process applies to all Google APIs including:  
+    
+    - Gmail API  
+    - Google Sheets API  
+    - Google Drive API  
+    - Google Calendar API  
+    - Google Forms API  
+    - YouTube Data API  
+    - Google Maps API  
+    - Cloud Vision API  
+    - Google Translate API  
+    - And many more  
+    
+    </details>
+
+    <details>
+    <summary><strong>Support Resources</strong></summary>
+    
+    - <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a>  
+    - <a href="https://developers.google.com/identity/protocols/oauth2/scopes" target="_blank">OAuth 2.0 Scopes for Google APIs</a>  
+    - <a href="https://docs.n8n.io" target="_blank">n8n Documentation</a>  
+
+    </details>
+</details>
+
+
+<details>
+
+<summary><strong> Summarize the Article Using Gemini Chat Model</strong></summary>
+
+- Add a new node → **Basic LLM Chain** 
+- Name it as `Summarize News Article`
+- Select `Define below`  
+- Add **prompt** 
+    
+```
+   System: "You are a social media strategist with expertise in content adaptation"
+
+    User: "Analyze this article and create a summary that:
+    1. Captures the 3 most important insights
+    2. Includes any actionable advice or tips
+    3. Maintains the original tone and perspective
+    4. Highlights implications for the target audience
+    5. Stays under 200 words for social media adaptation
+    
+    Article: {{$json.text}}
+
+    
+ ```
+ 
+- Click on the `+` for the Basic LLM Model to select a model  
+- Choose `Google Gemini Chat Model`  
+- Click `Create New Credential`  
+- Go to `API key` from <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>  
+- Sign in with your Google account  
+- Click `Create API key`  
+- Copy the key and keep it safe  
+
+</details>
+
+
+<details>
+<summary><strong>LLM Chain Node for Generating the LinkedIn Post</strong></summary><br>
+
+- Add Another **Basic LLM Chain** Node
+- Name it as `Generate LinkedIn Post Content`
+- Select `Define below`  
+- Add **prompt**
+
+```
+Assume the role of an industry expert and draft a LinkedIn post discussing key points from a news article relevant to artificial intelligence. The post should provide insightful analysis, connect with current industry trends, and encourage professional engagement or discussion. Highlight any notable implications for the industry. Since LinkedIn supports detailed posts, ensure it is informative and structured. Include a professional call to action. Here's a summary of the article: {ADD PREVIOUS NODE’S OUTPUT}
+
+```
+
+- Search and Add `Google Gemini Chat Model` 
+- select the account which is already saved
+- Connect it to the `Summarize News Article` node's output
+
+</details>
+
+<MultiLineWarning text=" Important Note">
+- **X (formerly Twitter)** Developer Portal has been updated to a **pay-for-use model**. New developer accounts now require a paid plan to access API features, which results in a "Payment Required" error during workflow execution
+- Posting to X is not possible 
+with newly created developer accounts
+
+</MultiLineWarning> 
+
+
+<details>
+<summary><strong>LLM Chain Node for Generating Twitter Post</strong></summary><br>
+
+- Add Another **Basic LLM Chain** Node
+- Name it as `Generate X/Twitter PostContent`
+- Select `Define below`  
+- Add **prompt**
+
+```
+Draft an X post as an AI industry expert analyzing a key news article. The post should:
+
+Deliver sharp insights on the article's main points
+Connect to current AI trends
+Spark discussion with a thought-provoking question
+Be punchy and engaging
+End with a clear call to action
+Length: Within 30 words
+
+Focus: What matters most to the AI community. Make every word count.
+Article summary:
+
+```
+
+- Search and Add `Google Gemini Chat Model`
+- select the account which is already saved
+- Connect it to the `Summarize News Article` node's output
+</details>
+
+
+<details>
+<summary><strong>LinkedIn Node Configuration</strong></summary><br>
+
+- Add `LinkedIn Node` to the `Generate LinkedIn Post Content`
+- Name it as `Post to LinkedIn`
+- create new credentials 
+Go to <a href="https://www.linkedin.com/developers/apps/new" target="_blank">LinkedIn Developer Apps</a>  
+- Enter an `App Name` (e.g., `n8n_post`)  
+- In the `LinkedIn Page` field, search for `NIAT` and select the first option  
+- Upload a `logo` of NIAT  
+- Check the box → `I have read and agree to these terms`  
+- Click on `Create App`  
+
+- After app creation, the `Products tab` opens. Enable the required APIs:  
+  - *Share on LinkedIn*  
+  - *Sign In with LinkedIn using OpenID Connect*  
+
+#### Setup Authentication
+
+- Navigate to the `Auth tab`  
+- Click `Add Redirect URL` → Paste the `OAuth Redirect URL` from n8n  
+- Copy the `Client ID` → Paste it in n8n credentials  
+- Copy the `Primary Client Secret` → Paste it in n8n credentials  
+- Click `Create My Account` and complete `Sign In`  
+- Connection should now be successful  
+
+
+####Final Steps in LinkedIn Node
+
+- In the `LinkedIn Node parameters`, click `Person name or id` 
+- Select the appropriate `Name or ID`  
+
+</details>
+
+<details>
+<summary><strong>Twitter Node Configuration</strong></summary><br>
+
+####Add Twitter (X) Node in n8n
+
+- Add a new node → **Post to Twitter** to `Generate X/Twitter PostContent` 
+- Go to  <a href="https://developer.x.com/en/portal/dashboard" target="_blank">X Developer Portal</a>
+- click on `developer portal` on the top right 
+- click on sign in for free
+- In the left menu, select `Projects and Apps`, then select the `Overview` tab  
+- If a project already exists, click on the existing project  
+- If not, find the `Apps` section and click `Add App`  
+- Enter a `Name` for your app → Click `Next`  
+- Go to `App Settings`  
+
+####Configure User Authentication
+
+- In `User authentication settings`, select `Set Up`  
+- Set the `App permissions`:  
+  - `Read and write`  
+
+- In `Type of app`, select one:  
+  - `Web App`, `Automated App`, `Bot`  
+
+
+####Configure OAuth Redirect URL
+
+- In n8n, copy the `OAuth Redirect URL`  
+- In `App Info` → Paste the URL in `Callback URI / Redirect URL`  
+- Add a `Website URL` for your app  
+- Save your changes  
+
+#### Add Credentials to n8n
+
+- Copy the `Client ID` and `Client Secret` from X  
+- Paste them into the corresponding fields in your n8n credential  
+- Connection should now be successful  
+
+</details>
+
+
+
+<details>
+<summary><strong>Auto-Post to Social Media</strong></summary>
+- Automatically post the generated content to the respective social media platforms.
+
+
+- ####Auto-Post to LinkedIn
+
+    - Add LinkedIn Node
+    - Select `Create a Post`
+    - Authenticate Using Your LinkedIn Credentials
+    - Select Username and Fill in the Text to Be Posted
+    - Execute the workflow
+    
+    <MultiLineNote>Save and Reload the workflow after connected to linkedIn</MultiLineNote>
+
+- ####Auto-Post to X(Twitter)
+
+    - Add X (Twitter) Node
+    - Authenticate to Your X Account
+    - Create Your X API Credentials for Client ID and Secret Key
+    - Fill in the Text to Be Posted
+
+</details>
+
+---
+
+##Workflow Testing
+
+<details>
+<summary>**Trigger Testing**</summary>
+- Add test article to Google Sheet  
+- Execute the workflow  
+- Check data passes between nodes  
+</details>
+<details>
+<summary>**Content Quality Testing**</summary>
+- Review AI-generated summaries  
+- Verify platform-specific adaptations  
+- Check character limits and formatting  
+</details>
+<details>
+<summary>**End-to-End Testing**</summary>
+
+- Complete workflow execution  
+- Verify posts appear on platforms  
+- Confirm success notifications
+
+</details>
+
+---
+
+# Common Issues you may Encounter
+- **402 Errors:** Content length exceeds the maximum characters allowed
+- **Authentication Failures:** API credentials expired or incorrect
+- **Rate Limiting: **Too many API calls in short timeframe
+- **Content Quality: ** Prompts need refinement for better output
+
+---
+
+#  Setting the Scheduler to Run Every Week
+##Common Scheduling Options
+
+In n8n, there are three common ways to run workflows:
+
+* **Manual Trigger**  
+   You click a button to run it — useful for testing.  
+* **Time-based Schedule**  
+   Runs automatically at set intervals (e.g., every 15 minutes, every day, or every Monday at 9 AM).  
+* **Event-based**  
+   Starts when something specific happens, like a webhook receiving new data.
+
+##Time Based Schedule
+
+- The time-based schedule triggers the node at the specified interval or exact time
+- At the trigger time, the node checks for new or updated rows since the last check
+- The workflow runs only if the trigger's conditions are met
+
+n8n triggers the workflow only for new or updated rows since the last check, not for every row in the sheet
+
+---
+
+#Automating the Execution
+- Try automating the execution of our workflow every week at a specific time
+
+###Workflow Should be in Active State
+- To ensure your workflow is automated and triggers as expected, make sure the workflow is active
+
+<MultiLineNote>
+- The Active button has been updated to Publish, allowing you to publish your workflows.
+- Kindly note that the Publish feature is restricted to a limited number of uses on the portal.
+</MultiLineNote>

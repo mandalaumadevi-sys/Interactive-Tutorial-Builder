@@ -1,0 +1,64 @@
+{
+  "agent_id": "agent1_image_selector",
+  "agent_name": "Agent 1 — Image Identification and Selection Step",
+  "version": "1.0",
+  "pass_threshold": 7,
+  "description": "Scores Agent 1's image_decisions output — the step where Agent 1 evaluates every image in a content block and decides whether to send it to Agent 2 for animation (decision = 'send_to_agent2') or skip it (decision = 'skip'). Each decision carries image_id, decision, an optional visual_type (for sends), and a reason. This rubric scores only the image-selection judgment — not the content HTML or the animation quality. NOTE: animation placement in this pipeline is handled by an inline <!--HF_ANIM:image_id--> marker that the content agent inserts; there is no placement field on the decision, so placement is not scored here.",
+  "dimensions": [
+    {
+      "id": "decision_correctness",
+      "name": "Decision correctness — every content image sent, only chrome skipped",
+      "description": "Is the send_to_agent2 or skip decision correct for each image? MANDATORY SEND for any content/process-bearing image: a process or workflow diagram (e.g. an n8n/automation workflow), flowchart, architecture, lifecycle, hierarchy, visual comparison, or a screenshot that shows a process or structure. Such images must NEVER be skipped on the grounds that they are 'explainable in text'. SKIP only pure chrome that carries no concept: repeated logos/branding, repeated bullets/icons, decorative backgrounds, a picture that only decorates an analogy, or a plain result screenshot with no process or structure.",
+      "weight": 0.35,
+      "anchors": {
+        "1": "Content/process images are skipped — a workflow diagram, flowchart, architecture, lifecycle, or a process screenshot is marked 'skip' (often justified as 'explainable in text'), and/or pure chrome (logos, decorative icons) is sent. The decisions misunderstand the rule that every content image must be animated.",
+        "5": "Most decisions are correct but at least one content/process image is wrongly skipped (e.g. a workflow screenshot skipped as 'just a UI'), or one chrome image is wrongly sent.",
+        "10": "Every content/process image is sent — process/workflow diagrams, flowcharts, architecture, lifecycles, hierarchies, comparisons, and process-bearing screenshots, with NONE skipped as 'explainable in text'. Only pure chrome (repeated logos, repeated bullet icons, decorative backgrounds, analogy-only pictures, plain result screenshots) is skipped. No exceptions."
+      }
+    },
+    {
+      "id": "reason_quality",
+      "name": "Reason quality — specific and rule-grounded",
+      "description": "Is the reason field specific, concrete, and grounded in the documented rules? Does it answer WHAT the image shows, WHY that warrants animation (or not), and WHICH rule applies — rather than restating the decision or asserting topic relevance?",
+      "weight": 0.25,
+      "anchors": {
+        "1": "Reasons are missing, circular ('this should be animated because it is useful'), or generic ('not needed', 'image found'). No reference to what the image shows or which rule applies.",
+        "5": "Reasons identify what the image shows but do not explain why that triggers the send/skip rule — e.g. 'this is a diagram' without saying why a diagram warrants animation, or it argues topic relevance instead of animation suitability.",
+        "10": "Every reason is specific and rule-grounded. Sends name the visual type and structure ('n8n workflow of 4 nodes wired in sequence' or 'flowchart of 6 sequential Waterfall phases with directional arrows'), explain the animation value ('building the workflow node by node shows how the agent is assembled'), and cite the rule ('content/process image → mandatory send'). Skips name the chrome category ('NxtWave logo repeated on 32 slides — branding, no concept → skip')."
+      }
+    },
+    {
+      "id": "visual_type_correctness",
+      "name": "Visual type correctness — classification for sends",
+      "description": "For each send_to_agent2 decision, is visual_type present and the best fit from {flowchart, lifecycle, architecture, comparison, concept}? visual_type drives Agent 2's reference-template selection, so a wrong or missing type degrades the downstream animation. Skip decisions should not carry a visual_type.",
+      "weight": 0.20,
+      "anchors": {
+        "1": "visual_type is missing on send decisions, or consistently wrong — e.g. a repeating sprint loop labelled 'flowchart', a layered architecture labelled 'concept', or a comparison table labelled 'flowchart'.",
+        "5": "visual_type is present on all sends but at least one is a loose or wrong fit — e.g. a lifecycle loop tagged 'flowchart', or a generic concept tagged 'architecture'.",
+        "10": "Every send carries a precise visual_type: sequential phases → flowchart, repeating/iterative cycle → lifecycle, layered/component structure → architecture, side-by-side contrast → comparison, generic labelled breakdown → concept. Skips carry no visual_type."
+      }
+    },
+    {
+      "id": "completeness",
+      "name": "Completeness — every image has a decision",
+      "description": "Does the output contain exactly one decision entry for every image in the block's images array? No missing decisions, no decisions for image_ids not in the input, no duplicate image_ids.",
+      "weight": 0.10,
+      "anchors": {
+        "1": "One or more input images have no decision entry, or decisions reference image_ids not present in the input. The output is structurally incomplete.",
+        "5": "All images have decisions but at least one image_id is slightly wrong (e.g. 'img_1' instead of 'img_b1_01') or one decision is a duplicate.",
+        "10": "Exactly one decision per input image. All image_ids match precisely. No images omitted, added, or duplicated."
+      }
+    },
+    {
+      "id": "edge_case_handling",
+      "name": "Edge case handling — ambiguous images",
+      "description": "When an image is ambiguous (a partially relevant diagram, a comparison table, a screenshot), does Agent 1 make a principled decision with explicit reasoning? The deciding test is whether the image carries a process or structure: if it does (even as a screenshot), it is a content image and must be sent; only pure chrome with no process/structure is skipped.",
+      "weight": 0.10,
+      "anchors": {
+        "1": "Ambiguous images are handled by defaulting to skip/send with no analysis, or a process-bearing screenshot is skipped just because it is a 'UI'. No engagement with the deciding test.",
+        "5": "Ambiguous images are recognised as edge cases but the reasoning is thin ('this might be useful', 'not sure, skipping to be safe'). The call may be correct but is not principled.",
+        "10": "Ambiguous images are explicitly discussed against the process/structure test and called correctly — e.g. 'a Jira/Kanban board screenshot shows a three-stage workflow → it carries process structure → send', or 'a two-column Waterfall-vs-Agile table is a visual comparison → send', while 'a screenshot of the finished app with no process shown → chrome → skip'."
+      }
+    }
+  ]
+}

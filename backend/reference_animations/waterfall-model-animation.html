@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waterfall Model — Animated</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --req: #1b5e9c;   /* Requirement Analysis */
+        --des: #6c7fd0;   /* Design */
+        --dev: #1f9bbf;   /* Development */
+        --test: #93bf3f;  /* Testing */
+        --dep: #c33d2e;   /* Deployment */
+        --mnt: #e6a200;   /* Maintenance */
+        --arrow: #ef8f2e; /* connectors */
+        --lblText: #5b6470;
+        --lblBorder: #e3e7ec;
+        --em: #2563eb;    /* bold emphasis words */
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f8fafc;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        color: #1f2937;
+    }
+
+    .stage-heading { text-align: center; margin-bottom: 6px; }
+    .stage-heading h1 { font-size: 1.6rem; font-weight: 700; color: #1f2937; }
+    .stage-heading p  { font-size: 0.95rem; color: #6b7280; font-style: italic; margin-top: 4px; }
+
+    .stage {
+        width: 100%;
+        max-width: 940px;
+        background: #ffffff;
+        border: 1px solid #eef2f7;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+        padding: 28px 24px 32px;
+        margin-top: 22px;
+    }
+
+    svg { width: 100%; height: auto; display: block; }
+
+    /* ── BLOCK & LABEL TEXT ── */
+    .blk-t  { fill: #ffffff; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; }
+    .lbl-box { fill: #ffffff; stroke: var(--lblBorder); stroke-width: 1.5; }
+    .lbl-t  { fill: var(--lblText); font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px; }
+    .lbl-t .em { fill: var(--em); font-weight: 700; }
+
+    .blk rect { filter: drop-shadow(0 2px 3px rgba(0,0,0,0.16)); }
+
+    /* ── REVEAL ANIMATION (blocks + labels) ── */
+    .reveal {
+        opacity: 0;
+        transform: translateY(10px) scale(0.96);
+        transform-box: fill-box;
+        transform-origin: center;
+        transition: opacity 0.45s ease, transform 0.5s cubic-bezier(0.2, 0.75, 0.25, 1);
+    }
+    .reveal.show { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* ── ARROW SHAFT (self-drawing) ── */
+    .arrow-shaft {
+        fill: none;
+        stroke: var(--arrow);
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        transition: stroke-dashoffset 0.5s ease;
+    }
+    .arrow-shaft.show { stroke-dashoffset: 0; }
+
+    /* ── ARROW HEAD (pops in as the shaft finishes drawing) ── */
+    .arrow-head {
+        fill: var(--arrow);
+        opacity: 0;
+        transform: scale(0.3);
+        transform-box: fill-box;
+        transform-origin: center;
+        transition: opacity 0.25s ease 0.32s, transform 0.25s ease 0.32s;
+    }
+    .arrow-head.show { opacity: 1; transform: scale(1); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .reveal, .arrow-shaft, .arrow-head { transition: none; }
+    }
+</style>
+</head>
+<body>
+
+    <div class="stage-heading">
+        <h1>Waterfall Model</h1>
+        <p>Each phase is completed fully before the next begins</p>
+    </div>
+
+    <div class="stage">
+        <svg viewBox="0 0 890 460" role="img" aria-label="Animated Waterfall Model diagram">
+
+            <!-- ═══ CONNECTOR ARROWS (drawn beneath the blocks) ═══ -->
+
+            <!-- Requirement Analysis → label -->
+            <path class="arrow-shaft" id="a-req-l1" pathLength="1" d="M170,59 L206,59"/>
+            <polygon class="arrow-head" id="h-req-l1" points="210,59 201,54 201,64"/>
+
+            <!-- Requirement Analysis → Design -->
+            <path class="arrow-shaft" id="a-req-des" pathLength="1" d="M64,88 L64,123 L151,123"/>
+            <polygon class="arrow-head" id="h-req-des" points="155,123 146,118 146,128"/>
+
+            <!-- Design → Development -->
+            <path class="arrow-shaft" id="a-des-dev" pathLength="1" d="M179,146 L179,193 L266,193"/>
+            <polygon class="arrow-head" id="h-des-dev" points="270,193 261,188 261,198"/>
+
+            <!-- Development → label -->
+            <path class="arrow-shaft" id="a-dev-l2" pathLength="1" d="M420,193 L466,193"/>
+            <polygon class="arrow-head" id="h-dev-l2" points="470,193 461,188 461,198"/>
+
+            <!-- Development → Testing -->
+            <path class="arrow-shaft" id="a-dev-test" pathLength="1" d="M294,216 L294,263 L381,263"/>
+            <polygon class="arrow-head" id="h-dev-test" points="385,263 376,258 376,268"/>
+
+            <!-- Testing → label -->
+            <path class="arrow-shaft" id="a-test-l3" pathLength="1" d="M489,263 L541,263"/>
+            <polygon class="arrow-head" id="h-test-l3" points="545,263 536,258 536,268"/>
+
+            <!-- Testing → Deployment -->
+            <path class="arrow-shaft" id="a-test-dep" pathLength="1" d="M409,286 L409,333 L496,333"/>
+            <polygon class="arrow-head" id="h-test-dep" points="500,333 491,328 491,338"/>
+
+            <!-- Deployment → Maintenance -->
+            <path class="arrow-shaft" id="a-dep-mnt" pathLength="1" d="M524,356 L524,403 L611,403"/>
+            <polygon class="arrow-head" id="h-dep-mnt" points="615,403 606,398 606,408"/>
+
+            <!-- Maintenance → label (points left) -->
+            <path class="arrow-shaft" id="a-mnt-l4" pathLength="1" d="M615,403 L589,403"/>
+            <polygon class="arrow-head" id="h-mnt-l4" points="585,403 594,398 594,408"/>
+
+
+            <!-- ═══ PHASE BLOCKS ═══ -->
+
+            <g class="reveal blk" id="b-req">
+                <rect x="40" y="30" width="130" height="58" rx="8" fill="var(--req)"/>
+                <text x="105" y="53" text-anchor="middle" class="blk-t">Requirement</text>
+                <text x="105" y="73" text-anchor="middle" class="blk-t">Analysis</text>
+            </g>
+
+            <g class="reveal blk" id="b-des">
+                <rect x="155" y="100" width="104" height="46" rx="8" fill="var(--des)"/>
+                <text x="207" y="128" text-anchor="middle" class="blk-t">Design</text>
+            </g>
+
+            <g class="reveal blk" id="b-dev">
+                <rect x="270" y="170" width="150" height="46" rx="8" fill="var(--dev)"/>
+                <text x="345" y="198" text-anchor="middle" class="blk-t">Development</text>
+            </g>
+
+            <g class="reveal blk" id="b-test">
+                <rect x="385" y="240" width="104" height="46" rx="8" fill="var(--test)"/>
+                <text x="437" y="268" text-anchor="middle" class="blk-t">Testing</text>
+            </g>
+
+            <g class="reveal blk" id="b-dep">
+                <rect x="500" y="310" width="150" height="46" rx="8" fill="var(--dep)"/>
+                <text x="575" y="338" text-anchor="middle" class="blk-t">Deployment</text>
+            </g>
+
+            <g class="reveal blk" id="b-mnt">
+                <rect x="615" y="380" width="150" height="46" rx="8" fill="var(--mnt)"/>
+                <text x="690" y="408" text-anchor="middle" class="blk-t">Maintenance</text>
+            </g>
+
+
+            <!-- ═══ EXPLANATION LABELS ═══ -->
+
+            <g class="reveal lbl" id="l1">
+                <rect class="lbl-box" x="210" y="39" width="235" height="40" rx="8"/>
+                <text x="224" y="64" class="lbl-t">Plan everything <tspan class="em">beforehand</tspan></text>
+            </g>
+
+            <g class="reveal lbl" id="l2">
+                <rect class="lbl-box" x="470" y="173" width="250" height="40" rx="8"/>
+                <text x="484" y="198" class="lbl-t">Developers <tspan class="em">code complete app</tspan></text>
+            </g>
+
+            <g class="reveal lbl" id="l3">
+                <rect class="lbl-box" x="545" y="243" width="320" height="40" rx="8"/>
+                <text x="559" y="268" class="lbl-t">Testing after <tspan class="em">everything has developed</tspan></text>
+            </g>
+
+            <g class="reveal lbl" id="l4">
+                <rect class="lbl-box" x="335" y="383" width="250" height="40" rx="8"/>
+                <text x="349" y="408" class="lbl-t">Maintenance <tspan class="em">after deployment</tspan></text>
+            </g>
+
+        </svg>
+    </div>
+
+<script>
+    // Interleaved reveal order: each phase block, then its label, then the
+    // connector arrow leading down to the next phase.
+    const steps = [
+        ['#b-req'],
+        ['#a-req-l1', '#h-req-l1', '#l1'],
+        ['#a-req-des', '#h-req-des'],
+        ['#b-des'],
+        ['#a-des-dev', '#h-des-dev'],
+        ['#b-dev'],
+        ['#a-dev-l2', '#h-dev-l2', '#l2'],
+        ['#a-dev-test', '#h-dev-test'],
+        ['#b-test'],
+        ['#a-test-l3', '#h-test-l3', '#l3'],
+        ['#a-test-dep', '#h-test-dep'],
+        ['#b-dep'],
+        ['#a-dep-mnt', '#h-dep-mnt'],
+        ['#b-mnt'],
+        ['#a-mnt-l4', '#h-mnt-l4', '#l4'],
+    ];
+
+    const STEP = 620;   // ms between reveals
+    const HOLD = 2600;  // ms to hold the finished diagram
+    const GAP  = 700;   // ms blank before replaying
+
+    const allEls = () => document.querySelectorAll('.reveal, .arrow-shaft, .arrow-head');
+
+    function revealAll() {
+        allEls().forEach(el => el.classList.add('show'));
+    }
+    function clearAll() {
+        allEls().forEach(el => el.classList.remove('show'));
+    }
+
+    // Respect reduced-motion: show the full diagram, no looping.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        revealAll();
+    } else {
+        const playOnce = () => {
+            steps.forEach((group, i) => {
+                setTimeout(() => {
+                    group.forEach(sel => document.querySelector(sel)?.classList.add('show'));
+                }, i * STEP);
+            });
+        };
+
+        const loop = () => {
+            playOnce();
+            const total = steps.length * STEP + HOLD;
+            setTimeout(() => {
+                clearAll();
+                setTimeout(loop, GAP);
+            }, total);
+        };
+
+        loop();
+    }
+</script>
+
+</body>
+</html>

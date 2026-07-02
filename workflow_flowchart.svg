@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 1710" font-family="'Segoe UI', Roboto, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker>
+    <marker id="arrowLoop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d97706"/></marker>
+    <marker id="arrowRail" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/></marker>
+    <marker id="arrowPass" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#16a34a"/></marker>
+  </defs>
+
+  <rect x="0" y="0" width="1440" height="1710" fill="#f8fafc"/>
+  <text x="720" y="44" text-anchor="middle" font-size="26" font-weight="700" fill="#0f172a">Interactive Tutorial Builder — Agentic Workflow</text>
+  <text x="720" y="70" text-anchor="middle" font-size="14" fill="#64748b">LangGraph orchestration · dual ingestion · vision animations · 2 human checkpoints · memory + eval-driven self-refinement</text>
+
+  <!-- ===================== SIDE RAILS ===================== -->
+  <rect x="34" y="392" width="206" height="540" rx="14" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="137" y="424" text-anchor="middle" font-size="16" font-weight="700" fill="#6d28d9">MEMORY</text>
+  <text x="137" y="444" text-anchor="middle" font-size="11" fill="#7c3aed">(course-scoped, shared)</text>
+  <line x1="54" y1="458" x2="220" y2="458" stroke="#ddd6fe" stroke-width="1"/>
+  <text x="50" y="486" font-size="12" fill="#5b21b6">• Prior concepts taught</text>
+  <text x="50" y="514" font-size="12" fill="#5b21b6">• MCQ topics used</text>
+  <text x="50" y="542" font-size="12" fill="#5b21b6">• Human feedback</text>
+  <text x="50" y="570" font-size="12" fill="#5b21b6">• Eval-score history</text>
+  <text x="50" y="598" font-size="12" fill="#5b21b6">• Run checkpoints (resume)</text>
+  <line x1="54" y1="618" x2="220" y2="618" stroke="#ddd6fe" stroke-width="1"/>
+  <text x="137" y="642" text-anchor="middle" font-size="11" fill="#7c3aed">read at ingest ·</text>
+  <text x="137" y="658" text-anchor="middle" font-size="11" fill="#7c3aed">written at the end</text>
+
+  <rect x="1200" y="392" width="206" height="540" rx="14" fill="#ecfeff" stroke="#0891b2" stroke-width="1.5"/>
+  <text x="1303" y="424" text-anchor="middle" font-size="16" font-weight="700" fill="#0e7490">EVAL-SETS</text>
+  <text x="1303" y="444" text-anchor="middle" font-size="11" fill="#0891b2">(rubric + good/bad)</text>
+  <line x1="1216" y1="458" x2="1390" y2="458" stroke="#a5f3fc" stroke-width="1"/>
+  <text x="1216" y="484" font-size="12" fill="#155e75">• block_divider</text>
+  <text x="1216" y="508" font-size="12" fill="#155e75">• content</text>
+  <text x="1216" y="532" font-size="12" fill="#155e75">• visual-decision</text>
+  <text x="1216" y="556" font-size="12" fill="#155e75">• visual</text>
+  <text x="1216" y="580" font-size="12" fill="#155e75">• mcq</text>
+  <text x="1216" y="604" font-size="12" fill="#155e75">• assessment</text>
+  <text x="1216" y="628" font-size="12" fill="#155e75">• final_quality</text>
+  <line x1="1216" y1="648" x2="1390" y2="648" stroke="#a5f3fc" stroke-width="1"/>
+  <text x="1303" y="672" text-anchor="middle" font-size="11" fill="#0891b2">LLM judge scores each</text>
+  <text x="1303" y="688" text-anchor="middle" font-size="11" fill="#0891b2">stage vs threshold 7.0</text>
+
+  <!-- ===================== RAIL CONNECTORS ===================== -->
+  <path d="M240,486 C 360,486 410,240 520,240" stroke="#94a3b8" stroke-width="1.2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrowRail)"/>
+  <text x="300" y="372" font-size="10.5" fill="#94a3b8">load memory</text>
+  <path d="M240,520 L392,650" stroke="#94a3b8" stroke-width="1.2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrowRail)"/>
+  <path d="M520,1536 C 300,1536 240,1150 240,910" stroke="#94a3b8" stroke-width="1.2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrowRail)"/>
+  <text x="250" y="1180" font-size="10.5" fill="#94a3b8">write back</text>
+  <path d="M1200,470 L920,348" stroke="#94a3b8" stroke-width="1.2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrowRail)"/>
+  <path d="M1200,580 L1084,660" stroke="#94a3b8" stroke-width="1.2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrowRail)"/>
+  <path d="M1200,700 C 1060,700 1010,1186 940,1186" stroke="#94a3b8" stroke-width="1.2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrowRail)"/>
+
+  <!-- ===================== MAIN SPINE EDGES ===================== -->
+  <path d="M570,154 L640,208" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <path d="M870,154 L800,208" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <path d="M720,272 L720,316" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <path d="M720,380 L720,424" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <path d="M720,494 L720,540" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <text x="734" y="522" font-size="11" fill="#64748b">approved blocks</text>
+  <path d="M720,900 L720,940" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <path d="M720,1004 L720,1044" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <path d="M720,1108 L720,1148" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <path d="M720,1224 L720,1276" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <text x="734" y="1254" font-size="11" fill="#b45309" font-weight="600">fail / flagged</text>
+  <path d="M500,1190 C 452,1240 452,1370 520,1412" stroke="#16a34a" stroke-width="1.8" fill="none" marker-end="url(#arrowPass)"/>
+  <text x="404" y="1300" font-size="11" fill="#15803d" font-weight="700">pass ✓</text>
+  <path d="M720,1352 L720,1400" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <text x="734" y="1382" font-size="11" fill="#475569">approve / edit</text>
+  <path d="M720,1464 L720,1504" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <path d="M720,1568 L720,1608" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- ===================== LOOPS ===================== -->
+  <path d="M500,455 C 452,455 452,348 520,348" stroke="#d97706" stroke-width="1.7" fill="none" stroke-dasharray="5,4" marker-end="url(#arrowLoop)"/>
+  <text x="356" y="398" font-size="11" fill="#b45309" font-weight="600">feedback →<tspan x="356" dy="14">re-divide</tspan></text>
+  <path d="M500,1186 C 300,1186 300,720 356,720" stroke="#d97706" stroke-width="1.7" fill="none" stroke-dasharray="5,4" marker-end="url(#arrowLoop)"/>
+  <text x="252" y="950" font-size="11" fill="#b45309" font-weight="600">score &lt; 7 →<tspan x="252" dy="14">regenerate</tspan><tspan x="252" dy="14">failing stage</tspan></text>
+  <path d="M940,1312 C 1120,1312 1120,348 920,348" stroke="#d97706" stroke-width="1.7" fill="none" stroke-dasharray="5,4" marker-end="url(#arrowLoop)"/>
+  <text x="1036" y="828" font-size="11" fill="#b45309" font-weight="600">reject →<tspan x="1036" dy="14">re-divide</tspan></text>
+
+  <!-- ===================== NODES ===================== -->
+  <rect x="470" y="96" width="200" height="58" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="570" y="122" text-anchor="middle" font-size="14" font-weight="700" fill="#1e3a8a">Flow A — HTML</text>
+  <text x="570" y="140" text-anchor="middle" font-size="11.5" fill="#1d4ed8">session .html upload</text>
+  <rect x="770" y="96" width="200" height="58" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="870" y="122" text-anchor="middle" font-size="14" font-weight="700" fill="#1e3a8a">Flow B — PPTX</text>
+  <text x="870" y="140" text-anchor="middle" font-size="11.5" fill="#1d4ed8">.pptx (text + images)</text>
+
+  <rect x="520" y="208" width="400" height="64" rx="10" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/>
+  <text x="720" y="232" text-anchor="middle" font-size="14.5" font-weight="700" fill="#334155">Stage 0 · Ingestion → Normalize</text>
+  <text x="720" y="252" text-anchor="middle" font-size="11.5" fill="#475569">both flows → one contract: normalized_html + assets[]</text>
+
+  <rect x="520" y="316" width="400" height="64" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="720" y="340" text-anchor="middle" font-size="14.5" font-weight="700" fill="#5b21b6">Stage 1 · Block Divider (LLM)</text>
+  <text x="720" y="360" text-anchor="middle" font-size="11.5" fill="#6d28d9">group sections → 3–7 cohesive blocks · self-checks</text>
+
+  <rect x="500" y="424" width="440" height="70" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="1.8"/>
+  <text x="720" y="450" text-anchor="middle" font-size="14.5" font-weight="700" fill="#92400e">👤 HUMAN-IN-LOOP #1 · Division Review</text>
+  <text x="720" y="470" text-anchor="middle" font-size="11.5" fill="#b45309">see heading tree, block count, titles + reasoning</text>
+  <text x="720" y="486" text-anchor="middle" font-size="11.5" fill="#b45309">accept ✓   or   feedback ↻ re-divide</text>
+
+  <!-- fan-out -->
+  <rect x="356" y="540" width="728" height="360" rx="14" fill="#faf5ff" stroke="#a78bfa" stroke-width="1.6" stroke-dasharray="7,5"/>
+  <text x="720" y="566" text-anchor="middle" font-size="14" font-weight="700" fill="#6d28d9">Stage 3 · PER BLOCK — runs in parallel (fan-out, ×N blocks)</text>
+
+  <rect x="392" y="586" width="300" height="128" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="542" y="610" text-anchor="middle" font-size="14" font-weight="700" fill="#5b21b6">Agent 1 · Content &amp; Layout</text>
+  <text x="408" y="634" font-size="11.5" fill="#6d28d9">1. rewrite block → house-style HTML</text>
+  <text x="408" y="654" font-size="11.5" fill="#6d28d9">2. decide animate / skip per image</text>
+  <text x="408" y="674" font-size="11.5" fill="#6d28d9">3. embed animation in place</text>
+  <text x="408" y="700" font-size="10.5" fill="#7c3aed">self-check: rules + content rubric</text>
+
+  <rect x="748" y="586" width="300" height="128" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="898" y="610" text-anchor="middle" font-size="14" font-weight="700" fill="#5b21b6">Agent 2 · Animation (vision)</text>
+  <text x="764" y="634" font-size="11.5" fill="#6d28d9">• SEE the image</text>
+  <text x="764" y="654" font-size="11.5" fill="#6d28d9">• match reference library</text>
+  <text x="764" y="674" font-size="11.5" fill="#6d28d9">  (waterfall / agile / v-model)</text>
+  <text x="764" y="700" font-size="10.5" fill="#7c3aed">emit inline SVG/CSS/JS · rules + visual rubric</text>
+
+  <path d="M692,632 L748,632" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <text x="720" y="626" text-anchor="middle" font-size="9.5" fill="#475569">image →</text>
+  <path d="M748,668 L692,668" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+  <text x="720" y="684" text-anchor="middle" font-size="9.5" fill="#475569">← animation</text>
+
+  <rect x="392" y="734" width="656" height="146" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="720" y="758" text-anchor="middle" font-size="14" font-weight="700" fill="#5b21b6">Agent 3 · MCQ Generator  (independent, concurrent with Agent 1)</text>
+  <text x="720" y="782" text-anchor="middle" font-size="11.5" fill="#6d28d9">per-block MCQs · cover sub-topics · material-only · no partial credit</text>
+  <text x="720" y="803" text-anchor="middle" font-size="11.5" fill="#6d28d9">emit -END- text  →  convert to QUIZ_DATA shape</text>
+  <rect x="470" y="818" width="500" height="40" rx="8" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="1.2"/>
+  <text x="720" y="838" text-anchor="middle" font-size="10.5" fill="#5b21b6" font-family="monospace">{ question, options[], multi, correctIndexes[], explanation }</text>
+  <text x="720" y="872" text-anchor="middle" font-size="10.5" fill="#7c3aed">default 2 gating MCQs / block · self-check: rules + mcq rubric</text>
+
+  <rect x="520" y="940" width="400" height="64" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="720" y="964" text-anchor="middle" font-size="14.5" font-weight="700" fill="#5b21b6">Stage 4 · Agent 4 — Final Assessment</text>
+  <text x="720" y="984" text-anchor="middle" font-size="11.5" fill="#6d28d9">session-level DESCRIPTIVE Q&amp;A (default 5) + model answers → carousel</text>
+
+  <rect x="520" y="1044" width="400" height="64" rx="10" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/>
+  <text x="720" y="1068" text-anchor="middle" font-size="14.5" font-weight="700" fill="#334155">Stage 5 · Draft Assemble (deterministic)</text>
+  <text x="720" y="1088" text-anchor="middle" font-size="11.5" fill="#475569">stitch blocks + quizzes into a draft HTML for scoring</text>
+
+  <rect x="500" y="1148" width="440" height="76" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1.6"/>
+  <text x="720" y="1172" text-anchor="middle" font-size="14.5" font-weight="700" fill="#166534">Stage 6 · Quality — LLM Judge &amp; Self-Refine</text>
+  <text x="720" y="1192" text-anchor="middle" font-size="11.5" fill="#15803d">score the whole session vs rubric (≈ 7.0) → pass / fail</text>
+  <text x="720" y="1210" text-anchor="middle" font-size="11.5" fill="#15803d">fail &amp; retries&lt;max → regenerate failing stage ↻ → then escalate</text>
+
+  <rect x="500" y="1276" width="440" height="76" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="1.8"/>
+  <text x="720" y="1300" text-anchor="middle" font-size="14.5" font-weight="700" fill="#92400e">👤 HUMAN-IN-LOOP #2 · Final Review</text>
+  <text x="720" y="1320" text-anchor="middle" font-size="11" fill="#b45309">reached only when quality fails, or a block is flagged</text>
+  <text x="720" y="1338" text-anchor="middle" font-size="11.5" fill="#b45309">approve / edit ✓ → assemble       reject ↻ → re-divide</text>
+
+  <rect x="520" y="1400" width="400" height="64" rx="10" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/>
+  <text x="720" y="1424" text-anchor="middle" font-size="14.5" font-weight="700" fill="#334155">Stage 7 · Assemble (deterministic)</text>
+  <text x="720" y="1444" text-anchor="middle" font-size="11.5" fill="#475569">final stepper shell → one self-contained .html</text>
+
+  <rect x="520" y="1504" width="400" height="64" rx="10" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.6"/>
+  <text x="720" y="1528" text-anchor="middle" font-size="14.5" font-weight="700" fill="#6d28d9">Memory · write-back (deterministic)</text>
+  <text x="720" y="1548" text-anchor="middle" font-size="11.5" fill="#7c3aed">save concepts, MCQ topics, feedback, eval score → course memory</text>
+
+  <rect x="540" y="1608" width="360" height="62" rx="10" fill="#064e3b" stroke="#065f46" stroke-width="1.5"/>
+  <text x="720" y="1634" text-anchor="middle" font-size="15" font-weight="700" fill="#ecfdf5">✓ Final Interactive Tutorial (.html)</text>
+  <text x="720" y="1654" text-anchor="middle" font-size="11.5" fill="#a7f3d0">generated_tutorials/&lt;course&gt;/&lt;session&gt;.html</text>
+
+  <!-- ===================== LEGEND ===================== -->
+  <g transform="translate(40,1000)">
+    <text x="0" y="0" font-size="12" font-weight="700" fill="#334155">Legend</text>
+    <rect x="0" y="12" width="16" height="12" rx="3" fill="#dbeafe" stroke="#3b82f6"/><text x="22" y="22" font-size="11" fill="#334155">Input</text>
+    <rect x="0" y="32" width="16" height="12" rx="3" fill="#e2e8f0" stroke="#64748b"/><text x="22" y="42" font-size="11" fill="#334155">Deterministic</text>
+    <rect x="0" y="52" width="16" height="12" rx="3" fill="#ede9fe" stroke="#7c3aed"/><text x="22" y="62" font-size="11" fill="#334155">LLM agent</text>
+    <rect x="0" y="72" width="16" height="12" rx="3" fill="#fef3c7" stroke="#d97706"/><text x="22" y="82" font-size="11" fill="#334155">Human-in-loop</text>
+    <rect x="0" y="92" width="16" height="12" rx="3" fill="#dcfce7" stroke="#16a34a"/><text x="22" y="102" font-size="11" fill="#334155">Eval / quality judge</text>
+    <rect x="0" y="112" width="16" height="12" rx="3" fill="#064e3b" stroke="#065f46"/><text x="22" y="122" font-size="11" fill="#334155">Output</text>
+    <line x1="2" y1="138" x2="18" y2="138" stroke="#d97706" stroke-width="1.7" stroke-dasharray="5,4"/><text x="22" y="142" font-size="11" fill="#334155">Loop-back</text>
+    <line x1="2" y1="158" x2="18" y2="158" stroke="#16a34a" stroke-width="1.8"/><text x="22" y="162" font-size="11" fill="#334155">Pass (skip review)</text>
+    <line x1="2" y1="178" x2="18" y2="178" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,4"/><text x="22" y="182" font-size="11" fill="#334155">Memory / eval read-write</text>
+  </g>
+</svg>

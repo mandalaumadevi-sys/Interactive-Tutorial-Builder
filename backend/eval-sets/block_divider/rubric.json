@@ -1,0 +1,85 @@
+{
+  "agent_id": "block_divider",
+  "agent_name": "Block Divider — LLM Stage",
+  "version": "1.0",
+  "pass_threshold": 7,
+  "dimensions": [
+    {
+      "id": "concept_boundary_correctness",
+      "name": "Concept boundary correctness",
+      "description": "Does each block contain exactly one cohesive concept or topic? Are concept transitions used as block boundaries? Does no single block mix two unrelated major topics?",
+      "weight": 0.30,
+      "anchors": {
+        "1": "Blocks cut mid-concept — a single concept is split across two blocks, or two unrelated major concepts are merged into one block. The learner would be confused about what a block is about.",
+        "5": "Most blocks contain one concept but at least one block has a noticeable topic mismatch — for example, the Waterfall model and Agile model sharing one block, or an introductory section merged with a detailed technical section.",
+        "10": "Every block contains exactly one cohesive concept. Block boundaries fall precisely at topic transitions. A learner can state the single topic of every block in one sentence."
+      }
+    },
+    {
+      "id": "merge_split_rule_adherence",
+      "name": "Merge and split rule adherence",
+      "description": "Were the merge rules (small/related H2s joined) and split rules (long H2s with 4+ H3s broken up) applied correctly? Were H3s kept inside their parent H2 except when splitting was justified?",
+      "weight": 0.25,
+      "anchors": {
+        "1": "Merge/split rules completely ignored — either every H2 became its own block regardless of size and relationship, or completely unrelated sections were merged. H3s split away from parent H2 without justification.",
+        "5": "Rules partially applied — one obvious merge was missed (e.g. a tiny intro section left as its own block) or one obvious split was missed (e.g. a 700-word section with 6 H3s kept as one block). H3 separation mostly correct.",
+        "10": "All merge and split rules applied precisely. Tightly related small H2s are merged. Oversized H2 sections with 4+ H3s are split at a logical H3 boundary. Every H3 stays inside its parent H2 unless a justified split applies."
+      }
+    },
+    {
+      "id": "block_count_range",
+      "name": "Block count within 3–7 range",
+      "description": "Does the output contain between 3 and 7 blocks? Sessions with fewer than 3 blocks suggest under-splitting; more than 7 suggest over-splitting.",
+      "weight": 0.10,
+      "anchors": {
+        "1": "Output has fewer than 3 or more than 7 blocks. The session content clearly warranted more or fewer divisions but rules were not applied to enforce the range.",
+        "5": "Block count is at the edge of the acceptable range (exactly 3 or exactly 7) where a better-reasoned division could have landed closer to the 4–6 ideal range.",
+        "10": "Block count is between 3 and 7, and the specific number is the most natural fit for the session's content volume and topic count."
+      }
+    },
+    {
+      "id": "block_size_balance",
+      "name": "Block size balance — 100 to 600 words per block",
+      "description": "Is each block within the 100–600 word target? Are blocks roughly comparable in depth — no single block dramatically larger or smaller than others?",
+      "weight": 0.15,
+      "anchors": {
+        "1": "At least one block has fewer than 100 words (stub block) or more than 600 words (overloaded block). Blocks are wildly unbalanced — one block covers 80% of the session content while others are near-empty.",
+        "5": "Block sizes are mostly within range but one block is noticeably shorter (100–150 words on a simple intro) or longer (550–600 words, borderline). Balance is acceptable but not optimal.",
+        "10": "All blocks fall comfortably within 100–600 words. Blocks are reasonably balanced in depth. No single block dominates the session. The learner experiences consistent effort per block."
+      }
+    },
+    {
+      "id": "block_title_quality",
+      "name": "Block title quality — learner-facing and descriptive",
+      "description": "Are block titles clear, learner-facing descriptions of what the block contains? Do they avoid using raw heading text verbatim when that text is cryptic or numbered?",
+      "weight": 0.10,
+      "anchors": {
+        "1": "Block titles are raw heading text copied verbatim (e.g. '1. Prompt Engineering', 'Why Not One SDLC for All?') or are vague single words (e.g. 'Introduction', 'Overview'). A learner cannot tell what the block covers from the title alone.",
+        "5": "Block titles are mostly descriptive but at least one is a direct copy of a cryptic heading or is slightly too short to be informative. Titles are not wrong but could be more learner-facing.",
+        "10": "Every block title is a clear, learner-facing phrase that describes what the learner will understand after completing it (e.g. 'Why Software Development Models Exist', 'Understanding the Waterfall Model'). Cryptic numbered headings are rephrased."
+      }
+    },
+    {
+      "id": "image_assignment_correctness",
+      "name": "Image assignment correctness",
+      "description": "Is each image assigned to the block where its img tag appears in the source HTML? Are image src, alt, and caption fields populated correctly?",
+      "weight": 0.05,
+      "anchors": {
+        "1": "Images are missing from the output entirely, assigned to the wrong block, or the images array is empty for blocks that clearly contain images in the source HTML.",
+        "5": "Most images are correctly assigned but at least one image is missing from its block, assigned to a neighbouring block, or has an empty src when the source clearly had one.",
+        "10": "Every image from the source HTML is assigned to the exact block where it appears. src is correctly extracted. alt and caption fields are populated where source text provides them."
+      }
+    },
+    {
+      "id": "content_completeness",
+      "name": "Content completeness — no content lost",
+      "description": "Does every section of the source HTML appear in exactly one block? Is no content dropped, duplicated, or orphaned between blocks?",
+      "weight": 0.05,
+      "anchors": {
+        "1": "Visible sections of the source HTML are missing from all blocks — content was dropped. Or the same content appears in two blocks. The total content across all blocks does not add up to the source.",
+        "5": "Nearly all content is present but a minor section (one small H3 or a short paragraph) was accidentally omitted or a small piece appears in two adjacent blocks.",
+        "10": "Every section of the source HTML appears in exactly one block. No content is lost. No content is duplicated. The union of all block content_html fields equals the complete source HTML."
+      }
+    }
+  ]
+}

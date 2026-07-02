@@ -1,0 +1,246 @@
+{
+  "agent_id": "assessment_qa_generator",
+  "version": "2.1",
+  "examples": [
+    {
+      "example_id": "qa_good_001",
+      "source": "human_authored",
+      "context": { "session_name": "Introduction to Generative AI" },
+      "output": {
+        "question_number": 1,
+        "question_type": "short",
+        "question": "Define Generative AI.",
+        "blooms_level": "K1",
+        "answer": "Generative AI is a type of artificial intelligence that can create new content — such as text, images, audio, or video — based on patterns learned from training data. It uses machine learning models to generate original outputs that resemble the data it was trained on.",
+        "session_source": "Introduction to Generative AI — Definition section",
+        "material_alignment_check": "Definition taken directly from session. No extra information added."
+      },
+      "scores": {
+        "material_alignment": 10, "question_validity": 10, "blooms_alignment": 10,
+        "answer_depth_match": 10, "answer_not_revealed_in_question": 10, "short_answer_conciseness": 10,
+        "weighted_average": 10.0
+      },
+      "notes": "Perfect short answer. Two sentences — definition and one supporting point. Exact session terminology. No sub-headings, no bullet lists. Verb 'Define' maps correctly to K1."
+    },
+    {
+      "example_id": "qa_good_002",
+      "source": "human_authored",
+      "context": { "session_name": "Introduction to Generative AI" },
+      "output": {
+        "question_number": 2,
+        "question_type": "short",
+        "question": "List any two applications of Generative AI with tools.",
+        "blooms_level": "K1",
+        "answer": "Two applications of Generative AI are: (1) Image Generation — tools like Stable Diffusion and DALL-E can generate images from text descriptions. (2) AI Audio Generation — tools like ElevenLabs and Murf.ai can create speech, music, and audio effects from text prompts.",
+        "session_source": "Introduction to Generative AI — Applications section",
+        "material_alignment_check": "Both applications and all tools are explicitly covered in the session material."
+      },
+      "scores": {
+        "material_alignment": 10, "question_validity": 10, "blooms_alignment": 10,
+        "answer_depth_match": 10, "answer_not_revealed_in_question": 10, "short_answer_conciseness": 9,
+        "weighted_average": 9.9
+      },
+      "notes": "Correct use of 'List' for K1. Both examples and specific tools are from the session. Two clean sentences. No sub-headings."
+    },
+    {
+      "example_id": "qa_good_003",
+      "source": "human_authored",
+      "context": { "session_name": "Introduction to Generative AI" },
+      "output": {
+        "question_number": 3,
+        "question_type": "short",
+        "question": "State any two use cases of AI image generation.",
+        "blooms_level": "K1",
+        "answer": "Two use cases of AI image generation are: (1) Creative Industries — for creating concept art and visual assets quickly. (2) E-Commerce — for generating product visuals. Other use cases include Entertainment and Media and Architecture and Design.",
+        "session_source": "Introduction to Generative AI — Image Generation Use Cases",
+        "material_alignment_check": "All four use cases (Creative Industries, E-Commerce, Entertainment and Media, Architecture and Design) are from the session use cases section."
+      },
+      "scores": {
+        "material_alignment": 10, "question_validity": 10, "blooms_alignment": 10,
+        "answer_depth_match": 10, "answer_not_revealed_in_question": 10, "short_answer_conciseness": 10,
+        "weighted_average": 10.0
+      },
+      "notes": "Reviewer explicitly listed these four use cases as the course-covered ones. All four appear here. Two sentences. No invented examples."
+    },
+    {
+      "example_id": "qa_good_004",
+      "source": "human_authored",
+      "context": { "session_name": "Prompt Engineering" },
+      "output": {
+        "question_number": 4,
+        "question_type": "short",
+        "question": "What is prompt engineering?",
+        "blooms_level": "K1",
+        "answer": "Prompt engineering is the art of creating prompts that help an LLM generate more accurate and higher-quality answers. It results in better results, consistency across responses, and saved time.",
+        "session_source": "Prompt Engineering — Definition and Why Prompt Engineering section",
+        "material_alignment_check": "Definition uses exact session phrase 'the art of creating prompts'. Benefits from the Why Prompt Engineering section."
+      },
+      "scores": {
+        "material_alignment": 10, "question_validity": 10, "blooms_alignment": 10,
+        "answer_depth_match": 10, "answer_not_revealed_in_question": 10, "short_answer_conciseness": 10,
+        "weighted_average": 10.0
+      },
+      "notes": "Two sentences. Uses exact session phrase. Benefits match the session list exactly. No padding."
+    },
+    {
+      "example_id": "qa_good_005",
+      "source": "human_authored",
+      "context": { "session_name": "Open Source and Closed Source Models" },
+      "output": {
+        "question_number": 5,
+        "question_type": "long",
+        "question": "What are Open Source and Closed Source Models? Explain their advantages and disadvantages with examples.",
+        "blooms_level": "K2",
+        "answer": "Open Source Models\nDefinition: Open source models are publicly available AI models that anyone can use, modify, and distribute freely.\n\nAdvantages:\n- Free to use — no subscription fees\n- Privacy — runs locally, data stays on your machine\n- Customization — complete control over the model\n- Unlimited Generations — no daily caps\n\nDisadvantages:\n- No Official Support — community-based help only\n- Hardware Requirements — requires powerful GPUs\n- Setup Complexity — requires technical knowledge\n\nExamples: Llama (Meta), Mistral, Stable Diffusion, FLUX.1, Whisper, MeloTTS, OpenVoice V2\n\nClosed Source Models\nDefinition: Closed source models are proprietary AI systems not publicly accessible, maintained and controlled by organizations.\n\nAdvantages:\n- Official Support — dedicated customer support\n- Higher Quality — typically better outputs\n- Ease of Use — ready to use via APIs\n- Regular Updates — continuously improved\n\nDisadvantages:\n- Cost — subscription fees add up\n- Privacy Concerns — data sent to their servers\n- Limited Customization — restricted by organization rules\n- Daily Limits — generation volume restricted\n- Dependency — reliant on provider infrastructure\n\nExamples: GPT-4/GPT-5 (OpenAI), Claude (Anthropic), Gemini (Google), DALL-E 3, WaveNet (Google)",
+        "session_source": "Open Source and Closed Source Models — full session",
+        "material_alignment_check": "All advantages, disadvantages, and examples taken directly from session. No extra terminology added."
+      },
+      "scores": {
+        "material_alignment": 10, "question_validity": 10, "blooms_alignment": 9,
+        "answer_depth_match": 10, "answer_not_revealed_in_question": 10, "short_answer_conciseness": 10,
+        "weighted_average": 9.9
+      },
+      "notes": "Long question answered with full structure matching the session exactly — two sections, each with definition, advantages, disadvantages, examples. All examples are from the session material."
+    },
+    {
+      "example_id": "qa_good_006",
+      "source": "human_authored",
+      "context": { "session_name": "Introduction to AI Agents" },
+      "output": {
+        "question_number": 6,
+        "question_type": "long",
+        "question": "What is an AI Agent? Explain its core components in detail.",
+        "blooms_level": "K2",
+        "answer": "Definition: An AI agent is a system that can operate independently to achieve a specific goal without constant human intervention. AI agents can understand what you want, reason and plan how to accomplish the task, execute actions, and learn from successes and failures.\n\nCore Components:\n\n1. AI Model (LLM)\nThe AI model is essentially the agent's brain — it interprets instructions, reasons about problems, and decides on actions. Functions: Goal Understanding, Planning and Reasoning, Adaptive Learning. Examples: GPT, Gemini, LLAMA 3, Claude.\n\n2. Tools\nTools are external functions or interfaces the agent can use to interact with the outside world. They extend capabilities, allow access to real-time data, and execute specific functions. Examples: Web Search, Image Generation, Retrieval, API Interface (GitHub, YouTube, Spotify, SERP API).\n\n3. Memory\nMemory allows the agent to store information, learn from past interactions, and maintain context and continuity. Without memory, every interaction is treated as new with no recall of previous context.",
+        "session_source": "Introduction to AI Agents — Definition and Core Components section",
+        "material_alignment_check": "Three components (AI Model, Tools, Memory), their definitions, functions, and examples all taken directly from session. No Planning System or Execution Engine added — those are not in this session."
+      },
+      "scores": {
+        "material_alignment": 10, "question_validity": 10, "blooms_alignment": 10,
+        "answer_depth_match": 10, "answer_not_revealed_in_question": 10, "short_answer_conciseness": 10,
+        "weighted_average": 10.0
+      },
+      "notes": "Long question answered with the session's exact three-component structure. Critically: does NOT add Planning System or Execution Engine (which the bad example did — those are from outside this session). Tool examples match the session exactly."
+    },
+    {
+      "example_id": "qa_good_007",
+      "source": "reference_doc_intro_gen_ai",
+      "context": { "session_name": "Introduction to Generative AI" },
+      "output": {
+        "question_number": 7,
+        "question_type": "short",
+        "question": "Define Generative AI and explain its capabilities.",
+        "blooms_level": "K2",
+        "answer": "Generative AI is a subset of deep learning that focuses on creating new content such as text, images, audio, and video, based on previously learned data.\n\n**Capabilities:**\n- Text generation\n- Image generation\n- Video generation\n- Speech generation\n- Music generation\n- Code generation",
+        "session_source": "Introduction to Generative AI — definition and capabilities",
+        "material_alignment_check": "Definition and all six capabilities are taken verbatim from the reference. No extra capabilities added."
+      },
+      "scores": {
+        "material_alignment": 10, "question_validity": 10, "blooms_alignment": 9,
+        "answer_depth_match": 10, "answer_not_revealed_in_question": 10, "short_answer_conciseness": 9,
+        "weighted_average": 9.8
+      },
+      "notes": "Reference style: a one-line definition followed by a labelled '**Capabilities:**' bullet list — NOT a paragraph that buries the list. A short answer may carry a small list when the question asks to enumerate."
+    },
+    {
+      "example_id": "qa_good_008",
+      "source": "reference_doc_intro_gen_ai",
+      "context": { "session_name": "Introduction to Generative AI" },
+      "output": {
+        "question_number": 8,
+        "question_type": "short",
+        "question": "Describe the role of Large Language Models (LLMs) in Generative AI applications.",
+        "blooms_level": "K2",
+        "answer": "Large Language Models (LLMs) are advanced AI models trained on vast amounts of text data, and they drive the core capabilities of most text-based Generative AI applications.\n\n**Role:**\n- Understand natural language and generate human-like responses\n- Perform tasks like reasoning, translation, and summarization\n- Process a user's prompt and return an output, powering apps like chatbots and content creators",
+        "session_source": "Introduction to Generative AI — role of LLMs",
+        "material_alignment_check": "Role points map directly to the reference's LLM description. No new terminology introduced."
+      },
+      "scores": {
+        "material_alignment": 10, "question_validity": 10, "blooms_alignment": 10,
+        "answer_depth_match": 9, "answer_not_revealed_in_question": 10, "short_answer_conciseness": 9,
+        "weighted_average": 9.8
+      },
+      "notes": "'Describe' → K2. Lead sentence + a tight labelled '**Role:**' list. Uses the session's own wording."
+    },
+    {
+      "example_id": "qa_good_009",
+      "source": "reference_doc_intro_gen_ai",
+      "context": { "session_name": "Introduction to Generative AI" },
+      "output": {
+        "question_number": 9,
+        "question_type": "short",
+        "question": "Define Fine-tuning in Generative AI.",
+        "blooms_level": "K1",
+        "answer": "Fine-tuning is the process where a pre-trained model is further trained with specific data for specialized tasks or domains.",
+        "session_source": "Introduction to Generative AI — Fine-tuning",
+        "material_alignment_check": "Single-sentence definition taken directly from the reference. Nothing added."
+      },
+      "scores": {
+        "material_alignment": 10, "question_validity": 10, "blooms_alignment": 10,
+        "answer_depth_match": 10, "answer_not_revealed_in_question": 10, "short_answer_conciseness": 10,
+        "weighted_average": 10.0
+      },
+      "notes": "Important calibration: a simple definition stays as ONE clean sentence — no label, no bullets. Structure is only added when the content is a list. This is why the validator must not force bullets on every answer."
+    },
+    {
+      "example_id": "qa_good_010",
+      "source": "reference_doc_intro_gen_ai",
+      "context": { "session_name": "Introduction to Generative AI" },
+      "output": {
+        "question_number": 10,
+        "question_type": "long",
+        "question": "Compare and contrast open source and closed source AI models.",
+        "blooms_level": "K4",
+        "answer": "**Open Source Models** are publicly available AI models that anyone can use, modify, and distribute.\n- Free to use and modify\n- Can run locally, ensuring privacy\n- Complete control and customizable to specific needs\n- Community-based support\n- Examples: Llama, Mistral, GPT-Neo\n\n**Closed Source Models** are proprietary models controlled by organizations.\n- Can be expensive for heavy usage\n- Privacy concerns, as data is sent to their servers\n- Limited customization, restricted by the organization\n- Official customer support provided\n- Examples: GPT-4, Claude, Gemini\n\n**Key difference:** Open source models give control, privacy, and zero cost but rely on community support, while closed source models offer official support and ease of use but cost money and send data to the provider.",
+        "session_source": "Introduction to Generative AI — open vs closed source models",
+        "material_alignment_check": "Every advantage, disadvantage, and example is from the reference. The 'Key difference' only restates points already made."
+      },
+      "scores": {
+        "material_alignment": 10, "question_validity": 10, "blooms_alignment": 10,
+        "answer_depth_match": 10, "answer_not_revealed_in_question": 10, "short_answer_conciseness": 10,
+        "weighted_average": 10.0
+      },
+      "notes": "K4 compare/contrast pattern: a bolded subsection per side (lead + bullets), then a closing '**Key difference:**' line that synthesises only session content."
+    },
+    {
+      "example_id": "qa_good_011",
+      "source": "reference_doc_intro_gen_ai",
+      "context": { "session_name": "Introduction to Generative AI" },
+      "output": {
+        "question_number": 11,
+        "question_type": "long",
+        "question": "Explain how Generative AI works with different file types (images, PDFs, audio, and Excel files) and give one practical use case for each.",
+        "blooms_level": "K2",
+        "answer": "Modern LLMs can work with various file types — PDFs, Excel sheets, audio recordings, videos, and presentations — extracting data, summarizing key points, and analyzing and visualizing information.\n\n**Practical use cases:**\n- **Images (Agriculture):** analyze photos of plants, soil, and farming conditions to give farmers plant advice\n- **PDFs (Education):** extract key points and summarize lecture notes for students preparing for exams\n- **Audio (Legal):** summarize court-hearing recordings so lawyers can quickly review proceedings\n- **Excel (Education):** analyze exam scores and performance data to spot trends and areas for improvement",
+        "session_source": "Introduction to Generative AI — working with file types",
+        "material_alignment_check": "Each file type and its single use case match the reference exactly. No domains or use cases invented."
+      },
+      "scores": {
+        "material_alignment": 10, "question_validity": 10, "blooms_alignment": 10,
+        "answer_depth_match": 10, "answer_not_revealed_in_question": 10, "short_answer_conciseness": 10,
+        "weighted_average": 10.0
+      },
+      "notes": "Enumerative long answer: a one-line lead, then a labelled bullet list with one use case per file type — exactly mirroring the reference's structure."
+    },
+    {
+      "example_id": "qa_good_012",
+      "source": "reference_doc_intro_gen_ai",
+      "context": { "session_name": "Introduction to Generative AI" },
+      "output": {
+        "question_number": 12,
+        "question_type": "long",
+        "question": "Compare different types of AI models (Reasoning Models and Flash Models) and explain when each is most appropriate to use.",
+        "blooms_level": "K4",
+        "answer": "**Reasoning Models** handle complex logical tasks through step-by-step thinking.\n- Break multi-step problems into smaller components\n- Follow logical chains of thought\n- Support deeper analysis of problems\n- When to use: complex logical tasks needing detailed, step-by-step reasoning\n\n**Flash Models** are optimized for speed and efficiency rather than deep reasoning.\n- Quick responses to routine queries\n- Efficient processing of simple tasks\n- Lower computational requirements; handle high-volume interactions\n- When to use: routine, simple tasks where speed matters more than deep analysis\n\n**Key difference:** Reasoning models prioritize thorough analysis for complex problems, while Flash models prioritize speed and efficiency for simpler, routine tasks.",
+        "session_source": "Introduction to Generative AI — reasoning vs flash models",
+        "material_alignment_check": "Capabilities, 'when to use', and the key difference are all taken from the reference."
+      },
+      "scores": {
+        "material_alignment": 10, "question_validity": 10, "blooms_alignment": 10,
+        "answer_depth_match": 10, "answer_not_revealed_in_question": 10, "short_answer_conciseness": 10,
+        "weighted_average": 10.0
+      },
+      "notes": "Second K4 example: each model gets a labelled subsection with bullets including an inline 'When to use', then a 'Key difference' synthesis."
+    }
+  ]
+}

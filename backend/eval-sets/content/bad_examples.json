@@ -1,0 +1,128 @@
+{
+  "agent_id": "agent_content",
+  "agent_name": "Content Agent — Block Rewriter (Agent 1)",
+  "version": "1.0",
+  "examples": [
+    {
+      "example_id": "content_bad_001",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "block_title": "Understanding the Waterfall Model",
+        "learning_objectives": [
+          "Understand how the Waterfall model works and when to use it"
+        ],
+        "images_in_block": [
+          { "image_id": "waterfall_flow", "alt": "Diagram of Waterfall phases flowing top to bottom" }
+        ],
+        "source_html": "<h2>Waterfall Model</h2><p>Step-by-step way of developing software where each phase must be completed before moving to the next.</p><ul><li>Requirement Analysis</li><li>Design</li><li>Development</li><li>Testing</li><li>Deployment</li><li>Maintenance</li></ul><p>Best suited when: requirements are clear and fixed; project is small or simple.</p><p>Advantages: Simple to understand and use; clear documentation. Disadvantages: No feedback until the end; costly to fix late.</p>"
+      },
+      "output": {
+        "content_html": "<div class=\"main-content\"><h2>Waterfall Model</h2><ul class=\"bullet-list\"><li class=\"bullet-item\"><span class=\"bullet-dot\"></span><span class=\"bullet-text\">Step-by-step way of developing software where each phase must be completed before moving to the next.</span></li><li class=\"bullet-item\"><span class=\"bullet-dot\"></span><span class=\"bullet-text\">Requirement Analysis</span></li><li class=\"bullet-item\"><span class=\"bullet-dot\"></span><span class=\"bullet-text\">Design</span></li><li class=\"bullet-item\"><span class=\"bullet-dot\"></span><span class=\"bullet-text\">Development</span></li><li class=\"bullet-item\"><span class=\"bullet-dot\"></span><span class=\"bullet-text\">Testing</span></li><li class=\"bullet-item\"><span class=\"bullet-dot\"></span><span class=\"bullet-text\">Deployment</span></li><li class=\"bullet-item\"><span class=\"bullet-dot\"></span><span class=\"bullet-text\">Maintenance</span></li><li class=\"bullet-item\"><span class=\"bullet-dot\"></span><span class=\"bullet-text\">Best suited when: requirements are clear and fixed; project is small or simple.</span></li><li class=\"bullet-item\"><span class=\"bullet-dot\"></span><span class=\"bullet-text\">Advantages: Simple to understand and use; clear documentation. Disadvantages: No feedback until the end; costly to fix late.</span></li></ul></div>",
+        "image_decisions": [],
+        "concepts_defined": ["Waterfall Model"],
+        "visual_patterns_used": []
+      },
+      "scores": {
+        "accuracy": 7,
+        "clarity": 2,
+        "analogy_example_quality": 8,
+        "html_structure": 4,
+        "weighted_average": 5.1
+      },
+      "failure_labels": [
+        {
+          "dimension": "clarity",
+          "reason": "The block is a verbatim dump of the source's bullets and sentences. There is no connecting prose, no lead-in explanation of what Waterfall is — the learner just gets a list. Prose explaining the concept is the single most important requirement and it is absent."
+        },
+        {
+          "dimension": "html_structure",
+          "reason": "Although the class names are valid, the structure is wrong: everything is forced into one flat bullet list, the .section-label header is missing, and the available image (waterfall_flow) was ignored — no animation marker was placed, so the core diagram is lost."
+        }
+      ],
+      "notes": "The most common failure mode for the content agent: pasting the source bullets into a bullet-list and calling it done. The fix is to write prose that leads with the concept, reserve bullets for genuine lists (when-to-use, pros/cons), and place an animation marker for the concept diagram."
+    },
+    {
+      "example_id": "content_bad_002",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "block_title": "Understanding the Agile Model",
+        "learning_objectives": [
+          "Understand how Agile works and its popular frameworks"
+        ],
+        "images_in_block": [],
+        "source_html": "<h2>Agile Model</h2><p>Agile develops software in small repeated cycles called iterations, getting feedback early and often. Popular Agile frameworks include Scrum and Kanban.</p>"
+      },
+      "output": {
+        "content_html": "<div class=\"main-content\"><div class=\"section-label\"><h2>Understanding the Agile Model</h2><p>Model 2 of 3</p></div><p>The <strong>Agile Model</strong> develops software in small repeated cycles called iterations, gathering feedback early and often. Studies show that Agile teams ship software <strong>up to 60% faster</strong> than Waterfall teams, and Agile was officially invented by Google in 2001 to manage its search projects. Today over <strong>90% of all software companies</strong> use Scrum exclusively.</p></div>",
+        "image_decisions": [],
+        "concepts_defined": ["Agile Model"],
+        "visual_patterns_used": []
+      },
+      "scores": {
+        "accuracy": 1,
+        "clarity": 7,
+        "analogy_example_quality": 4,
+        "html_structure": 9,
+        "weighted_average": 5.0
+      },
+      "failure_labels": [
+        {
+          "dimension": "accuracy",
+          "reason": "The block invents multiple facts absent from the source: the '60% faster' statistic, the claim that Agile was 'invented by Google in 2001' (false — the Agile Manifesto was authored by a group of practitioners, not Google), and the '90% use Scrum exclusively' figure. None of these appear in the source and the historical claim is simply wrong. This is the worst failure mode because the learner is taught confident misinformation."
+        },
+        {
+          "dimension": "analogy_example_quality",
+          "reason": "The source names Scrum and Kanban as Agile frameworks, but the output drops Kanban entirely and replaces the source's own content with fabricated statistics — failing to faithfully reuse what the source actually provided."
+        }
+      ],
+      "notes": "Prose quality and HTML are fine, which makes this dangerous — it reads well but is factually fabricated. The content agent must stay strictly within the source: no invented statistics, history, or adoption figures. When the source is silent, stay silent."
+    },
+    {
+      "example_id": "content_bad_003",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "block_title": "Understanding the V-Model",
+        "learning_objectives": [
+          "Understand the V-Model and when to use it"
+        ],
+        "images_in_block": [
+          { "image_id": "vmodel_vshape", "alt": "V-shaped diagram mapping development phases to testing phases" }
+        ],
+        "source_html": "<h2>V-Model</h2><p>V-Model stands for Verification and Validation Model. It is an extension of Waterfall with a testing phase mapped to every development phase.</p>"
+      },
+      "output": {
+        "content_html": "<div class=\"main-content\"><style>.vbox{color:blue;font-weight:bold}</style><h2 style=\"font-size:28px\">V-Model</h2><p class=\"vbox\">V-Model stands for Verification and Validation Model. It is an extension of Waterfall with a testing phase mapped to every development phase.</p><img src=\"https://example.com/vmodel.png\" alt=\"V-Model\"><script>console.log('v-model loaded');</script></div>",
+        "image_decisions": [],
+        "concepts_defined": ["V-Model"],
+        "visual_patterns_used": []
+      },
+      "scores": {
+        "accuracy": 8,
+        "clarity": 4,
+        "analogy_example_quality": 8,
+        "html_structure": 1,
+        "weighted_average": 5.4
+      },
+      "failure_labels": [
+        {
+          "dimension": "html_structure",
+          "reason": "Multiple house-style violations: it emits a <style> block, a <script> block, an <img> tag, and inline style= attributes — all explicitly forbidden. The image should be handled via an animation marker (the block has a vmodel_vshape image), not an <img>. The shell cannot render this safely."
+        },
+        {
+          "dimension": "clarity",
+          "reason": "Barely more than a copy of the single source sentence, with no real explanation of how the V-shape maps development to testing."
+        }
+      ],
+      "notes": "Even though the one fact present is accurate, the output is unusable: forbidden tags (<style>/<script>/<img>), inline styles, and a thin copy of the source. The content agent must emit only allowed house-style components inside .main-content, never embed images directly, and explain the concept in prose."
+    }
+  ]
+}

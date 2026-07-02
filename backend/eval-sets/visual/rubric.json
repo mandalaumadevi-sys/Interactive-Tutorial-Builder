@@ -1,0 +1,64 @@
+{
+  "agent_id": "agent2_animation",
+  "agent_name": "Agent 2 — Animation Generator",
+  "version": "1.0",
+  "pass_threshold": 7,
+  "description": "Scores Agent 2's output — a single self-contained inline HTML animation fragment (inline <style>/<svg>/<script>) that recreates one concept-bearing image as a step-by-step reveal. The fragment must be namespaced by image_id, loop or expose a 'Next' control, and respect prefers-reduced-motion. This rubric scores the animation only — not the surrounding content HTML or the send/skip decision.",
+  "dimensions": [
+    {
+      "id": "visual_clarity",
+      "name": "Visual diagram (not text-heavy), clean and appealing",
+      "description": "Is the animation a VISUAL recreation of the diagram — boxes/nodes, arrows/connectors, and simple icons drawn in SVG that look like the source image — rather than a slideshow of text? Text must be MINIMAL: only short labels on shapes, never sentences/paragraphs/narration. Is it clean (generous spacing, no overlap/clipping, restrained palette on white, consistent shapes, smooth non-gimmicky motion) and does the finished frame convey the concept's meaning at a glance?",
+      "weight": 0.2,
+      "anchors": {
+        "1": "The animation is mostly TEXT (sentences, paragraphs, long descriptive labels, on-screen narration) instead of a visual diagram — OR it is cluttered/confusing: overlapping or clipped shapes, clashing colours, gimmicky motion, or a finished frame that does not convey the concept.",
+        "5": "A visual diagram is present but text-leaning or unpolished — labels too long/wordy, a crowding issue, inconsistent styling, or motion that distracts more than it teaches.",
+        "10": "A clean VISUAL diagram: shapes/arrows/icons matching the source, only SHORT labels (no sentences), generous spacing, restrained palette on white, smooth purposeful motion. It looks polished AND the finished frame conveys the concept's meaning at a glance."
+      }
+    },
+    {
+      "id": "animation_appropriateness",
+      "name": "Animation type matches the visual",
+      "description": "Does the animation's structure and reveal pattern match the visual_type — sequential phases for flowchart, a repeating loop for lifecycle, bottom-up layers for architecture, paired reveal for comparison, central-plus-satellites for concept?",
+      "weight": 0.2,
+      "anchors": {
+        "1": "The animation structure is wrong for the concept — e.g. a sequential process rendered as a static unordered cloud, or a comparison shown as a single column. The reveal pattern fights the concept.",
+        "5": "The general type is right but the reveal pattern is generic — e.g. a flowchart whose phases all fade in at once instead of in sequence, so the structure is present but the motion does not reinforce it.",
+        "10": "The animation structure and reveal pattern precisely match the visual_type: flowchart phases revealed in order with connecting arrows drawing in, architecture layers rising bottom-up, a lifecycle looping through states, a comparison revealing paired items side by side."
+      }
+    },
+    {
+      "id": "learning_value",
+      "name": "Step-by-step reveal follows the described process",
+      "description": "Does the staged reveal make the concept clearer than the original static image would? When the lesson describes a process for the image, does the build order FOLLOW that described process (e.g. an n8n workflow assembled node by node — add the agent, connect the chat model, add and connect the simple memory node, attach the tool — in the order the lesson explains)? Is pacing pedagogically sensible (introduce, build, connect)?",
+      "weight": 0.25,
+      "anchors": {
+        "1": "The animation adds no learning value over a static image — everything appears at once, or motion is decorative (spinning, bouncing) — OR the build order contradicts the process the lesson describes.",
+        "5": "The reveal helps somewhat but ordering or pacing is off — steps appear too fast to follow, or in an order that does not match the described process or does not build understanding.",
+        "10": "The staged reveal genuinely teaches and follows the lesson's described process step for step: elements appear in the order the process is explained, each step adds one idea, connectors/labels appear at the moment they make sense, and the finished diagram leaves a clear mental model."
+      }
+    },
+    {
+      "id": "fidelity_to_source",
+      "name": "Faithful to the source image and described process",
+      "description": "Does the animation recreate exactly what the source image shows — all of its parts, using the image's ACTUAL component/node names and connections (e.g. the real n8n node labels) — and stay within the steps the lesson's described process states, without inventing extra steps, phases, nodes, mappings, or labels that are in neither the image nor that description?",
+      "weight": 0.2,
+      "anchors": {
+        "1": "The animation invents content (extra phases, made-up nodes/mappings, labels absent from both the image and the described process), renames or drops real components, or omits core parts — so it misrepresents what the source teaches.",
+        "5": "Mostly faithful but with one drift — a missing minor element, a renamed node, or one invented label/step that neither the image nor the described process contains.",
+        "10": "Every element of the source image is represented with its real names and connections, and the steps match the lesson's described process exactly. Nothing is invented; the node/phase count, component names, and mappings match the source exactly."
+      }
+    },
+    {
+      "id": "technical_validity",
+      "name": "Self-contained, namespaced, auto-loop, reduced-motion safe",
+      "description": "Is the fragment fully self-contained (inline <style>/<svg>/<script>, no external libraries or network), namespaced by image_id to avoid colliding with the page, AUTO-PLAYING and looping on its own with NO control buttons (no Play/Pause/Reset/Replay/Next/Step buttons or clickable controls), and honouring prefers-reduced-motion by showing the finished diagram with no motion?",
+      "weight": 0.15,
+      "anchors": {
+        "1": "Violates the hard rules — references an external library/URL, uses un-namespaced generic ids/classes that would collide with the page, has no <svg>/<canvas> drawing, adds control buttons (Play/Reset/Next/etc.) instead of auto-looping, or omits the prefers-reduced-motion fallback.",
+        "5": "Self-contained and draws an <svg>, but one technical rule is weak — e.g. ids only partially namespaced, a stray control button, or reduced-motion handled but motion still plays for some elements.",
+        "10": "Fully self-contained inline fragment, every id/class namespaced by the image_id prefix, auto-plays and loops with NO buttons or controls of any kind, and prefers-reduced-motion reveals the finished diagram with no animation. No external resources."
+      }
+    }
+  ]
+}

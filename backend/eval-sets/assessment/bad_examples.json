@@ -1,0 +1,228 @@
+{
+  "agent_id": "assessment_qa_generator",
+  "version": "2.1",
+  "examples": [
+    {
+      "example_id": "qa_bad_001",
+      "source": "human_authored",
+      "context": { "session_name": "Introduction to Generative AI" },
+      "output": {
+        "question_number": 1,
+        "question_type": "short",
+        "question": "What is a Large Language Model (LLM)?",
+        "blooms_level": "K1",
+        "answer": "A Large Language Model (LLM) is an advanced type of AI model trained on vast amounts of text data.\n\nKey Characteristics:\n\nTraining: Learns patterns from petabytes of datasets including books, Wikipedia, and billions of websites.\nResources: Requires millions of CPU/GPU/TPU resources, terabytes of memory, months of training.\nDevelopment: Involves top-notch researchers, developers, and entrepreneurs.\nParameters: Composed of billions of parameters. Higher parameters = better outcomes.\n\nCapabilities: Reasoning, Language Understanding, Summarization, Text Generation, Language Translation"
+      },
+      "scores": {
+        "material_alignment": 6, "question_validity": 8, "blooms_alignment": 8,
+        "answer_depth_match": 1, "answer_not_revealed_in_question": 9, "short_answer_conciseness": 1,
+        "weighted_average": 4.6
+      },
+      "failure_labels": [
+        {
+          "dimension": "answer_depth_match",
+          "reason": "This is a short question but the answer has 5 sub-headings (Key Characteristics, Training, Resources, Development, Parameters, Capabilities) with nested bullet lists. Reviewer explicitly flagged: 'as it is a 2 marks answer no need of mentioning key characteristics'. A short answer must be 2–4 sentences with no sub-headings."
+        },
+        {
+          "dimension": "short_answer_conciseness",
+          "reason": "The answer is structured like a long response. The correct format: one definition sentence plus one supporting point — nothing more."
+        }
+      ],
+      "notes": "Most common short question failure: treating every question as a long question by adding Key Characteristics sub-headings and nested bullet lists."
+    },
+    {
+      "example_id": "qa_bad_002",
+      "source": "human_authored",
+      "context": { "session_name": "Introduction to Generative AI — Sem 1" },
+      "output": {
+        "question_number": 2,
+        "question_type": "long",
+        "question": "Explain API connectors to AI services.",
+        "blooms_level": "K2",
+        "answer": "API connectors to AI services provide the link between applications and AI models. There are three main methods: running LLMs locally, direct HTTP requests, or using provider libraries.\n\nPython Packages: google-genai (Gemini), openai (GPT), anthropic (Claude).\n\nExample: from google import genai; client = genai.Client(api_key=...)\n\nSecurity: API keys must be stored in environment variables. Rate Limits: 60 requests/minute."
+      },
+      "scores": {
+        "material_alignment": 1, "question_validity": 1, "blooms_alignment": 7,
+        "answer_depth_match": 5, "answer_not_revealed_in_question": 8, "short_answer_conciseness": 9,
+        "weighted_average": 2.8
+      },
+      "failure_labels": [
+        {
+          "dimension": "question_validity",
+          "reason": "Reviewer explicitly flagged: 'the answer provided is from sem 2 course — building llm applications — but this is from sem 1 introduction to Gen AI, and in this course there is no information taught to students with this terminology (api connectors, ai services).' The question asks about a topic not covered in the Sem 1 course."
+        },
+        {
+          "dimension": "material_alignment",
+          "reason": "The entire answer (Python packages, code examples, rate limits, API key management) is from the Sem 2 course. None of this was taught in Sem 1. Using content from a different course is the most severe material alignment failure."
+        }
+      ],
+      "notes": "Cross-course contamination. Before writing a question verify the topic is in the specific session provided — not in another session or another course."
+    },
+    {
+      "example_id": "qa_bad_003",
+      "source": "human_authored",
+      "context": { "session_name": "Introduction to Generative AI" },
+      "output": {
+        "question_number": 3,
+        "question_type": "short",
+        "question": "State the role of training data in Generative AI for audio.",
+        "blooms_level": "K1",
+        "answer": "Training data provides the patterns the model learns to replicate. The model analyses audio samples to understand pitch, tone, rhythm, and speech patterns, enabling realistic audio generation."
+      },
+      "scores": {
+        "material_alignment": 1, "question_validity": 1, "blooms_alignment": 8,
+        "answer_depth_match": 8, "answer_not_revealed_in_question": 7, "short_answer_conciseness": 8,
+        "weighted_average": 3.5
+      },
+      "failure_labels": [
+        {
+          "dimension": "question_validity",
+          "reason": "Reviewer explicitly flagged: 'training data was not explained anywhere in the course — out of context from the course.' The session covers what AI Audio Generation is and its transformation types but never explains training data, pitch, tone, or rhythm analysis."
+        },
+        {
+          "dimension": "material_alignment",
+          "reason": "Pitch, tone, rhythm, speech patterns — these are technical audio concepts not in the session. The session definition is: 'AI Audio Generation is the use of AI to create sounds, music, speech, and audio effects from simple text prompts or reference samples.' There is no training data explanation."
+        }
+      ],
+      "notes": "Topic-in-session does not mean every sub-aspect is in the session. The session covers audio generation — not the training data mechanics behind it."
+    },
+    {
+      "example_id": "qa_bad_004",
+      "source": "human_authored",
+      "context": { "session_name": "Introduction to Generative AI" },
+      "output": {
+        "question_number": 4,
+        "question_type": "long",
+        "question": "Compare and contrast Autoregressive models with Diffusion models.",
+        "blooms_level": "K4",
+        "answer": "Autoregressive Models: Generate content sequentially, one element at a time. Common in text generation (GPT models).\n\nDiffusion Models: Generate content by refining random noise through a reverse diffusion process. Used in Stable Diffusion.\n\nComparison: Autoregressive = sequential, text-focused. Diffusion = parallel refinement, image-focused."
+      },
+      "scores": {
+        "material_alignment": 1, "question_validity": 1, "blooms_alignment": 9,
+        "answer_depth_match": 6, "answer_not_revealed_in_question": 9, "short_answer_conciseness": 9,
+        "weighted_average": 3.3
+      },
+      "failure_labels": [
+        {
+          "dimension": "question_validity",
+          "reason": "Reviewer explicitly flagged: 'Autoregressive models were not discussed in the course — question itself is not valid, it is out of context.' The session covers Diffusion Models but never introduces Autoregressive models. A compare-and-contrast question requires BOTH sides to have been taught."
+        },
+        {
+          "dimension": "material_alignment",
+          "reason": "The entire Autoregressive Models section is external knowledge not from the session. The session only covers Diffusion Models and their two phases (Training and Generation)."
+        }
+      ],
+      "notes": "Compare-and-contrast questions require both sides to be taught. If only one side appears in the session — the comparison question is invalid."
+    },
+    {
+      "example_id": "qa_bad_005",
+      "source": "human_authored",
+      "context": { "session_name": "Introduction to Generative AI" },
+      "output": {
+        "question_number": 5,
+        "question_type": "long",
+        "question": "Elaborate on multimodal architectures of AI systems.",
+        "blooms_level": "K2",
+        "answer": "Multimodal architectures process multiple data types simultaneously.\n\nHow they work:\n1. Separate Encoders — each modality has its own encoder\n2. Shared Representation Space — encoders map modalities into a common space\n3. Cross-Modal Attention — attends to relevant info across modalities\n4. Unified Decoder — generates outputs in different modalities\n\nExamples: Image Captioning, Text-to-Image, Visual Question Answering\nAdvantages: Richer Understanding, Flexibility\nChallenges: Alignment, Complexity, Computational Cost"
+      },
+      "scores": {
+        "material_alignment": 2, "question_validity": 2, "blooms_alignment": 4,
+        "answer_depth_match": 2, "answer_not_revealed_in_question": 9, "short_answer_conciseness": 9,
+        "weighted_average": 3.3
+      },
+      "failure_labels": [
+        {
+          "dimension": "question_validity",
+          "reason": "Reviewer explicitly flagged: 'course only provides 2 lines about multimodal — the whole answer is extra info, not worth of long answer.' A topic covered in 2 lines cannot support a long question. This should have been written as a short question at most."
+        },
+        {
+          "dimension": "material_alignment",
+          "reason": "Separate encoders, shared representation space, cross-modal attention, unified decoder — none of these are in the session. The session mentions multimodal only in passing (e.g. Gemini can process text, images, audio, video)."
+        },
+        {
+          "dimension": "blooms_alignment",
+          "reason": "'Elaborate' is a K4 verb but K2 is stated. For K2 the verb should be 'Explain' or 'Describe'. Additionally, using 'Elaborate' when the session has 2 lines creates an impossible expectation."
+        }
+      ],
+      "notes": "Answer depth must mirror session depth. If the session covers a topic in 2 lines — write a short question. A long question about a 2-line topic forces the agent to invent content."
+    },
+    {
+      "example_id": "qa_bad_006",
+      "source": "human_authored",
+      "context": { "session_name": "Introduction to Generative AI" },
+      "output": {
+        "question_number": 6,
+        "question_type": "short",
+        "question": "Define Generative AI, which is a subset of deep learning that creates new content.",
+        "blooms_level": "K1",
+        "answer": "Generative AI is a subset of deep learning that focuses on generating new content such as text, images, audio, or video based on content it has pre-trained on."
+      },
+      "scores": {
+        "material_alignment": 8, "question_validity": 9, "blooms_alignment": 9,
+        "answer_depth_match": 9, "answer_not_revealed_in_question": 1, "short_answer_conciseness": 9,
+        "weighted_average": 6.4
+      },
+      "failure_labels": [
+        {
+          "dimension": "answer_not_revealed_in_question",
+          "reason": "The question text 'Define Generative AI, which is a subset of deep learning that creates new content' contains the answer. A student who does not know the answer can read the question and extract it. The question must simply be: 'Define Generative AI.' — nothing more."
+        }
+      ],
+      "notes": "Single failure: answer revealed in the question. The fix is trivial — remove everything after the core question."
+    },
+    {
+      "example_id": "qa_bad_007",
+      "source": "human_authored",
+      "context": { "session_name": "Introduction to AI Agents" },
+      "output": {
+        "question_number": 7,
+        "question_type": "long",
+        "question": "Prepare a report on AI agents and its workflow.",
+        "blooms_level": "K4",
+        "answer": "AI agents are intelligent systems that can perceive their environment and make decisions.\n\nComponents: LLM Brain, Tools, Memory, Planning System, Execution Engine\n\nWorkflow: Task Understanding → Planning → Tool Selection → Execution → Result Processing → Response\n\nTypes of Agents: Simple Reactive, Goal-Based, Learning, Collaborative\n\nFine-Tuning Agents: Can be specialised by training on domain-specific data and configuring tools."
+      },
+      "scores": {
+        "material_alignment": 3, "question_validity": 5, "blooms_alignment": 2,
+        "answer_depth_match": 5, "answer_not_revealed_in_question": 9, "short_answer_conciseness": 9,
+        "weighted_average": 4.2
+      },
+      "failure_labels": [
+        {
+          "dimension": "blooms_alignment",
+          "reason": "'Prepare a report' is a K6 verb (Create) but K4 is stated. For K4 the verb should be 'Elaborate on' or 'Analyse'. If K6 was intended, the level field should say K6."
+        },
+        {
+          "dimension": "material_alignment",
+          "reason": "Reviewer flagged: '80 percent of the answer is not aligned with the course.' Planning System and Execution Engine are not in the session — the session has three components only (AI Model, Tools, Memory). Agent types (Simple Reactive, Goal-Based, Learning, Collaborative) are not in the session. Fine-Tuning Agents is explicitly flagged as 'not explained anywhere in the course'."
+        }
+      ],
+      "notes": "Two failures combined: wrong Bloom's verb and session-external content. The session defines AI agents with three components and the ReAct pattern — use only those."
+    },
+    {
+      "example_id": "qa_bad_008",
+      "source": "reference_doc_intro_gen_ai",
+      "context": { "session_name": "Introduction to Generative AI" },
+      "output": {
+        "question_number": 8,
+        "question_type": "long",
+        "question": "Explain how Generative AI works with different file types (images, PDFs, audio, and Excel files) and give one practical use case for each.",
+        "blooms_level": "K2",
+        "answer": "Generative AI can work with many file types and for images it can analyze photos of plants and soil to advise farmers, and for PDFs it can extract key points and summarize lecture notes for students, and for audio it can summarize court hearing recordings for lawyers, and for Excel files it can analyze exam scores to find trends for teachers, all of which makes it useful across agriculture, education, and the legal domain.",
+        "session_source": "Introduction to Generative AI — working with file types",
+        "material_alignment_check": "Content is on-topic and from the session, but it is dumped as one paragraph."
+      },
+      "scores": {
+        "material_alignment": 9, "question_validity": 9, "blooms_alignment": 10,
+        "answer_depth_match": 3, "answer_not_revealed_in_question": 9, "short_answer_conciseness": 8,
+        "weighted_average": 7.0
+      },
+      "failure_labels": [
+        {
+          "dimension": "answer_depth_match",
+          "reason": "The content is correct and from the session, but a long answer that enumerates four file types and their use cases is dumped as one run-on paragraph. It must be structured: a one-line lead, then a labelled bullet list with one use case per file type (see good example qa_good_011). Burying a list inside prose is the exact 'paragraph blob' failure to avoid."
+        }
+      ],
+      "notes": "Structure-mirrors-content failure: right facts, wrong shape. Enumerations (file types, capabilities, examples, advantages) must be labelled bullet lists, not prose. Contrast with qa_good_011 which lists the same content."
+    }
+  ]
+}

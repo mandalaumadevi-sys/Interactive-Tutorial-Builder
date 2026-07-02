@@ -1,0 +1,36 @@
+{
+  "agent": "final_quality",
+  "pass_threshold": 7.0,
+  "dimensions": [
+    {
+      "dimension": "learning_flow",
+      "weight": 0.2,
+      "description": "Blocks build on each other in a logical progression.",
+      "anchors": { "1": "Largely fails this dimension.", "5": "Partially meets; notable gaps.", "10": "Fully meets the standard." }
+    },
+    {
+      "dimension": "objective_coverage",
+      "weight": 0.2,
+      "description": "All session objectives covered across blocks + assessment.",
+      "anchors": { "1": "Largely fails this dimension.", "5": "Partially meets; notable gaps.", "10": "Fully meets the standard." }
+    },
+    {
+      "dimension": "content_depth_consistency",
+      "weight": 0.2,
+      "description": "Blocks are roughly equivalent in depth and effort.",
+      "anchors": { "1": "Largely fails this dimension.", "5": "Partially meets; notable gaps.", "10": "Fully meets the standard." }
+    },
+    {
+      "dimension": "mcq_variety_across_session",
+      "weight": 0.2,
+      "description": "Variety in MCQ types across all blocks combined.",
+      "anchors": { "1": "Largely fails this dimension.", "5": "Partially meets; notable gaps.", "10": "Fully meets the standard." }
+    },
+    {
+      "dimension": "assessment_synthesis",
+      "weight": 0.2,
+      "description": "Assessment questions genuinely require multi-block knowledge.",
+      "anchors": { "1": "Largely fails this dimension.", "5": "Partially meets; notable gaps.", "10": "Fully meets the standard." }
+    }
+  ]
+}

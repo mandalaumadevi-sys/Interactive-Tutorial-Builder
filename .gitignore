@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+runs/
+memory_store/
+*.sqlite
+.pytest_cache/
+node_modules/
+dist/
+frontend/dist/
+*.egg-info/
+.deepeval/
+.ruff_cache/
+generated_tutorials/

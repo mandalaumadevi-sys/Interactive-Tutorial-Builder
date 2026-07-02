@@ -1,0 +1,166 @@
+{
+  "agent_id": "agent1_image_selector",
+  "agent_name": "Agent 1 — Image Identification and Selection Step",
+  "version": "1.0",
+  "examples": [
+    {
+      "example_id": "img_sel_good_001",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "block_id": 2,
+        "block_title": "Understanding the Waterfall Model",
+        "block_content_summary": "Explains the Waterfall model's sequential phases with a process diagram, and includes a photo of a real waterfall used purely as an analogy.",
+        "images_in_block": [
+          { "image_id": "img_b2_01", "src": "https://example.com/waterfall-diagram.png", "alt": "Waterfall Model phases diagram", "caption": "" },
+          { "image_id": "img_b2_02", "src": "https://example.com/waterfall-photo.jpg", "alt": "A real waterfall in nature", "caption": "Just like a waterfall flows downward, the model moves in one direction only." }
+        ]
+      },
+      "output": {
+        "image_decisions": [
+          {
+            "image_id": "img_b2_01",
+            "decision": "send_to_agent2",
+            "visual_type": "flowchart",
+            "reason": "This is a process flowchart showing the six sequential Waterfall phases (Requirement Analysis, Design, Development, Testing, Deployment, Maintenance) connected by downward directional arrows. Revealing the phases one at a time makes the strict one-direction sequence tangible. Rule: a process flow / sequence of steps → send to Agent 2."
+          },
+          {
+            "image_id": "img_b2_02",
+            "decision": "skip",
+            "reason": "This is a photograph of a real waterfall used only as an analogy for the model's one-direction flow. It has no phases, components, or arrows to reveal and is fully explained by the surrounding text. Rule: a photo used as an analogy → skip."
+          }
+        ]
+      },
+      "scores": { "decision_correctness": 10, "reason_quality": 10, "visual_type_correctness": 10, "completeness": 10, "edge_case_handling": 9, "weighted_average": 9.9 },
+      "notes": "The correct inverse of img_sel_bad_001. The structural diagram is sent (flowchart) and the analogy photo is skipped. Each reason names what the image shows, why animation helps, and the rule applied. visual_type 'flowchart' matches the sequential-phase structure."
+    },
+    {
+      "example_id": "img_sel_good_002",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Introduction to AI Agents",
+        "block_id": 2,
+        "block_title": "The Three Core Components of an AI Agent",
+        "block_content_summary": "Explains AI Model, Tools, and Memory as the three core components, with a layered architecture diagram.",
+        "images_in_block": [
+          { "image_id": "img_b2_01", "src": "https://example.com/ai-agent-architecture.png", "alt": "AI Agent architecture diagram showing AI Model, Tools, and Memory layers", "caption": "Figure 1: The three core components of an AI Agent" }
+        ]
+      },
+      "output": {
+        "image_decisions": [
+          {
+            "image_id": "img_b2_01",
+            "decision": "send_to_agent2",
+            "visual_type": "architecture",
+            "reason": "This is a layered architecture diagram showing the three stacked components of an AI Agent — the AI Model, Tools, and Memory. Revealing the layers one by one builds the learner's mental model of how the parts stack and connect. Rule: a system architecture / component diagram → send to Agent 2."
+          }
+        ]
+      },
+      "scores": { "decision_correctness": 10, "reason_quality": 9, "visual_type_correctness": 10, "completeness": 10, "edge_case_handling": 8, "weighted_average": 9.55 },
+      "notes": "The correct version of img_sel_bad_002 — same image, but with a substantive reason (names the layered structure and the sequential-reveal value) and the correct visual_type 'architecture' instead of the useless 'Image found.' with no type."
+    },
+    {
+      "example_id": "img_sel_good_003",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Prompt Engineering",
+        "block_id": 3,
+        "block_title": "The RCATF Framework — Structuring Your Prompts",
+        "block_content_summary": "Explains the five RCATF framework components, with a ChatGPT screenshot and a purpose-built RCATF framework diagram.",
+        "images_in_block": [
+          { "image_id": "img_b3_01", "src": "https://example.com/chatgpt-screenshot.png", "alt": "Screenshot of ChatGPT interface", "caption": "Example prompt entered into ChatGPT" },
+          { "image_id": "img_b3_02", "src": "https://example.com/rcatf-diagram.png", "alt": "RCATF Framework diagram", "caption": "The five components of the RCATF framework" }
+        ]
+      },
+      "output": {
+        "image_decisions": [
+          {
+            "image_id": "img_b3_01",
+            "decision": "skip",
+            "reason": "This is a UI screenshot of the ChatGPT interface — it illustrates where a prompt is typed, but it has no process, hierarchy, or structural content to reveal and the text already covers it. Being relevant to the topic does not make it animatable. Rule: a screenshot of a UI example → skip."
+          },
+          {
+            "image_id": "img_b3_02",
+            "decision": "send_to_agent2",
+            "visual_type": "concept",
+            "reason": "This is a purpose-built framework diagram breaking RCATF into its five labelled components (Role, Context, Action, Task, Format). Revealing each component in turn builds the framework piece by piece. Rule: a structured concept breakdown → send to Agent 2."
+          }
+        ]
+      },
+      "scores": { "decision_correctness": 10, "reason_quality": 10, "visual_type_correctness": 9, "completeness": 10, "edge_case_handling": 10, "weighted_average": 9.8 },
+      "notes": "The correct inverse of img_sel_bad_003. The UI screenshot is skipped with explicit rule grounding (topic relevance is not animation suitability), while the framework diagram is sent as 'concept'. Edge-case handling is strong: the screenshot is correctly treated as a clear skip, not a judgement call."
+    },
+    {
+      "example_id": "img_sel_good_004",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Agile Model and Frameworks",
+        "block_id": 3,
+        "block_title": "Popular Agile Frameworks — Scrum and Kanban",
+        "block_content_summary": "Explains Scrum (iterative sprint cycle) and Kanban (board with three columns), with a Scrum sprint cycle diagram and a Jira Kanban board screenshot.",
+        "images_in_block": [
+          { "image_id": "img_b3_01", "src": "https://example.com/scrum-sprint-diagram.png", "alt": "Scrum sprint cycle diagram showing iterative loop", "caption": "The Scrum sprint cycle" },
+          { "image_id": "img_b3_02", "src": "https://example.com/jira-kanban-screenshot.png", "alt": "Screenshot of a Jira Kanban board showing To Do, In Progress, and Done columns", "caption": "A Kanban board in Jira" }
+        ]
+      },
+      "output": {
+        "image_decisions": [
+          {
+            "image_id": "img_b3_01",
+            "decision": "send_to_agent2",
+            "visual_type": "lifecycle",
+            "reason": "This is a sprint cycle diagram — a repeating loop (plan → sprint → review → repeat) that shows how Scrum iterates. Animating the loop makes the iterative, repeating nature tangible in a way a static image cannot. Rule: a lifecycle / state machine → send to Agent 2."
+          },
+          {
+            "image_id": "img_b3_02",
+            "decision": "skip",
+            "reason": "This is a screenshot of a real Jira board. It does show the three Kanban columns, but it is a software UI screenshot, not a purpose-built structural diagram, and the columns are described in the text. Rule: a screenshot of a UI example → skip."
+          }
+        ]
+      },
+      "scores": { "decision_correctness": 10, "reason_quality": 9, "visual_type_correctness": 10, "completeness": 10, "edge_case_handling": 10, "weighted_average": 9.75 },
+      "notes": "The correct inverse of img_sel_bad_005. The sprint cycle is sent as 'lifecycle'; the Jira screenshot is skipped. The skip reason explicitly resolves the edge case — it acknowledges the three-column structure but applies the UI-screenshot rule rather than chasing topic relevance."
+    },
+    {
+      "example_id": "img_sel_good_005",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "block_id": 4,
+        "block_title": "Waterfall vs Agile — A Side-by-Side Comparison",
+        "block_content_summary": "Compares Waterfall and Agile across feedback timing, flexibility, and documentation, with a two-column comparison table and a small decorative checkmark icon.",
+        "images_in_block": [
+          { "image_id": "img_b4_01", "src": "https://example.com/waterfall-vs-agile-table.png", "alt": "Comparison table contrasting Waterfall and Agile across several dimensions", "caption": "Waterfall vs Agile" },
+          { "image_id": "img_b4_02", "src": "https://example.com/checkmark-icon.svg", "alt": "Green checkmark icon", "caption": "" }
+        ]
+      },
+      "output": {
+        "image_decisions": [
+          {
+            "image_id": "img_b4_01",
+            "decision": "send_to_agent2",
+            "visual_type": "comparison",
+            "reason": "This is a side-by-side comparison table contrasting Waterfall and Agile across feedback timing, flexibility, and documentation. Revealing the rows one at a time draws the contrast out clearly. Rule: a visual comparison / contrast structure → send to Agent 2."
+          },
+          {
+            "image_id": "img_b4_02",
+            "decision": "skip",
+            "reason": "This is a small decorative checkmark icon with no caption and no conceptual content — pure chrome that carries no information to reveal. Rule: a decorative illustration / icon → skip."
+          }
+        ]
+      },
+      "scores": { "decision_correctness": 9, "reason_quality": 9, "visual_type_correctness": 10, "completeness": 10, "edge_case_handling": 9, "weighted_average": 9.3 },
+      "notes": "Covers the 'comparison' visual_type and a decorative-icon skip, and demonstrates completeness — both images in the block get exactly one decision (the failure img_sel_bad_004 omitted the icon). The comparison table is the send-worthy structure; the checkmark icon is correctly skipped."
+    }
+  ]
+}

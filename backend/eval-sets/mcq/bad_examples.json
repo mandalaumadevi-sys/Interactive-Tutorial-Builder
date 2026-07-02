@@ -1,0 +1,463 @@
+{
+  "agent_id": "agent_mcq_generator",
+  "agent_name": "MCQ Generation Agent",
+  "version": "1.0",
+  "examples": [
+    {
+      "example_id": "mcq_bad_001",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "SERP API Workflow Automation",
+        "sub_topic": "SERP API Basics",
+        "learning_objective": "Understanding the purpose of SERP API"
+      },
+      "output": {
+        "TOPIC": "Workflow Automation",
+        "SUB_TOPIC": "SERP API",
+        "QUESTION_KEY": "serp_api_purpose_bad_001",
+        "BASE_QUESTION_KEYS": "NA",
+        "QUESTION_TEXT": "Which of the following statements correctly describes the purpose of the SERP API?",
+        "CONTENT_TYPE": "MARKDOWN",
+        "QUESTION_TYPE": "MULTIPLE_CHOICE",
+        "LEARNING_OUTCOME": "understanding_serp_api_purpose",
+        "CODE": "NA",
+        "CODE_LANGUAGE": "NA",
+        "OPTION_1": "The SERP API fetches real-time search results from Google and other search engines",
+        "OPTION_2": "The SERP API is used to send emails with the data retrieved from external sources",
+        "OPTION_3": "The SERP API retrieves pre-published articles from multiple websites for use in the workflow",
+        "OPTION_4": "None of the given options",
+        "CORRECT_OPTION": "OPTION_1",
+        "EXPLANATION": "The SERP API fetches real-time search results.",
+        "BLOOM_LEVEL": "Knowledge"
+      },
+      "scores": {
+        "question_clarity": 4,
+        "option_quality": 3,
+        "material_alignment": 6,
+        "question_specificity": 5,
+        "question_type_correctness": 7,
+        "explanation_quality": 2,
+        "weighted_average": 3.9
+      },
+      "failure_labels": [
+        {
+          "dimension": "option_quality",
+          "reason": "Reviewer flagged 'partial correctness also present' — Option 3 ('retrieves pre-published articles from multiple websites') is partially correct since SERP API does retrieve content from multiple websites. Option 3 is a consequence or adjacent behaviour of the correct answer, not a clearly wrong alternative."
+        },
+        {
+          "dimension": "option_quality",
+          "reason": "'None of the given options' is a weak distractor that adds no pedagogical value. The reviewer's corrected version replaced it with a specific plausible wrong option ('The SERP API stores and manages RSS feed subscriptions')."
+        },
+        {
+          "dimension": "explanation_quality",
+          "reason": "Explanation is a one-liner that just restates the correct answer. Does not explain why wrong options are incorrect. Reviewer's note: explanation should reference the session content specifically."
+        },
+        {
+          "dimension": "question_clarity",
+          "reason": "'Which of the following statements correctly describes' is verbose phrasing. The reviewer simplified it to a direct question about the purpose. The word 'correctly' in the question hints that one option is a statement rather than asking what the student knows."
+        }
+      ],
+      "notes": "Classic partial correctness failure. Wrong options describe related but adjacent behaviours. The fix: replace Option 3 with an option describing something completely unrelated to web search retrieval."
+    },
+    {
+      "example_id": "mcq_bad_002",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "AI Agents Introduction",
+        "sub_topic": "API Definition",
+        "learning_objective": "Understanding what API stands for and its purpose"
+      },
+      "output": {
+        "TOPIC": "Workflow Automation Basics",
+        "SUB_TOPIC": "API Basics",
+        "QUESTION_KEY": "api_definition_bad_001",
+        "BASE_QUESTION_KEYS": "NA",
+        "QUESTION_TEXT": "What does API stand for and what is its primary function in software development?",
+        "CONTENT_TYPE": "MARKDOWN",
+        "QUESTION_TYPE": "MULTIPLE_CHOICE",
+        "LEARNING_OUTCOME": "understanding_api_definition",
+        "CODE": "NA",
+        "CODE_LANGUAGE": "NA",
+        "OPTION_1": "Automated Process Interface, it automates software deployment",
+        "OPTION_2": "Application Programming Interface, it allows communication between different applications",
+        "OPTION_3": "Advanced Programming Interface, it improves the performance of software",
+        "OPTION_4": "Application Programming Interface, it stores application data for future use",
+        "CORRECT_OPTION": "OPTION_2",
+        "EXPLANATION": "API stands for Application Programming Interface and allows communication between applications.",
+        "BLOOM_LEVEL": "Knowledge"
+      },
+      "scores": {
+        "question_clarity": 3,
+        "option_quality": 4,
+        "material_alignment": 3,
+        "question_specificity": 3,
+        "question_type_correctness": 7,
+        "explanation_quality": 3,
+        "weighted_average": 3.4
+      },
+      "failure_labels": [
+        {
+          "dimension": "question_clarity",
+          "reason": "Reviewer flagged 'what is software development here?' — the term 'software development' was not discussed in the session. The question introduces context not from the material. Fixed version asks simply: 'What does API stand for and what is its primary function?'"
+        },
+        {
+          "dimension": "option_quality",
+          "reason": "Options 2 and 4 both start with 'Application Programming Interface' — this gives away the correct expansion immediately. A student can eliminate Options 1 and 3 just by knowing the acronym, then has a 50-50 guess. The wrong part of Option 4 is also partially correct since APIs are used for data retrieval which relates to storage."
+        },
+        {
+          "dimension": "material_alignment",
+          "reason": "The phrase 'software development' in the question was not used in the session. Using session-specific language is mandatory — the reviewer explicitly asked to remove this reference."
+        },
+        {
+          "dimension": "explanation_quality",
+          "reason": "Explanation is a one-liner paraphrase of Option 2. Does not explain why options 1, 3, or 4 are wrong. The reviewer's corrected version made the distractors use A, Automated and Advanced — much stronger distractors with a genuine explanation needed."
+        }
+      ],
+      "notes": "Two options sharing the same correct expansion is a critical flaw — it eliminates 50% of the distractor pool. Never repeat the correct acronym expansion across multiple options."
+    },
+    {
+      "example_id": "mcq_bad_003",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Stable Diffusion UI",
+        "sub_topic": "Automatic1111 Interface",
+        "learning_objective": "Understanding what Automatic1111 is"
+      },
+      "output": {
+        "TOPIC": "AI Image Generation",
+        "SUB_TOPIC": "Stable Diffusion Tools",
+        "QUESTION_KEY": "automatic1111_desc_bad_001",
+        "BASE_QUESTION_KEYS": "NA",
+        "QUESTION_TEXT": "Which statement best describes what Automatic1111 does?",
+        "CONTENT_TYPE": "MARKDOWN",
+        "QUESTION_TYPE": "MULTIPLE_CHOICE",
+        "LEARNING_OUTCOME": "understanding_automatic1111",
+        "CODE": "NA",
+        "CODE_LANGUAGE": "NA",
+        "OPTION_1": "It speeds up computer hardware for faster image creation",
+        "OPTION_2": "It removes the need for AI models like Stable Diffusion",
+        "OPTION_3": "It is a coding tool for expert programmers only",
+        "OPTION_4": "It provides an easy-to-use interface for creating AI art without coding",
+        "CORRECT_OPTION": "OPTION_4",
+        "EXPLANATION": "Automatic1111 provides a user-friendly interface for Stable Diffusion.",
+        "BLOOM_LEVEL": "Knowledge"
+      },
+      "scores": {
+        "question_clarity": 4,
+        "option_quality": 4,
+        "material_alignment": 3,
+        "question_specificity": 4,
+        "question_type_correctness": 7,
+        "explanation_quality": 2,
+        "weighted_average": 3.7
+      },
+      "failure_labels": [
+        {
+          "dimension": "material_alignment",
+          "reason": "Reviewer flagged 'AI art' as wrong terminology — it is not from the session. Automatic1111 is a user-friendly interface for Stable Diffusion image generation, not 'AI art creation'. Using imprecise informal terms introduces inaccuracy."
+        },
+        {
+          "dimension": "question_clarity",
+          "reason": "Reviewer flagged 'what is the outcome of it getting confusion while reading this' — the question was confusing because options mix unrelated things (hardware, model replacement, coding tool). Student cannot answer without reading all options carefully."
+        },
+        {
+          "dimension": "option_quality",
+          "reason": "Option 2 ('removes the need for AI models like Stable Diffusion') is completely backwards — Automatic1111 depends on Stable Diffusion, it does not remove it. However, Option 3 ('coding tool for expert programmers') is partially correct in that it does involve some configuration. The reviewer asked to use technical functionality terms instead."
+        },
+        {
+          "dimension": "explanation_quality",
+          "reason": "Explanation is a one-liner. The reviewer's corrected version should explain what Automatic1111 provides (visual controls, sliders, buttons) and why the other options are wrong (it does not touch hardware, it uses Stable Diffusion not replaces it, it does not require coding)."
+        }
+      ],
+      "notes": "Using informal terms like 'AI art' instead of session-specific terminology is a recurring failure. Always use exact terms from the session material. Also: the question asks 'which statement best describes' — this phrasing is weaker than a direct question."
+    },
+    {
+      "example_id": "mcq_bad_004",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Stable Diffusion Parameters",
+        "sub_topic": "Seed Number",
+        "learning_objective": "Understanding the purpose of the seed number in Stable Diffusion"
+      },
+      "output": {
+        "TOPIC": "AI Image Generation",
+        "SUB_TOPIC": "Stable Diffusion Parameters",
+        "QUESTION_KEY": "seed_number_bad_001",
+        "BASE_QUESTION_KEYS": "NA",
+        "QUESTION_TEXT": "In Stable Diffusion, the seed number acts like a unique ID that ensures reproducibility when used with the same prompt.",
+        "CONTENT_TYPE": "MARKDOWN",
+        "QUESTION_TYPE": "MULTIPLE_CHOICE",
+        "LEARNING_OUTCOME": "understanding_seed_number_purpose",
+        "CODE": "NA",
+        "CODE_LANGUAGE": "NA",
+        "OPTION_1": "timer; faster generation",
+        "OPTION_2": "password; security",
+        "OPTION_3": "unique ID; image reproducibility",
+        "OPTION_4": "filter; better quality",
+        "CORRECT_OPTION": "OPTION_3",
+        "EXPLANATION": "The seed acts like a unique ID for reproducibility.",
+        "BLOOM_LEVEL": "Knowledge"
+      },
+      "scores": {
+        "question_clarity": 2,
+        "option_quality": 2,
+        "material_alignment": 3,
+        "question_specificity": 5,
+        "question_type_correctness": 6,
+        "explanation_quality": 2,
+        "weighted_average": 2.8
+      },
+      "failure_labels": [
+        {
+          "dimension": "option_quality",
+          "reason": "Reviewer flagged 'dont use analogies in the mcqs because we will use analogies to explain the concept' and 'don't use terminologies which are not known to lot of students'. Options 1–4 use analogies (timer, password, filter) inside fill-in-the-blank options. This violates the no-analogies rule. Options must use session-specific technical terms."
+        },
+        {
+          "dimension": "question_clarity",
+          "reason": "The question is a statement used as a fill-in-the-blank but the blank positioning and the option format (two blanks per option: 'timer; faster generation') makes it extremely hard to parse. Student must match two concepts simultaneously per option."
+        },
+        {
+          "dimension": "option_quality",
+          "reason": "The option format 'timer; faster generation' is inconsistent with the blank structure in the question. The correct option 'unique ID; image reproducibility' directly matches the question text making it obvious. The question gives away the answer by including the exact phrase 'unique ID' in the question itself."
+        },
+        {
+          "dimension": "explanation_quality",
+          "reason": "Explanation does not mention why timer, password, or filter are wrong. It just re-states the correct answer."
+        }
+      ],
+      "notes": "Analogies in options are strictly forbidden. The session may use analogies in explanatory text but MCQ options must use technical terms only. Also: never include the exact correct answer phrase in the question text when creating a fill-in-the-blank."
+    },
+    {
+      "example_id": "mcq_bad_005",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "AI Image Generation Models",
+        "sub_topic": "Diffusion Model Architectures",
+        "learning_objective": "Understanding diffusion model architectures"
+      },
+      "output": {
+        "TOPIC": "AI Image Generation",
+        "SUB_TOPIC": "Image Generation Architectures",
+        "QUESTION_KEY": "image_generation_architectures_001",
+        "BASE_QUESTION_KEYS": "NA",
+        "QUESTION_TEXT": "Which of the following are common architectures used in AI image generation?",
+        "CONTENT_TYPE": "MARKDOWN",
+        "QUESTION_TYPE": "MORE_THAN_ONE_MULTIPLE_CHOICE",
+        "LEARNING_OUTCOME": "understanding_ai_image_generation_architecture",
+        "CODE": "NA",
+        "CODE_LANGUAGE": "NA",
+        "OPTION_1": "Diffusion Models",
+        "OPTION_2": "Generative Adversarial Networks (GANs)",
+        "OPTION_3": "Variational Autoencoders (VAEs)",
+        "OPTION_4": "Transformers",
+        "CORRECT_OPTION": "OPTION_1, OPTION_2, OPTION_3, OPTION_4",
+        "EXPLANATION": "All four are common architectures used in AI image generation.",
+        "BLOOM_LEVEL": "Knowledge"
+      },
+      "scores": {
+        "question_clarity": 4,
+        "option_quality": 2,
+        "material_alignment": 2,
+        "question_specificity": 4,
+        "question_type_correctness": 4,
+        "explanation_quality": 2,
+        "weighted_average": 2.8
+      },
+      "failure_labels": [
+        {
+          "dimension": "material_alignment",
+          "reason": "Reviewer flagged 'did students know about GAN or VAE' — these terms were not explained in the session. Using architectures that were never taught means a student who understood the session cannot answer this question. Every option must be from session-covered content only."
+        },
+        {
+          "dimension": "option_quality",
+          "reason": "The reviewer explicitly asked to check all questions related to this key 'because you are directly utilizing existing questions without considering' the session context. The options GANs and VAEs are technical terms students have not encountered."
+        },
+        {
+          "dimension": "question_type_correctness",
+          "reason": "When all four options are correct, the question has no discrimination power. If CORRECT_OPTION includes all options, the question is testing nothing — a student can guess randomly and always be right. MORE_THAN_ONE_MULTIPLE_CHOICE must have at least one clearly wrong option."
+        },
+        {
+          "dimension": "explanation_quality",
+          "reason": "Explanation is 'All four are common architectures' — this adds no value. Does not explain what each architecture does or why it qualifies as an image generation architecture."
+        }
+      ],
+      "notes": "Two critical failures in one question: (1) terminology from outside the session material, (2) all options are correct making the question trivial. MORE_THAN_ONE_MULTIPLE_CHOICE must always have at least one clearly wrong option."
+    },
+    {
+      "example_id": "mcq_bad_006",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "n8n Workflow Automation",
+        "sub_topic": "Webhook Node",
+        "learning_objective": "Understanding what a webhook does in n8n"
+      },
+      "output": {
+        "TOPIC": "No-Code Application",
+        "SUB_TOPIC": "Webhook Node",
+        "QUESTION_KEY": "webhook_role_bad_001",
+        "BASE_QUESTION_KEYS": "NA",
+        "QUESTION_TEXT": "What is the primary role of a webhook in connecting a frontend application to an n8n workflow?",
+        "CONTENT_TYPE": "MARKDOWN",
+        "QUESTION_TYPE": "MULTIPLE_CHOICE",
+        "LEARNING_OUTCOME": "understanding_webhook_role",
+        "CODE": "NA",
+        "CODE_LANGUAGE": "NA",
+        "OPTION_1": "It stores user data temporarily until the workflow is manually activated by the creator",
+        "OPTION_2": "It converts the frontend code into n8n nodes for seamless integration",
+        "OPTION_3": "It acts as a bridge that receives data from the frontend and triggers the workflow automatically",
+        "OPTION_4": "It provides authentication credentials for users accessing the workflow directly",
+        "CORRECT_OPTION": "OPTION_3",
+        "EXPLANATION": "A webhook bridges the frontend and n8n workflow.",
+        "BLOOM_LEVEL": "Understanding"
+      },
+      "scores": {
+        "question_clarity": 4,
+        "option_quality": 3,
+        "material_alignment": 5,
+        "question_specificity": 6,
+        "question_type_correctness": 7,
+        "explanation_quality": 2,
+        "weighted_average": 4.0
+      },
+      "failure_labels": [
+        {
+          "dimension": "question_clarity",
+          "reason": "Reviewer flagged 'creating confusion here dont create the questions in such a way that will take time to understand the question itself'. The question is too long and the options are dense. A student cannot quickly parse four long options that all describe different technical mechanisms."
+        },
+        {
+          "dimension": "option_quality",
+          "reason": "Options use analogies — 'acts as a bridge' is an analogy, not a technical description. Reviewer explicitly flagged 'instead of using analogy use the technical term itself present in the ppt'. Use 'receives data from the frontend and triggers the workflow' without the bridge metaphor."
+        },
+        {
+          "dimension": "option_quality",
+          "reason": "Option 2 ('converts the frontend code into n8n nodes') is meaningless — this does not correspond to any real technical behaviour. Options must represent plausible but incorrect alternatives, not gibberish technical-sounding phrases. Reviewer noted 'options are confused'."
+        },
+        {
+          "dimension": "explanation_quality",
+          "reason": "Explanation is a 6-word restatement. No explanation of why each wrong option is incorrect. Option 1 describes manual activation (opposite of webhook's automatic trigger). Option 4 describes authentication (unrelated). These distinctions should be in the explanation."
+        }
+      ],
+      "notes": "Analogy in options is a repeated critical failure. 'Acts as a bridge' must be replaced with technical phrasing. Also: options must represent real plausible wrong behaviours — 'converts frontend code into n8n nodes' is not a real concept."
+    },
+    {
+      "example_id": "mcq_bad_007",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "LLM Applications Python Part 2",
+        "sub_topic": "Gradio Interface",
+        "learning_objective": "Understanding Gradio interface parameters"
+      },
+      "output": {
+        "TOPIC": "Building UI for LLM Applications",
+        "SUB_TOPIC": "Gradio Interface",
+        "QUESTION_KEY": "gradio_interface_param_bad_001",
+        "BASE_QUESTION_KEYS": "NA",
+        "QUESTION_TEXT": "Match each Gradio parameter with its corresponding value for the gr.Interface() method in the Study Assistant UI:\n\nA. fn\nB. inputs\nC. outputs\nD. description\n\n1. gr.Textbox(lines=10, label='Response')\n2. Ask a question and get an answer from your AI study assistant with a chosen personality\n3. study_assistant\n4. gr.Textbox(lines=4, placeholder='Ask a question...', label='Question')",
+        "CONTENT_TYPE": "MARKDOWN",
+        "QUESTION_TYPE": "MULTIPLE_CHOICE",
+        "LEARNING_OUTCOME": "matching_gradio_parameters",
+        "CODE": "NA",
+        "CODE_LANGUAGE": "NA",
+        "OPTION_1": "A-3, B-4, C-1, D-2",
+        "OPTION_2": "A-1, B-3, C-4, D-2",
+        "OPTION_3": "A-2, B-1, C-3, D-4",
+        "OPTION_4": "A-4, B-2, C-1, D-3",
+        "CORRECT_OPTION": "OPTION_1",
+        "EXPLANATION": "fn maps to study_assistant, inputs maps to the question textbox, outputs maps to the response textbox, description maps to the description string.",
+        "BLOOM_LEVEL": "Application"
+      },
+      "scores": {
+        "question_clarity": 2,
+        "option_quality": 3,
+        "material_alignment": 4,
+        "question_specificity": 5,
+        "question_type_correctness": 6,
+        "explanation_quality": 5,
+        "weighted_average": 3.4
+      },
+      "failure_labels": [
+        {
+          "dimension": "question_clarity",
+          "reason": "Reviewer flagged 'here have we expecting students to remember the code?' — this question tests memorisation of specific code values used in the session implementation, not conceptual understanding of Gradio parameters. Students should not be tested on specific string values from code examples."
+        },
+        {
+          "dimension": "material_alignment",
+          "reason": "The question tests recall of the exact description string used in the session's code example. This is rote memorisation, not understanding. The reviewer asked students to understand what each parameter does, not memorise its value in a specific implementation."
+        },
+        {
+          "dimension": "question_clarity",
+          "reason": "The question phrasing uses 'unable to understand the question' as reviewer feedback. Using item numbers and letters simultaneously (A, B, C, D for categories and 1, 2, 3, 4 for values) in a matching question creates cognitive overload. Standard matching uses numbers for items and letters for descriptions, not reversed."
+        }
+      ],
+      "notes": "Memorisation of specific implementation values from code examples is not a valid test of understanding. Matching questions should test conceptual knowledge of what parameters do, not what values were used in a specific example session."
+    },
+    {
+      "example_id": "mcq_bad_008",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Understanding How LLMs Work",
+        "sub_topic": "Assertion-Reason Questions",
+        "learning_objective": "Testing RNN/LSTM limitations"
+      },
+      "output": {
+        "TOPIC": "LLM Fundamentals",
+        "SUB_TOPIC": "RNN and LSTM Limitations",
+        "QUESTION_KEY": "rnn_memory_assertion_bad_001",
+        "BASE_QUESTION_KEYS": "NA",
+        "QUESTION_TEXT": "Consider the following statements:\nAssertion (A): RNNs and LSTMs struggle with Memory Fading problem.\nReason (R): These architectures process text sequentially and may forget earlier information as the sequence grows longer.",
+        "CONTENT_TYPE": "MARKDOWN",
+        "QUESTION_TYPE": "MULTIPLE_CHOICE",
+        "LEARNING_OUTCOME": "understanding_rnn_limitations",
+        "CODE": "NA",
+        "CODE_LANGUAGE": "NA",
+        "OPTION_1": "A is true, but R is false",
+        "OPTION_2": "Both A and R are true, and R is the correct explanation of A",
+        "OPTION_3": "Both A and R are true, but R is not the correct explanation of A",
+        "OPTION_4": "A is false, but R is true",
+        "CORRECT_OPTION": "OPTION_2",
+        "EXPLANATION": "Both are true and R explains A.",
+        "BLOOM_LEVEL": "Understanding"
+      },
+      "scores": {
+        "question_clarity": 1,
+        "option_quality": 2,
+        "material_alignment": 5,
+        "question_specificity": 5,
+        "question_type_correctness": 3,
+        "explanation_quality": 1,
+        "weighted_average": 2.6
+      },
+      "failure_labels": [
+        {
+          "dimension": "question_type_correctness",
+          "reason": "Reviewer explicitly flagged 'remove this type of questions' — Assertion-Reason question type is not an approved question type in this system. The approved types are MULTIPLE_CHOICE, MORE_THAN_ONE_MULTIPLE_CHOICE, and CODE_ANALYSIS. This question must be converted to a Statement-type MULTIPLE_CHOICE."
+        },
+        {
+          "dimension": "question_clarity",
+          "reason": "The options (A true R false / Both true R explains A / Both true R does not explain A / A false R true) require the student to evaluate two separate claims and their logical relationship simultaneously. This is cognitively overloaded and the reviewer asked to convert to simple statement-type questions."
+        },
+        {
+          "dimension": "explanation_quality",
+          "reason": "Explanation is 5 words. For a complex assertion-reason question structure this is completely insufficient. No reasoning provided about the memory fading problem or sequential processing."
+        }
+      ],
+      "notes": "Assertion-Reason question type is banned. Convert to statement-type: 'Consider the following statements: Statement I: RNNs and LSTMs struggle with the memory fading problem. Statement II: ...' with options Only I / Only II / Both / Neither."
+    }
+  ]
+}

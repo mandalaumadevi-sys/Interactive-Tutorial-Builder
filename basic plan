@@ -1,0 +1,23 @@
+# Interactive Tutorial Builder - Detailed Requirements
+
+## Project Overview
+
+Build an Agentic AI Workflow that automatically generates interactive tutorials for every session in a course.
+
+The generated output should not be a static reading material or cheat sheet. Instead, it should be a guided learning experience that progressively reveals content, validates learner understanding through mandatory MCQs, and concludes with a session-level assessment.
+
+The final output should be generated as HTML code that can be directly rendered inside the learning platform as a tutorial.
+
+---
+
+# Business Problem
+
+Currently, learners consume content through reading materials, PPTs, and recorded sessions.
+
+These resources are passive and do not actively verify whether the learner understands the concepts while learning.
+
+Creating interactive tutorials manually is time-consuming and difficult to scale across thousands of sessions.
+
+We need an automated system that converts session content into structured, interactive, assessment-driven tutorials.
+
+---

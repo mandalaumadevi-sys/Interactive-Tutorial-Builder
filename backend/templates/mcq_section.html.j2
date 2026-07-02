@@ -1,0 +1,13 @@
+{# Per-block quiz step. Questions are rendered client-side from QUIZ_DATA[idx]. #}
+<div class="step" data-kind="quiz" data-quiz="{{ idx }}">
+  <div class="quiz-block-wrapper">
+    <div class="quiz-header">
+      <div class="quiz-icon-box">?</div>
+      <div class="quiz-header-text">
+        <h2>Quick Check</h2>
+        <p>Answer all questions to continue</p>
+      </div>
+    </div>
+    <div class="quiz-area" id="quiz-area-{{ idx }}"></div>
+  </div>
+</div>

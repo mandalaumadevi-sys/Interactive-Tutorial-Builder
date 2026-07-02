@@ -1,0 +1,199 @@
+{
+  "agent_id": "agent2_animation",
+  "agent_name": "Agent 2 — Animation Generator",
+  "version": "1.0",
+  "examples": [
+    {
+      "example_id": "visual_bad_001",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "image_id": "img_wf_01",
+        "concept": "Waterfall Model",
+        "visual_type": "flowchart",
+        "source_image": {
+          "alt": "Waterfall Model phases diagram",
+          "caption": ""
+        },
+        "relevant_paragraph": "Six phases in a fixed order."
+      },
+      "output": {
+        "image_id": "img_wf_01",
+        "visual_type": "flowchart",
+        "html": "<div id=\"vz-wf\">\n  <script src=\"https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12/gsap.min.js\"></script>\n  <svg viewBox=\"0 0 400 120\"><rect class=\"reveal\" x=\"20\" y=\"30\" width=\"120\" height=\"50\" fill=\"#3b82f6\"/></svg>\n  <script>gsap.from(\".reveal\",{opacity:0,stagger:0.3});</script>\n</div>"
+      },
+      "scores": {
+        "animation_appropriateness": 6,
+        "learning_value": 5,
+        "fidelity_to_source": 7,
+        "technical_validity": 1,
+        "weighted_average": 4.9
+      },
+      "failure_labels": [
+        {
+          "dimension": "technical_validity",
+          "reason": "Loads GSAP from an external CDN via <script src=\"https://...\">. The hard rule is that animations must be fully self-contained — inline <style>/<svg>/<script> only, no external libraries or network requests. In the offline render environment this script would fail to load and the animation would never play."
+        }
+      ],
+      "notes": "The single most disqualifying failure: any external resource. Even if the reveal logic were good, depending on a CDN breaks the self-contained guarantee and the animation silently dies offline. Re-author with inline vanilla CSS/JS."
+    },
+    {
+      "example_id": "visual_bad_002",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Introduction to AI Agents",
+        "image_id": "img_ar_01",
+        "concept": "AI Agent architecture",
+        "visual_type": "architecture",
+        "source_image": {
+          "alt": "Three-layer AI agent architecture",
+          "caption": ""
+        },
+        "relevant_paragraph": "AI Model, Tools, and Memory stack as three layers."
+      },
+      "output": {
+        "image_id": "img_ar_01",
+        "visual_type": "architecture",
+        "html": "<div class=\"anim\">\n  <style>.box{opacity:0;animation:rise 1s forwards}@keyframes rise{to{opacity:1;transform:translateY(0)}}</style>\n  <svg viewBox=\"0 0 300 200\">\n    <rect id=\"box1\" class=\"box\" x=\"60\" y=\"140\" width=\"180\" height=\"40\"/>\n    <rect id=\"box2\" class=\"box\" x=\"60\" y=\"90\"  width=\"180\" height=\"40\"/>\n    <rect id=\"box3\" class=\"box\" x=\"60\" y=\"40\"  width=\"180\" height=\"40\"/>\n  </svg>\n</div>"
+      },
+      "scores": {
+        "animation_appropriateness": 8,
+        "learning_value": 7,
+        "fidelity_to_source": 8,
+        "technical_validity": 2,
+        "weighted_average": 6.5
+      },
+      "failure_labels": [
+        {
+          "dimension": "technical_validity",
+          "reason": "Two rule violations. (1) No prefers-reduced-motion fallback — users who request reduced motion still get full animation. (2) Generic, un-namespaced ids/classes ('box1', 'box2', '.box', '.anim') that are not scoped to the image_id and will collide with other animations or the tutorial page when several coexist."
+        }
+      ],
+      "notes": "The architecture reveal itself is fine, but un-namespaced selectors and a missing reduced-motion fallback are hard-rule breaks. Every id/class must carry the image_id prefix (e.g. 'img_ar_01-...') and a prefers-reduced-motion block must show the finished diagram with no motion."
+    },
+    {
+      "example_id": "visual_bad_003",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "image_id": "img_wf_01",
+        "concept": "Waterfall Model",
+        "visual_type": "flowchart",
+        "source_image": {
+          "alt": "Waterfall phases",
+          "caption": ""
+        },
+        "relevant_paragraph": "Six phases in a fixed order."
+      },
+      "output": {
+        "image_id": "img_wf_01",
+        "visual_type": "flowchart",
+        "html": "<div id=\"vz-flow\">\n  <p>Requirement</p><p>Design</p><p>Development</p><p>Testing</p><p>Deployment</p>\n</div>"
+      },
+      "scores": {
+        "animation_appropriateness": 3,
+        "learning_value": 2,
+        "fidelity_to_source": 6,
+        "technical_validity": 3,
+        "weighted_average": 3.3
+      },
+      "failure_labels": [
+        {
+          "dimension": "animation_appropriateness",
+          "reason": "There is no animation and no drawing at all — just a list of <p> phase names. A flowchart needs nodes, connecting arrows, and a sequential reveal; this is plain text that could have stayed in the content HTML."
+        },
+        {
+          "dimension": "learning_value",
+          "reason": "Nothing is revealed step by step; all phases appear at once as static text, so the animation adds zero understanding over the surrounding prose."
+        },
+        {
+          "dimension": "technical_validity",
+          "reason": "No <svg>/<canvas> drawing and no <style>/<script> — fails the requirement that the fragment render an animated diagram."
+        }
+      ],
+      "notes": "Degenerate output: the agent emitted phase labels as text instead of building an animated SVG flowchart. If an image cannot be turned into a real staged-reveal diagram, the correct upstream action is to skip it — not to emit a text stub."
+    },
+    {
+      "example_id": "visual_bad_004",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "image_id": "img_wf_01",
+        "concept": "Waterfall Model",
+        "visual_type": "flowchart",
+        "source_image": {
+          "alt": "Waterfall Model phases diagram (6 phases)",
+          "caption": ""
+        },
+        "relevant_paragraph": "The Waterfall model has six phases: Requirement, Design, Development, Testing, Deployment, Maintenance."
+      },
+      "output": {
+        "image_id": "img_wf_01",
+        "visual_type": "flowchart",
+        "html": "<div id=\"vz-wf2\">\n  <style>#vz-wf2 .ph{opacity:0;animation:vz-r 0.6s forwards}#vz-wf2 .ph:nth-child(n){animation-delay:calc(var(--i)*0.4s)}@keyframes vz-r{to{opacity:1}}@media (prefers-reduced-motion: reduce){#vz-wf2 .ph{opacity:1;animation:none}}</style>\n  <svg viewBox=\"0 0 200 380\">\n    <text class=\"ph\" style=\"--i:0\" x=\"20\" y=\"30\">Planning</text>\n    <text class=\"ph\" style=\"--i:1\" x=\"20\" y=\"80\">Requirement</text>\n    <text class=\"ph\" style=\"--i:2\" x=\"20\" y=\"130\">Design</text>\n    <text class=\"ph\" style=\"--i:3\" x=\"20\" y=\"180\">Development</text>\n    <text class=\"ph\" style=\"--i:4\" x=\"20\" y=\"230\">Testing</text>\n    <text class=\"ph\" style=\"--i:5\" x=\"20\" y=\"280\">Marketing</text>\n    <text class=\"ph\" style=\"--i:6\" x=\"20\" y=\"330\">Deployment</text>\n    <text class=\"ph\" style=\"--i:7\" x=\"20\" y=\"370\">Maintenance</text>\n  </svg>\n</div>"
+      },
+      "scores": {
+        "animation_appropriateness": 8,
+        "learning_value": 8,
+        "fidelity_to_source": 1,
+        "technical_validity": 9,
+        "weighted_average": 6.8
+      },
+      "failure_labels": [
+        {
+          "dimension": "fidelity_to_source",
+          "reason": "The animation invents phases that are not in the source. The source Waterfall model has six phases (Requirement, Design, Development, Testing, Deployment, Maintenance); this animation adds 'Planning' and 'Marketing', producing eight phases. Inventing steps teaches the learner a wrong model — the most dangerous kind of error because the animation looks polished and technically valid."
+        }
+      ],
+      "notes": "Technically clean and well-paced, which makes the fabrication easy to miss. The animation must recreate ONLY what the source shows — no added phases, mappings, or labels. Fidelity failures are not cosmetic; they propagate misinformation."
+    },
+    {
+      "example_id": "visual_bad_005",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "image_id": "img_wf_01",
+        "concept": "Waterfall Model",
+        "visual_type": "flowchart",
+        "source_image": {
+          "alt": "Waterfall Model phases diagram",
+          "caption": ""
+        },
+        "relevant_paragraph": "Six phases in a fixed order."
+      },
+      "output": {
+        "image_id": "img_wf_01",
+        "visual_type": "flowchart",
+        "html": "<div id=\"vz-spin\">\n  <style>#vz-spin svg{animation:vz-rot 2s linear infinite}@keyframes vz-rot{to{transform:rotate(360deg)}}@media (prefers-reduced-motion: reduce){#vz-spin svg{animation:none}}</style>\n  <svg viewBox=\"0 0 120 120\"><circle cx=\"60\" cy=\"60\" r=\"50\" fill=\"#3b82f6\"/><text x=\"60\" y=\"65\" text-anchor=\"middle\" fill=\"#fff\">Waterfall</text></svg>\n</div>"
+      },
+      "scores": {
+        "animation_appropriateness": 2,
+        "learning_value": 1,
+        "fidelity_to_source": 5,
+        "technical_validity": 6,
+        "weighted_average": 3.1
+      },
+      "failure_labels": [
+        {
+          "dimension": "animation_appropriateness",
+          "reason": "The concept is a sequential process (a flowchart), but the animation is a single circle spinning forever. A rotation reveals no phases, order, or connections — the motion fights the concept instead of expressing it."
+        },
+        {
+          "dimension": "learning_value",
+          "reason": "The spin is purely decorative. It teaches nothing about the Waterfall phases or their sequence; a learner gains no mental model from watching a logo rotate."
+        }
+      ],
+      "notes": "Decorative motion (spin/bounce/pulse) is never a substitute for a structural reveal. The animation type must match the visual_type — a flowchart needs phases appearing in order with connecting arrows, not ambient movement."
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+# Render Blueprint for the Tuti backend (FastAPI + LangGraph).
+# Render reads this file from the repo root. It builds the Docker image in ./backend
+# and runs it as an always-on web service. Deploy the FRONTEND separately on Vercel
+# (see DEPLOY.md) and point it at this service's URL.
+#
+# Two secrets are NOT in this file on purpose (sync:false) — you paste them into the
+# Render dashboard so they never live in git:
+#   • OPENROUTER_API_KEY  — your OpenRouter key (the LLM calls)
+#   • SUPABASE_DB_URL     — your Supabase Postgres connection string (all persistence)
+services:
+  - type: web
+    name: tuti-backend
+    runtime: docker
+    plan: free                       # free tier: spins down when idle, cold-start ~1 min
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/health
+    autoDeploy: true                 # redeploy automatically on every push to the branch
+    envVars:
+      # ---- secrets: set these in the Render dashboard, not here ----
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: SUPABASE_DB_URL
+        sync: false
+      # ---- non-secret config (safe to keep in git) ----
+      - key: OPENROUTER_BASE_URL
+        value: https://openrouter.ai/api/v1
+      - key: TB_LLM_MODE
+        value: real
+      - key: TB_LLM_PROVIDER
+        value: openrouter
+      - key: TB_TEXT_MODEL
+        value: anthropic/claude-sonnet-4.6
+      - key: TB_VISION_MODEL
+        value: anthropic/claude-sonnet-4.6
+      - key: TB_JUDGE_MODEL
+        value: anthropic/claude-sonnet-4.6
+      - key: TB_PASS_THRESHOLD
+        value: "7.0"
+      - key: TB_MCQ_PER_BLOCK
+        value: "2"
+      - key: TB_FINAL_ASSESSMENT_COUNT
+        value: "5"
+      - key: TB_MAX_REFINE_ATTEMPTS
+        value: "1"

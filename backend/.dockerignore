@@ -1,0 +1,14 @@
+# Never bake secrets or local junk into the image — env vars come from the host dashboard.
+.env
+.env.*
+runs/
+memory_store/
+*.sqlite
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.deepeval/
+*.egg-info/
+tests/
+.venv/

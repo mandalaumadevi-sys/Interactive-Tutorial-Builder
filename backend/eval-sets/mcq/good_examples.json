@@ -1,0 +1,207 @@
+{
+  "agent_id": "agent_mcq_generator",
+  "agent_name": "MCQ Generation Agent",
+  "version": "1.0",
+  "examples": [
+    {
+      "example_id": "mcq_good_001",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Introduction to Generative AI",
+        "sub_topic": "Definition and Concept",
+        "learning_objective": "Understanding what Generative AI is and how it is classified"
+      },
+      "output": {
+        "TOPIC": "Introduction to Generative AI",
+        "SUB_TOPIC": "Definition and Concept",
+        "QUESTION_KEY": "genai_definition_001",
+        "BASE_QUESTION_KEYS": "NA",
+        "QUESTION_TEXT": "How is Generative AI classified within the broader field of Artificial Intelligence?",
+        "CONTENT_TYPE": "MARKDOWN",
+        "QUESTION_TYPE": "MULTIPLE_CHOICE",
+        "LEARNING_OUTCOME": "understanding_generative_ai_definition",
+        "CODE": "NA",
+        "CODE_LANGUAGE": "NA",
+        "OPTION_1": "A subset of deep learning that focuses on generating new content",
+        "OPTION_2": "A feature used to browse the internet faster",
+        "OPTION_3": "None of the given Options",
+        "OPTION_4": "A method for manually entering data into spreadsheets",
+        "CORRECT_OPTION": "OPTION_1",
+        "EXPLANATION": "Generative AI is specifically defined as a subset of deep learning that focuses on generating new content such as text, images, audio, video etc. based on content it has pre-trained on.",
+        "BLOOM_LEVEL": "KNOWLEDGE"
+      },
+      "scores": {
+        "question_clarity": 9,
+        "option_quality": 8,
+        "material_alignment": 10,
+        "question_specificity": 9,
+        "question_type_correctness": 10,
+        "explanation_quality": 9,
+        "weighted_average": 9.1
+      },
+      "notes": "Strong base question. The question is specific — it asks how GenAI is classified, not just 'what is GenAI'. The wrong options are completely unrelated to the correct answer (browsing internet, data entry) — no partial correctness. Options are similar in length. Terminology matches the session exactly."
+    },
+    {
+      "example_id": "mcq_good_002",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "AI Shopping Assistant Workflow",
+        "sub_topic": "Workflow Components",
+        "learning_objective": "Understanding the purpose of specific nodes in the workflow"
+      },
+      "output": {
+        "TOPIC": "AI Shopping Assistant",
+        "SUB_TOPIC": "Workflow Components",
+        "QUESTION_KEY": "match_nodes_purposes_shopping_001",
+        "BASE_QUESTION_KEYS": "NA",
+        "QUESTION_TEXT": "Match the following nodes with their primary purposes in the AI Shopping Assistant workflow:\n\nNodes:\n1. If Node\n2. Telegram Get File Node\n3. Code Node\n4. HTTP Request Node (Whisper)\n\nPurposes:\nA. Changes audio file name from .oga to .ogg format\nB. Checks if message is text or audio and routes accordingly\nC. Retrieves complete audio file from Telegram servers using File ID\nD. Sends audio to Whisper API and receives transcribed text",
+        "CONTENT_TYPE": "MARKDOWN",
+        "QUESTION_TYPE": "MULTIPLE_CHOICE",
+        "LEARNING_OUTCOME": "matching_workflow_nodes_with_purposes",
+        "CODE": "NA",
+        "CODE_LANGUAGE": "NA",
+        "OPTION_1": "1-B, 2-C, 3-A, 4-D",
+        "OPTION_2": "1-A, 2-D, 3-B, 4-C",
+        "OPTION_3": "1-C, 2-B, 3-D, 4-A",
+        "OPTION_4": "1-D, 2-A, 3-C, 4-B",
+        "CORRECT_OPTION": "OPTION_1",
+        "EXPLANATION": "Correct matching: If Node (B) checks message type and routes messages, Telegram Get File Node (C) retrieves audio files using File ID, Code Node (A) changes file name format, and HTTP Request Node for Whisper (D) sends audio for transcription and receives text back.",
+        "BLOOM_LEVEL": "APPLY"
+      },
+      "scores": {
+        "question_clarity": 9,
+        "option_quality": 9,
+        "material_alignment": 10,
+        "question_specificity": 10,
+        "question_type_correctness": 10,
+        "explanation_quality": 10,
+        "weighted_average": 9.6
+      },
+      "notes": "Excellent matching question. Fully specific — names the exact workflow. All four items are explicitly from the session. Each match is unambiguous. Wrong options each have 2+ incorrect pairings. Explanation covers every pairing with a brief rationale."
+    },
+    {
+      "example_id": "mcq_good_003",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "SERP API Workflow Automation",
+        "sub_topic": "SERP API Parameters",
+        "learning_objective": "Understanding the purpose of the q parameter in SERP API"
+      },
+      "output": {
+        "TOPIC": "Workflow Automation Basics",
+        "SUB_TOPIC": "SERP API Parameters",
+        "QUESTION_KEY": "q_parameter_purpose_01",
+        "BASE_QUESTION_KEYS": "NA",
+        "QUESTION_TEXT": "What is the purpose of the 'q' parameter in SERP API?",
+        "CONTENT_TYPE": "MARKDOWN",
+        "QUESTION_TYPE": "MULTIPLE_CHOICE",
+        "LEARNING_OUTCOME": "understanding_q_parameter_purpose",
+        "CODE": "NA",
+        "CODE_LANGUAGE": "NA",
+        "OPTION_1": "To specify the search query or what to search for",
+        "OPTION_2": "To set the quantity of search results to return",
+        "OPTION_3": "To determine the quality level of search results",
+        "OPTION_4": "To enable quick search mode for faster results",
+        "CORRECT_OPTION": "OPTION_1",
+        "EXPLANATION": "The 'q' parameter is used to specify the specific query to search for. For example, 'AI Tech Events in India' tells the API to search for AI technology events happening in India.",
+        "BLOOM_LEVEL": "Understanding"
+      },
+      "scores": {
+        "question_clarity": 10,
+        "option_quality": 9,
+        "material_alignment": 10,
+        "question_specificity": 10,
+        "question_type_correctness": 10,
+        "explanation_quality": 9,
+        "weighted_average": 9.7
+      },
+      "notes": "Very strong question. Specific — names the exact parameter and API. Wrong options are clever: quantity, quality, quick all start with q like the parameter name — highly plausible distractors. Options are balanced in length. No analogies. All from session material. The original review comment shows this was produced AFTER the reviewer rejected 'What type of information should be entered in the q parameter?' and asked for outcome-based phrasing instead."
+    },
+    {
+      "example_id": "mcq_good_004",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "AI Image Generation",
+        "sub_topic": "Tool Overload in Agents",
+        "learning_objective": "Understanding partial correctness avoidance in wrong options"
+      },
+      "output": {
+        "TOPIC": "Multi-Agent Systems",
+        "SUB_TOPIC": "Single Agent Limitations",
+        "QUESTION_KEY": "tool_overload_problem_001",
+        "BASE_QUESTION_KEYS": "NA",
+        "QUESTION_TEXT": "What problem does tool overload cause in single-agent systems?",
+        "CONTENT_TYPE": "MARKDOWN",
+        "QUESTION_TYPE": "MULTIPLE_CHOICE",
+        "LEARNING_OUTCOME": "understanding_tool_overload_problem",
+        "CODE": "NA",
+        "CODE_LANGUAGE": "NA",
+        "OPTION_1": "Managing too many tools makes the agent harder to make clear decisions",
+        "OPTION_2": "The agent requires more training data to function properly",
+        "OPTION_3": "The agent must use all tools for every task it performs",
+        "OPTION_4": "The agent loses access to previously learned information",
+        "CORRECT_OPTION": "OPTION_1",
+        "EXPLANATION": "Tool overload occurs when an agent has too many tools to manage, making it difficult to make clear decisions about which tool to use and when. This is a core limitation of single-agent systems.",
+        "BLOOM_LEVEL": "Understanding"
+      },
+      "scores": {
+        "question_clarity": 9,
+        "option_quality": 10,
+        "material_alignment": 9,
+        "question_specificity": 9,
+        "question_type_correctness": 10,
+        "explanation_quality": 8,
+        "weighted_average": 9.3
+      },
+      "notes": "Excellent demonstration of no partial correctness. Wrong options are completely unrelated to the correct concept — training data, using all tools, losing information — none are consequences or symptoms of tool overload. This matches the good example in the prompt guidelines exactly."
+    },
+    {
+      "example_id": "mcq_good_005",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Introduction to AI Agents",
+        "sub_topic": "ReAct Pattern",
+        "learning_objective": "Understanding what the ReAct pattern is"
+      },
+      "output": {
+        "TOPIC": "How Agents Work",
+        "SUB_TOPIC": "ReAct Pattern",
+        "QUESTION_KEY": "react_pattern_base_08",
+        "BASE_QUESTION_KEYS": "NA",
+        "QUESTION_TEXT": "What is the ReAct pattern in AI agents?",
+        "CONTENT_TYPE": "MARKDOWN",
+        "QUESTION_TYPE": "MULTIPLE_CHOICE",
+        "LEARNING_OUTCOME": "understanding_react_pattern",
+        "CODE": "NA",
+        "CODE_LANGUAGE": "NA",
+        "OPTION_1": "A continuous loop of Thought, Action, and Observation that allows agents to reason, act, and learn",
+        "OPTION_2": "A predefined workflow where agents follow fixed steps to complete tasks",
+        "OPTION_3": "A memory system that stores and retrieves information from previous sessions",
+        "OPTION_4": "A configuration method that sets the agent's initial instructions at startup",
+        "CORRECT_OPTION": "OPTION_1",
+        "EXPLANATION": "ReAct is one of the most commonly used patterns where agents operate in a continuous loop of Thought, Action, and Observation. This loop allows the agent to reason, act, and learn from the results until it completes a task.",
+        "BLOOM_LEVEL": "Understanding"
+      },
+      "scores": {
+        "question_clarity": 9,
+        "option_quality": 8,
+        "material_alignment": 9,
+        "question_specificity": 9,
+        "question_type_correctness": 10,
+        "explanation_quality": 8,
+        "weighted_average": 8.9
+      },
+      "notes": "Good specific question — names 'ReAct pattern' and 'in AI agents' in the question. Wrong options are clearly wrong: predefined fixed workflow contradicts the dynamic loop, memory system is a different component, configuration method is unrelated. Original review flagged option 4 as partially correct — it has been replaced with a configuration method which is clearly wrong."
+    }
+  ]
+}

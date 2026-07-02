@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Tutorial Builder — Presentation Deck</title>
+<style>
+  :root{
+    --ink:#0f172a;--body:#334155;--muted:#64748b;--line:#cbd5e1;--soft:#e5e7eb;
+    --blue:#3b82f6;--blue-d:#1d4ed8;--violet:#7c3aed;--amber:#f59e0b;--amber-d:#b45309;
+    --green:#22c55e;--green-d:#15803d;--cyan:#0891b2;
+    --navy:#0b1220;--bg:#f1f5f9;--card:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;}
+  h2,h3{letter-spacing:-.01em;}
+  /* ── sticky nav ───────────────────────────────────────────── */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+       border-bottom:1px solid var(--soft);display:flex;gap:4px;align-items:center;padding:10px 22px;flex-wrap:wrap;}
+  .nav .brand{font-weight:800;font-size:.92rem;margin-right:14px;color:var(--ink);}
+  .nav a{font-size:.8rem;font-weight:600;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:8px;}
+  .nav a:hover{color:var(--blue-d);background:#eff6ff;}
+  /* ── section scaffold ─────────────────────────────────────── */
+  section{padding:54px 22px;max-width:1180px;margin:0 auto;}
+  .eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);}
+  .sec-title{font-size:1.85rem;font-weight:800;margin:6px 0 10px;}
+  .sec-sub{font-size:1rem;color:var(--muted);max-width:780px;margin-bottom:30px;}
+  /* ── hero ─────────────────────────────────────────────────── */
+  .hero{background:radial-gradient(1100px 460px at 12% -10%,#1e3a8a 0%,var(--navy) 55%);color:#fff;
+        max-width:none;padding:74px 22px 64px;}
+  .hero-inner{max-width:1180px;margin:0 auto;}
+  .hero .eyebrow{color:#93c5fd;}
+  .hero h1{font-size:2.7rem;font-weight:800;line-height:1.08;margin:10px 0 16px;letter-spacing:-.02em;}
+  .hero p{font-size:1.12rem;color:#cbd5e1;max-width:790px;}
+  .stats{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px;}
+  .stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:14px;
+        padding:16px 20px;min-width:140px;}
+  .stat b{display:block;font-size:1.7rem;font-weight:800;color:#fff;}
+  .stat span{font-size:.78rem;color:#93c5fd;font-weight:600;}
+  .pipeline-line{margin-top:30px;font-size:.95rem;color:#e2e8f0;font-weight:600;}
+  .pipeline-line code{background:rgba(255,255,255,.12);padding:3px 8px;border-radius:6px;font-size:.84rem;}
+  /* ── cards / grids ────────────────────────────────────────── */
+  .grid{display:grid;gap:16px;}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(330px,1fr));}
+  .card{background:var(--card);border:1px solid var(--soft);border-radius:16px;padding:22px 22px;}
+  .card h3{font-size:1.08rem;margin-bottom:7px;}
+  .card p{font-size:.92rem;color:var(--body);}
+  .card .tag{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+             padding:3px 9px;border-radius:999px;margin-bottom:11px;}
+  .t-det{background:#f1f5f9;color:#475569;border:1px solid var(--line);}
+  .t-llm{background:#eff6ff;color:var(--blue-d);border:1px solid #bfdbfe;}
+  .t-vis{background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;}
+  .t-hit{background:#fffbeb;color:var(--amber-d);border:1px solid #fde68a;}
+  .t-judge{background:#ecfdf5;color:var(--green-d);border:1px solid #bbf7d0;}
+  .io{font-size:.8rem;color:var(--muted);margin-top:11px;border-top:1px dashed var(--line);padding-top:9px;}
+  .io b{color:var(--ink);}
+  .check{font-size:.82rem;color:var(--body);margin-top:9px;}
+  .check::before{content:"🛡 ";}
+  /* ── workflow animation area ──────────────────────────────── */
+  .wf{background:#fff;border-top:1px solid var(--soft);border-bottom:1px solid var(--soft);}
+  .wrap{display:flex;gap:20px;padding:6px 0 0;align-items:flex-start;flex-wrap:wrap;max-width:1180px;margin:0 auto;}
+  .stage{flex:1 1 560px;min-width:340px;background:#fff;border:1px solid var(--soft);border-radius:14px;padding:10px;}
+  .stage svg{width:100%;height:auto;max-height:84vh;display:block;}
+  .panel{flex:1 1 300px;min-width:290px;max-width:400px;position:sticky;top:64px;}
+  .pcard{background:#fff;border:1px solid var(--soft);border-radius:14px;padding:18px 20px;margin-bottom:14px;}
+  .step-no{font-size:.74rem;font-weight:800;color:var(--blue);letter-spacing:.05em;text-transform:uppercase;}
+  .cap-title{font-size:1.18rem;font-weight:800;margin:6px 0 8px;}
+  .cap-text{font-size:.92rem;line-height:1.6;color:var(--body);}
+  .metricline{margin-top:12px;font-size:.8rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px;}
+  .metricline b{color:#0f172a;}
+  .say{margin-top:12px;font-size:.88rem;line-height:1.55;color:#0c4a6e;background:#f0f9ff;border:1px solid #bae6fd;
+       border-radius:10px;padding:11px 13px;display:none;}
+  .say.on{display:block;} .say b{color:#075985;}
+  .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  button{font:600 .85rem 'Inter',sans-serif;border:1.5px solid var(--line);background:#fff;color:var(--ink);
+         border-radius:8px;padding:8px 13px;cursor:pointer;}
+  button:hover{border-color:var(--blue);color:var(--blue);}
+  button.primary{background:var(--blue);color:#fff;border-color:var(--blue);}
+  button.primary:hover{background:var(--blue-d);color:#fff;}
+  button.toggle.on{background:#0c4a6e;color:#fff;border-color:#0c4a6e;}
+  .counter{font-size:.82rem;color:var(--muted);font-weight:600;margin-left:auto;}
+  .legend{font-size:.76rem;color:var(--muted);line-height:1.95;}
+  .legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px;border:2px solid;}
+  .legend .inp{background:#dbeafe;border-color:#3b82f6;}
+  .legend .det{background:#e2e8f0;border-color:#64748b;}
+  .legend .llm{background:#ede9fe;border-color:#7c3aed;}
+  .legend .hit{background:#fef3c7;border-color:#d97706;}
+  .legend .ev{background:#dcfce7;border-color:#16a34a;}
+  .legend .lp{display:inline-block;width:18px;border-top:3px dashed var(--amber);vertical-align:3px;margin-right:6px;}
+  /* ── SVG animation states (opacity + glow only; colors are inline) ── */
+  #flow .wf-node{opacity:.34;transition:opacity .35s ease;}
+  #flow .wf-node.done{opacity:1;}
+  #flow .wf-node.active{opacity:1;}
+  #flow .wf-node.active .box{stroke-width:4.5;filter:url(#glow);}
+  #flow .wf-sub{opacity:.5;transition:opacity .35s ease;}
+  #flow .wf-sub.done{opacity:1;} #flow .wf-sub.active{opacity:1;}
+  #flow .wf-sub.active .box{stroke-width:4;filter:url(#glow);}
+  #flow .rail{opacity:.5;transition:opacity .35s ease;}
+  #flow .rail.active{opacity:1;}
+  #flow .rail.active .box{stroke-width:3;filter:url(#glow);}
+  #flow .edge2{opacity:.28;transition:opacity .35s ease;}
+  #flow .edge2.active{opacity:1;}
+  #flow .loop2{opacity:.16;transition:opacity .35s ease;}
+  #flow .loop2.active{opacity:1;}
+  #flow .llabel{opacity:.28;transition:opacity .35s ease;}
+  #flow .llabel.active{opacity:1;}
+  /* ── levels (defense-in-depth) ────────────────────────────── */
+  .levels{display:flex;flex-direction:column;gap:12px;}
+  .level{display:flex;align-items:flex-start;gap:18px;border-radius:14px;padding:18px 20px;border:1px solid;}
+  .level .lnum{flex:0 0 46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+               font-weight:800;font-size:1.25rem;color:#fff;}
+  .level h3{font-size:1.05rem;margin-bottom:4px;}
+  .level p{font-size:.9rem;color:var(--body);}
+  .level .who{font-size:.76rem;color:var(--muted);margin-top:6px;}
+  .lv1{background:#f8fafc;border-color:var(--line);}   .lv1 .lnum{background:#64748b;}
+  .lv2{background:#f5f3ff;border-color:#ddd6fe;}        .lv2 .lnum{background:var(--violet);}
+  .lv3{background:#ecfdf5;border-color:#bbf7d0;}        .lv3 .lnum{background:var(--green);}
+  .lv4{background:#fffbeb;border-color:#fde68a;}        .lv4 .lnum{background:var(--amber);}
+  /* ── eval-set + memory tables ─────────────────────────────── */
+  .esrow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line);}
+  .esrow:last-child{border-bottom:none;}
+  .esrow .name{font-weight:700;font-size:.92rem;}
+  .esrow .who{font-size:.8rem;color:var(--muted);}
+  .pill{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:999px;background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;white-space:nowrap;}
+  .mem-cat{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px dashed var(--line);}
+  .mem-cat:last-child{border-bottom:none;}
+  .mem-cat .ico{font-size:1.25rem;}
+  .mem-cat b{font-size:.95rem;}
+  .mem-cat p{font-size:.86rem;color:var(--body);}
+  /* ── Q&A ──────────────────────────────────────────────────── */
+  details{background:#fff;border:1px solid var(--soft);border-radius:12px;padding:0 18px;margin-bottom:10px;}
+  details summary{cursor:pointer;font-weight:700;font-size:.95rem;padding:15px 0;list-style:none;}
+  details summary::marker{display:none;}
+  details summary::before{content:"▸ ";color:var(--blue);}
+  details[open] summary::before{content:"▾ ";}
+  details p{font-size:.9rem;color:var(--body);padding:0 0 16px;}
+  .foot{max-width:1180px;margin:0 auto;padding:30px 22px 70px;color:var(--muted);font-size:.82rem;}
+  .kbd{background:#f1f5f9;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 7px;font-size:.8rem;font-weight:700;}
+</style>
+</head>
+<body>
+
+<!-- ════════ NAV ════════ -->
+<div class="nav">
+  <span class="brand">🧩 Tutorial Builder</span>
+  <a href="#overview">Overview</a>
+  <a href="#workflow">Workflow</a>
+  <a href="#llm">Where AI acts</a>
+  <a href="#stack">Tech stack</a>
+  <a href="#agents">Agents</a>
+  <a href="#levels">Quality levels</a>
+  <a href="#evalsets">Eval-sets</a>
+  <a href="#golden">Golden eval</a>
+  <a href="#memory">Memory</a>
+  <a href="#refine">Self-refinement</a>
+  <a href="#cheat">Talking points</a>
+</div>
+
+<!-- ════════ HERO ════════ -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="eyebrow">Agentic Workflow · LangGraph</div>
+    <h1>The Interactive Tutorial Builder</h1>
+    <p>Give it one course session — an <b>HTML page</b> or a <b>PowerPoint deck</b> — and a team of
+       AI agents turns it into a single, self-contained <span style="color:#93c5fd"><b>interactive HTML tutorial</b></span>:
+       content split into guided steps, concept diagrams re-drawn as animations, every step gated by
+       a quiz, and a final assessment — all checked at four levels before a human signs off.</p>
+    <div class="stats">
+      <div class="stat"><b>2</b><span>front doors (HTML · PPTX)</span></div>
+      <div class="stat"><b>5</b><span>specialist agents</span></div>
+      <div class="stat"><b>7</b><span>eval-sets (the rubrics)</span></div>
+      <div class="stat"><b>4</b><span>levels of quality control</span></div>
+      <div class="stat"><b>2</b><span>human-in-the-loop gates</span></div>
+    </div>
+    <div class="pipeline-line">
+      <code>ingest → divide → 👤 review → build (×N, parallel) → assess → draft → quality ⟲ refine → 👤 review → assemble → memory</code>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ OVERVIEW ════════ -->
+<section id="overview">
+  <div class="eyebrow">The big picture</div>
+  <h2 class="sec-title">What it does — and why it matters</h2>
+  <p class="sec-sub">The one-sentence pitch for any audience: <b>it converts passive reading material
+     into an active, validated learning experience — automatically, but never blindly.</b></p>
+  <div class="grid g3">
+    <div class="card"><h3>① One input, one artifact</h3>
+      <p>A single session deck goes in. A single self-contained <code>.html</code> tutorial comes out —
+         no build step, no dependencies, opens in any browser.</p></div>
+    <div class="card"><h3>② A guided experience, not a cheat-sheet</h3>
+      <p>Content is progressively revealed in blocks. Concept diagrams become <b>step-by-step animations</b>.
+         Each block is <b>locked behind a quiz</b>, and the session ends with an assessment.</p></div>
+    <div class="card"><h3>③ Quality is engineered in</h3>
+      <p>Every agent grades its own work against a rubric and retries. A session-level judge scores the
+         whole thing. Two human gates can redirect the flow. <b>Nothing ships unchecked.</b></p></div>
+  </div>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><h3>Built on LangGraph</h3>
+      <p>A stateful graph of nodes with checkpointing (resumable mid-run), conditional routing, and
+         two <code>interrupt</code> points for the humans. The graph <b>always terminates</b>.</p></div>
+    <div class="card"><h3>Deterministic where it can be</h3>
+      <p>Ingestion, assembly, and format conversion are plain code — fast, free, reliable. LLMs are
+         reserved for the creative work: division, content, animation, questions, judging.</p></div>
+    <div class="card"><h3>It gets smarter per course</h3>
+      <p>Cross-session <b>memory</b> remembers concepts already taught, quiz topics used, and your
+         feedback — so the next session in a course builds on the last instead of repeating it.</p></div>
+  </div>
+</section>
+
+<!-- ════════ WORKFLOW (animation) ════════ -->
+<div class="wf">
+<section id="workflow" style="padding-top:40px;padding-bottom:30px">
+  <div class="eyebrow">The workflow, step by step</div>
+  <h2 class="sec-title">How a run actually executes</h2>
+  <p class="sec-sub">Press play, or step through with <span class="kbd">‹</span> <span class="kbd">›</span>.
+     Toggle <b>🎤 Presenter notes</b> for the line to say at each stage. <b style="color:#7c3aed">Violet</b> = LLM agent,
+     <b style="color:#475569">grey</b> = plain code, <b style="color:#b45309">amber</b> = a human gate or a loop;
+     the two side rails are <b style="color:#6d28d9">Memory</b> and the <b style="color:#0e7490">Eval-sets</b> every stage is scored against.</p>
+
+  <div class="wrap">
+    <div class="stage">
+      <svg id="flow" viewBox="0 0 1440 1710" role="img" aria-label="Animated agentic workflow diagram">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker>
+          <marker id="arrowLoop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d97706"/></marker>
+          <marker id="arrowRail" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/></marker>
+          <marker id="arrowPass" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#16a34a"/></marker>
+          <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <rect x="0" y="0" width="1440" height="1710" fill="#fff"/>
+        <text x="720" y="40" text-anchor="middle" font-size="25" font-weight="700" fill="#0f172a">Interactive Tutorial Builder — Agentic Workflow</text>
+        <text x="720" y="66" text-anchor="middle" font-size="13.5" fill="#64748b">LangGraph orchestration · dual ingestion · vision animations · 2 human checkpoints · memory + eval-driven self-refinement</text>
+
+        <!-- ══ side rails ══ -->
+        <g class="rail" id="rail-memory">
+          <rect class="box" x="34" y="392" width="206" height="540" rx="14" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5"/>
+          <text x="137" y="424" text-anchor="middle" font-size="16" font-weight="700" fill="#6d28d9">MEMORY</text>
+          <text x="137" y="444" text-anchor="middle" font-size="11" fill="#7c3aed">(course-scoped, shared)</text>
+          <line x1="54" y1="458" x2="220" y2="458" stroke="#ddd6fe" stroke-width="1"/>
+          <text x="50" y="486" font-size="12" fill="#5b21b6">• Prior concepts taught</text>
+          <text x="50" y="514" font-size="12" fill="#5b21b6">• MCQ topics used</text>
+          <text x="50" y="542" font-size="12" fill="#5b21b6">• Human feedback</text>
+          <text x="50" y="570" font-size="12" fill="#5b21b6">• Eval-score history</text>
+          <text x="50" y="598" font-size="12" fill="#5b21b6">• Run checkpoints (resume)</text>
+          <line x1="54" y1="618" x2="220" y2="618" stroke="#ddd6fe" stroke-width="1"/>
+          <text x="137" y="642" text-anchor="middle" font-size="11" fill="#7c3aed">read at ingest ·</text>
+          <text x="137" y="658" text-anchor="middle" font-size="11" fill="#7c3aed">written at the end</text>
+        </g>
+        <g class="rail" id="rail-eval">
+          <rect class="box" x="1200" y="392" width="206" height="540" rx="14" fill="#ecfeff" stroke="#0891b2" stroke-width="1.5"/>
+          <text x="1303" y="424" text-anchor="middle" font-size="16" font-weight="700" fill="#0e7490">EVAL-SETS</text>
+          <text x="1303" y="444" text-anchor="middle" font-size="11" fill="#0891b2">(rubric + good/bad)</text>
+          <line x1="1216" y1="458" x2="1390" y2="458" stroke="#a5f3fc" stroke-width="1"/>
+          <text x="1216" y="484" font-size="12" fill="#155e75">• block_divider</text>
+          <text x="1216" y="508" font-size="12" fill="#155e75">• content</text>
+          <text x="1216" y="532" font-size="12" fill="#155e75">• visual-decision</text>
+          <text x="1216" y="556" font-size="12" fill="#155e75">• visual</text>
+          <text x="1216" y="580" font-size="12" fill="#155e75">• mcq</text>
+          <text x="1216" y="604" font-size="12" fill="#155e75">• assessment</text>
+          <text x="1216" y="628" font-size="12" fill="#155e75">• final_quality</text>
+          <line x1="1216" y1="648" x2="1390" y2="648" stroke="#a5f3fc" stroke-width="1"/>
+          <text x="1303" y="672" text-anchor="middle" font-size="11" fill="#0891b2">LLM judge scores each</text>
+          <text x="1303" y="688" text-anchor="middle" font-size="11" fill="#0891b2">stage vs threshold 7.0</text>
+        </g>
+
+        <!-- ══ rail connectors ══ -->
+        <path class="edge2" id="c-mem-ing" d="M240,486 C 360,486 410,240 520,240" stroke="#94a3b8" stroke-width="1.2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrowRail)"/>
+        <path class="edge2" id="c-mem-a1"  d="M240,520 L392,650" stroke="#94a3b8" stroke-width="1.2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrowRail)"/>
+        <path class="edge2" id="c-mem-write" d="M520,1536 C 300,1536 240,1150 240,910" stroke="#94a3b8" stroke-width="1.2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrowRail)"/>
+        <path class="edge2" id="c-ev-div" d="M1200,470 L920,348" stroke="#94a3b8" stroke-width="1.2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrowRail)"/>
+        <path class="edge2" id="c-ev-fan" d="M1200,580 L1084,660" stroke="#94a3b8" stroke-width="1.2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrowRail)"/>
+        <path class="edge2" id="c-ev-q"   d="M1200,700 C 1060,700 1010,1186 940,1186" stroke="#94a3b8" stroke-width="1.2" fill="none" stroke-dasharray="4,4" marker-end="url(#arrowRail)"/>
+
+        <!-- ══ spine edges ══ -->
+        <path class="edge2" id="e-inA" d="M570,154 L640,208" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+        <path class="edge2" id="e-inB" d="M870,154 L800,208" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+        <path class="edge2" id="e-ing-div" d="M720,272 L720,316" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+        <path class="edge2" id="e-div-h1" d="M720,380 L720,424" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+        <path class="edge2" id="e-h1-fan" d="M720,494 L720,540" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+        <text x="734" y="522" font-size="11" fill="#64748b">approved blocks</text>
+        <path class="edge2" id="e-fan-a4" d="M720,900 L720,940" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+        <path class="edge2" id="e-a4-draft" d="M720,1004 L720,1044" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+        <path class="edge2" id="e-draft-q" d="M720,1108 L720,1148" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+        <path class="edge2" id="e-q-h2" d="M720,1224 L720,1276" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+        <text x="734" y="1254" font-size="11" fill="#b45309" font-weight="600">fail / flagged</text>
+        <!-- pass bypass: quality → final assemble, around HITL #2 -->
+        <path class="edge2" id="e-pass" d="M500,1190 C 452,1240 452,1370 520,1412" stroke="#16a34a" stroke-width="1.8" fill="none" marker-end="url(#arrowPass)"/>
+        <text x="404" y="1300" font-size="11" fill="#15803d" font-weight="700">pass ✓</text>
+        <path class="edge2" id="e-h2-asm" d="M720,1352 L720,1400" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+        <text x="734" y="1382" font-size="11" fill="#475569">approve / edit</text>
+        <path class="edge2" id="e-asm-mem" d="M720,1464 L720,1504" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+        <path class="edge2" id="e-mem-out" d="M720,1568 L720,1608" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+
+        <!-- ══ loops ══ -->
+        <path class="loop2" id="loop-feedback" d="M500,455 C 452,455 452,348 520,348" stroke="#d97706" stroke-width="1.7" fill="none" stroke-dasharray="5,4" marker-end="url(#arrowLoop)"/>
+        <text class="llabel" id="lbl-feedback" x="356" y="398" font-size="11" fill="#b45309" font-weight="600">feedback →<tspan x="356" dy="14">re-divide</tspan></text>
+        <path class="loop2" id="loop-refine" d="M500,1186 C 300,1186 300,720 356,720" stroke="#d97706" stroke-width="1.7" fill="none" stroke-dasharray="5,4" marker-end="url(#arrowLoop)"/>
+        <text class="llabel" id="lbl-refine" x="252" y="950" font-size="11" fill="#b45309" font-weight="600">score &lt; 7 →<tspan x="252" dy="14">regenerate</tspan><tspan x="252" dy="14">failing stage</tspan></text>
+        <path class="loop2" id="loop-reject" d="M940,1312 C 1120,1312 1120,348 920,348" stroke="#d97706" stroke-width="1.7" fill="none" stroke-dasharray="5,4" marker-end="url(#arrowLoop)"/>
+        <text class="llabel" id="lbl-reject" x="1036" y="828" font-size="11" fill="#b45309" font-weight="600">reject →<tspan x="1036" dy="14">re-divide</tspan></text>
+
+        <!-- ══ nodes ══ -->
+        <g class="wf-node" id="n-inputA"><rect class="box" x="470" y="96" width="200" height="58" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/><text x="570" y="122" text-anchor="middle" font-size="14" font-weight="700" fill="#1e3a8a">Flow A — HTML</text><text x="570" y="140" text-anchor="middle" font-size="11.5" fill="#1d4ed8">session .html upload</text></g>
+        <g class="wf-node" id="n-inputB"><rect class="box" x="770" y="96" width="200" height="58" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/><text x="870" y="122" text-anchor="middle" font-size="14" font-weight="700" fill="#1e3a8a">Flow B — PPTX</text><text x="870" y="140" text-anchor="middle" font-size="11.5" fill="#1d4ed8">.pptx (text + images)</text></g>
+
+        <g class="wf-node" id="n-ingest"><rect class="box" x="520" y="208" width="400" height="64" rx="10" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/><text x="720" y="232" text-anchor="middle" font-size="14.5" font-weight="700" fill="#334155">Stage 0 · Ingestion → Normalize</text><text x="720" y="252" text-anchor="middle" font-size="11.5" fill="#475569">both flows → one contract: normalized_html + assets[]</text></g>
+
+        <g class="wf-node" id="n-divide"><rect class="box" x="520" y="316" width="400" height="64" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/><text x="720" y="340" text-anchor="middle" font-size="14.5" font-weight="700" fill="#5b21b6">Stage 1 · Block Divider (LLM)</text><text x="720" y="360" text-anchor="middle" font-size="11.5" fill="#6d28d9">group sections → 3–7 cohesive blocks · self-checks</text></g>
+
+        <g class="wf-node" id="n-hitl1"><rect class="box" x="500" y="424" width="440" height="70" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="1.8"/><text x="720" y="450" text-anchor="middle" font-size="14.5" font-weight="700" fill="#92400e">👤 HUMAN-IN-LOOP #1 · Division Review</text><text x="720" y="470" text-anchor="middle" font-size="11.5" fill="#b45309">see heading tree, block count, titles + reasoning</text><text x="720" y="486" text-anchor="middle" font-size="11.5" fill="#b45309">accept ✓   or   feedback ↻ re-divide</text></g>
+
+        <!-- fan-out -->
+        <g class="wf-node" id="n-fanout"><rect class="box" x="356" y="540" width="728" height="360" rx="14" fill="#faf5ff" stroke="#a78bfa" stroke-width="1.6" stroke-dasharray="7,5"/><text x="720" y="566" text-anchor="middle" font-size="14" font-weight="700" fill="#6d28d9">Stage 3 · PER BLOCK — runs in parallel (fan-out, ×N blocks)</text></g>
+
+        <g class="wf-sub" id="n-agent1"><rect class="box" x="392" y="586" width="300" height="128" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/><text x="542" y="610" text-anchor="middle" font-size="14" font-weight="700" fill="#5b21b6">Agent 1 · Content &amp; Layout</text><text x="408" y="634" font-size="11.5" fill="#6d28d9">1. rewrite block → house-style HTML</text><text x="408" y="654" font-size="11.5" fill="#6d28d9">2. decide animate / skip per image</text><text x="408" y="674" font-size="11.5" fill="#6d28d9">3. embed animation in place</text><text x="408" y="700" font-size="10.5" fill="#7c3aed">self-check: rules + content rubric</text></g>
+
+        <g class="wf-sub" id="n-agent2"><rect class="box" x="748" y="586" width="300" height="128" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/><text x="898" y="610" text-anchor="middle" font-size="14" font-weight="700" fill="#5b21b6">Agent 2 · Animation (vision)</text><text x="764" y="634" font-size="11.5" fill="#6d28d9">• SEE the image</text><text x="764" y="654" font-size="11.5" fill="#6d28d9">• match reference library</text><text x="764" y="674" font-size="11.5" fill="#6d28d9">  (waterfall / agile / v-model)</text><text x="764" y="700" font-size="10.5" fill="#7c3aed">emit inline SVG/CSS/JS · rules + visual rubric</text></g>
+
+        <g class="wf-sub" id="a1a2">
+          <path d="M692,632 L748,632" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+          <text x="720" y="626" text-anchor="middle" font-size="9.5" fill="#475569">image →</text>
+          <path d="M748,668 L692,668" stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+          <text x="720" y="684" text-anchor="middle" font-size="9.5" fill="#475569">← animation</text>
+        </g>
+
+        <g class="wf-sub" id="n-agent3"><rect class="box" x="392" y="734" width="656" height="146" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/><text x="720" y="758" text-anchor="middle" font-size="14" font-weight="700" fill="#5b21b6">Agent 3 · MCQ Generator  (independent, concurrent with Agent 1)</text><text x="720" y="782" text-anchor="middle" font-size="11.5" fill="#6d28d9">per-block MCQs · cover sub-topics · material-only · no partial credit</text><text x="720" y="803" text-anchor="middle" font-size="11.5" fill="#6d28d9">emit -END- text  →  convert to QUIZ_DATA shape</text><rect x="470" y="818" width="500" height="40" rx="8" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="1.2"/><text x="720" y="838" text-anchor="middle" font-size="10.5" fill="#5b21b6" font-family="monospace">{ question, options[], multi, correctIndexes[], explanation }</text><text x="720" y="872" text-anchor="middle" font-size="10.5" fill="#7c3aed">default 2 gating MCQs / block · self-check: rules + mcq rubric</text></g>
+
+        <g class="wf-node" id="n-agent4"><rect class="box" x="520" y="940" width="400" height="64" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/><text x="720" y="964" text-anchor="middle" font-size="14.5" font-weight="700" fill="#5b21b6">Stage 4 · Agent 4 — Final Assessment</text><text x="720" y="984" text-anchor="middle" font-size="11.5" fill="#6d28d9">session-level DESCRIPTIVE Q&amp;A (default 5) + model answers → carousel</text></g>
+
+        <g class="wf-node" id="n-draft"><rect class="box" x="520" y="1044" width="400" height="64" rx="10" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/><text x="720" y="1068" text-anchor="middle" font-size="14.5" font-weight="700" fill="#334155">Stage 5 · Draft Assemble (deterministic)</text><text x="720" y="1088" text-anchor="middle" font-size="11.5" fill="#475569">stitch blocks + quizzes into a draft HTML for scoring</text></g>
+
+        <g class="wf-node" id="n-quality"><rect class="box" x="500" y="1148" width="440" height="76" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1.6"/><text x="720" y="1172" text-anchor="middle" font-size="14.5" font-weight="700" fill="#166534">Stage 6 · Quality — LLM Judge &amp; Self-Refine</text><text x="720" y="1192" text-anchor="middle" font-size="11.5" fill="#15803d">score the whole session vs rubric (≈ 7.0) → pass / fail</text><text x="720" y="1210" text-anchor="middle" font-size="11.5" fill="#15803d">fail &amp; retries&lt;max → regenerate failing stage ↻ → then escalate</text></g>
+
+        <g class="wf-node" id="n-hitl2"><rect class="box" x="500" y="1276" width="440" height="76" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="1.8"/><text x="720" y="1300" text-anchor="middle" font-size="14.5" font-weight="700" fill="#92400e">👤 HUMAN-IN-LOOP #2 · Final Review</text><text x="720" y="1320" text-anchor="middle" font-size="11" fill="#b45309">reached only when quality fails, or a block is flagged</text><text x="720" y="1338" text-anchor="middle" font-size="11.5" fill="#b45309">approve / edit ✓ → assemble       reject ↻ → re-divide</text></g>
+
+        <g class="wf-node" id="n-assemble"><rect class="box" x="520" y="1400" width="400" height="64" rx="10" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/><text x="720" y="1424" text-anchor="middle" font-size="14.5" font-weight="700" fill="#334155">Stage 7 · Assemble (deterministic)</text><text x="720" y="1444" text-anchor="middle" font-size="11.5" fill="#475569">final stepper shell → one self-contained .html</text></g>
+
+        <g class="wf-node" id="n-memory"><rect class="box" x="520" y="1504" width="400" height="64" rx="10" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.6"/><text x="720" y="1528" text-anchor="middle" font-size="14.5" font-weight="700" fill="#6d28d9">Memory · write-back (deterministic)</text><text x="720" y="1548" text-anchor="middle" font-size="11.5" fill="#7c3aed">save concepts, MCQ topics, feedback, eval score → course memory</text></g>
+
+        <g class="wf-node" id="n-output"><rect class="box" x="540" y="1608" width="360" height="62" rx="10" fill="#064e3b" stroke="#065f46" stroke-width="1.5"/><text x="720" y="1634" text-anchor="middle" font-size="15" font-weight="700" fill="#ecfdf5">✓ Final Interactive Tutorial (.html)</text><text x="720" y="1654" text-anchor="middle" font-size="11.5" fill="#a7f3d0">generated_tutorials/&lt;course&gt;/&lt;session&gt;.html</text></g>
+      </svg>
+    </div>
+
+    <div class="panel">
+      <div class="pcard">
+        <div class="step-no" id="step-no">Step 1 / 16</div>
+        <div class="cap-title" id="cap-title">—</div>
+        <div class="cap-text" id="cap-text">—</div>
+        <div class="metricline" id="cap-metric"></div>
+        <div class="say" id="cap-say"></div>
+      </div>
+      <div class="pcard">
+        <div class="controls">
+          <button class="primary" id="play">▶ Play</button>
+          <button id="prev">‹ Prev</button>
+          <button id="next">Next ›</button>
+          <button id="restart">⟲ Restart</button>
+          <button class="toggle" id="notes">🎤 Presenter notes</button>
+          <span class="counter" id="counter">1 / 16</span>
+        </div>
+      </div>
+      <div class="pcard legend">
+        <div><span class="sw inp"></span> input</div>
+        <div><span class="sw det"></span> deterministic stage (no LLM)</div>
+        <div><span class="sw llm"></span> LLM agent</div>
+        <div><span class="sw hit"></span> 👤 human-in-the-loop gate</div>
+        <div><span class="sw ev"></span> eval / quality judge</div>
+        <div><span class="lp"></span> loop (feedback / refine / reject)</div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ════════ WHERE AI ACTS ════════ -->
+<section id="llm">
+  <div class="eyebrow">Deterministic vs. AI</div>
+  <h2 class="sec-title">Where the LLM acts — and where it doesn't</h2>
+  <p class="sec-sub">Most of the pipeline is plain Python. A model is called in only a handful of places.
+     Everything structural — parsing, splitting, format conversion, assembly, memory — is deterministic
+     code. Every LLM call goes to <b>OpenRouter</b> (Claude Sonnet 4.6 by default).</p>
+  <div class="card">
+    <div class="esrow"><div style="flex:1"><span class="name">Ingest &amp; normalize</span><div class="who">strip noise, convert PPTX, parse HTML, build the image inventory</div></div><span class="tag t-det" style="margin:0">Deterministic</span></div>
+    <div class="esrow"><div style="flex:1"><span class="name">Split into sections</span><div class="who">cut the document at heading boundaries (or one block per slide)</div></div><span class="tag t-det" style="margin:0">Deterministic</span></div>
+    <div class="esrow"><div style="flex:1"><span class="name">Block Divider</span><div class="who">decide which sections group into 3–7 cohesive blocks — returns section IDs only, never rewrites text</div></div><span class="tag t-llm" style="margin:0">LLM · text</span></div>
+    <div class="esrow"><div style="flex:1"><span class="name">Agent 1 — Content</span><div class="who">rewrite a block into house-style HTML + decide animate / skip for each image</div></div><span class="tag t-vis" style="margin:0">LLM · vision</span></div>
+    <div class="esrow"><div style="flex:1"><span class="name">Agent 2 — Animation</span><div class="who">"see" a concept image and generate a self-contained inline SVG/CSS/JS animation</div></div><span class="tag t-vis" style="margin:0">LLM · vision</span></div>
+    <div class="esrow"><div style="flex:1"><span class="name">Agent 3 — MCQs</span><div class="who">write the per-block multiple-choice questions (in the fixed <code>-END-</code> text format)</div></div><span class="tag t-llm" style="margin:0">LLM · text</span></div>
+    <div class="esrow"><div style="flex:1"><span class="name"><code>-END-</code> → QUIZ_DATA</span><div class="who">regex-parse the MCQ text into interactive quiz JSON</div></div><span class="tag t-det" style="margin:0">Deterministic</span></div>
+    <div class="esrow"><div style="flex:1"><span class="name">Agent 4 — Final Assessment</span><div class="who">write the session-wide descriptive Q&amp;A with model answers</div></div><span class="tag t-llm" style="margin:0">LLM · text</span></div>
+    <div class="esrow"><div style="flex:1"><span class="name">Self-validation (every agent)</span><div class="who">score the agent's own output 0–10 against its eval-set rubric → drives a self-retry</div></div><span class="tag t-judge" style="margin:0">LLM · judge</span></div>
+    <div class="esrow"><div style="flex:1"><span class="name">Quality</span><div class="who">score the whole session vs the <code>final_quality</code> rubric → pass / fail</div></div><span class="tag t-judge" style="margin:0">LLM · judge</span></div>
+    <div class="esrow"><div style="flex:1"><span class="name">Draft &amp; final assemble</span><div class="who">Jinja2 templating — stitch blocks + quizzes into one HTML file</div></div><span class="tag t-det" style="margin:0">Deterministic</span></div>
+    <div class="esrow"><div style="flex:1"><span class="name">Memory read / write</span><div class="who">load &amp; save the course-scoped JSON store</div></div><span class="tag t-det" style="margin:0">Deterministic</span></div>
+  </div>
+  <p class="sec-sub" style="margin-top:14px">The three roles — <b>text</b>, <b>vision</b>, and <b>judge</b> — are independently configurable
+     (<code>TB_TEXT_MODEL</code> / <code>TB_VISION_MODEL</code> / <code>TB_JUDGE_MODEL</code>); they all default to
+     <code>anthropic/claude-sonnet-4.6</code>.</p>
+
+  <div class="grid g2" style="margin-top:22px">
+    <div class="card"><span class="tag t-det">No AI</span><h3>🔎 How images are found</h3>
+      <p>Pure parsing. <b>BeautifulSoup</b> does <code>find_all("img")</code> (HTML) and <b>python-pptx</b> reads
+         <code>PICTURE</code> shapes (PPTX). For each one we record an <b>ImageRef</b>: its <code>src</code>, alt text,
+         caption (from the <code>&lt;figure&gt;</code>/figcaption), nearest heading, pixel size, and how many times the
+         same image repeats across the document (a 20×-repeated logo is obviously decorative).</p></div>
+    <div class="card"><span class="tag t-vis">Vision</span><h3>🎬 How an image reaches the model</h3>
+      <p>The local image file is <b>base64-encoded into a <code>data:</code> URL</b> and attached as a standard
+         OpenAI-style <code>image_url</code> message part. Agent 1 decides which images are concept-bearing;
+         Agent 2 then receives the chosen image plus its alt/caption, "sees" it, and re-draws it as an animation —
+         it never embeds the raw screenshot.</p></div>
+  </div>
+</section>
+
+<!-- ════════ TECH STACK ════════ -->
+<section id="stack">
+  <div class="eyebrow">What it's built with</div>
+  <h2 class="sec-title">Tech stack &amp; tooling — and where each piece is used</h2>
+  <p class="sec-sub">Python 3.11. The orchestration is LangGraph; the rest is deliberately boring, reliable
+     libraries doing the deterministic work so the model only does what genuinely needs a model.</p>
+  <div class="grid g3">
+    <div class="card"><h3>🧩 Orchestration</h3>
+      <p><b>LangGraph</b> + <b>SQLite checkpointer</b>.<br><span class="who" style="color:#64748b;font-size:.82rem">in <code>graph.py</code></span></p>
+      <div class="io">The stateful node graph, conditional routing, the two human <code>interrupt</code> gates, and resumable runs.</div></div>
+    <div class="card"><h3>🤖 LLM access</h3>
+      <p><b>openai SDK</b> → <b>OpenRouter</b> · <b>httpx</b>.<br><span class="who" style="color:#64748b;font-size:.82rem">in <code>llm/</code></span></p>
+      <div class="io">All text + vision calls; images become base64 <code>data:</code> URLs; prompt-caching on the system prompt; per-call cost tracking.</div></div>
+    <div class="card"><h3>📄 Ingestion &amp; parsing</h3>
+      <p><b>BeautifulSoup4</b> + <b>lxml</b> · <b>python-pptx</b>.<br><span class="who" style="color:#64748b;font-size:.82rem">in <code>ingest/</code>, <code>tools/html_tools.py</code></span></p>
+      <div class="io">Clean HTML, split into blocks, find &amp; inventory images, export slide pictures, structural validation.</div></div>
+    <div class="card"><h3>🧱 Data &amp; config</h3>
+      <p><b>Pydantic v2</b> + <b>pydantic-settings</b> + <b>python-dotenv</b>.<br><span class="who" style="color:#64748b;font-size:.82rem">in <code>schemas.py</code>, <code>config.py</code></span></p>
+      <div class="io">The typed data contract that flows through every stage, plus all <code>.env</code>-driven settings.</div></div>
+    <div class="card"><h3>📦 Output</h3>
+      <p><b>Jinja2</b> · <b>markdown-it-py</b>.<br><span class="who" style="color:#64748b;font-size:.82rem">in <code>assembler/</code></span></p>
+      <div class="io">Render the single self-contained tutorial from a template; convert model markdown → HTML.</div></div>
+    <div class="card"><h3>🌐 API · CLI · UI</h3>
+      <p><b>FastAPI</b> + <b>Uvicorn</b> · <b>Typer</b> + <b>Rich</b> · <b>vanilla JS</b>.<br><span class="who" style="color:#64748b;font-size:.82rem">in <code>api/</code>, <code>cli.py</code>, <code>frontend/</code></span></p>
+      <div class="io">REST API + live progress stream (SSE), the command line, and a no-build web UI.</div></div>
+  </div>
+  <p class="sec-sub" style="margin-top:16px">Concurrency uses the standard-library <b>ThreadPoolExecutor</b> (per-block fan-out in <code>graph.py</code>),
+     and the <code>-END-</code> MCQ format is parsed with plain <b>regex</b> (<code>tools/mcq_parser.py</code>).</p>
+</section>
+
+<!-- ════════ AGENTS ════════ -->
+<section id="agents">
+  <div class="eyebrow">The cast</div>
+  <h2 class="sec-title">Five specialist agents (plus a judge)</h2>
+  <p class="sec-sub">Each agent has one job, its own prompt, and its own rubric. They are deliberately
+     narrow — that is what makes each one easy to validate and easy to retry in isolation.</p>
+  <div class="grid g2">
+    <div class="card"><span class="tag t-llm">LLM</span><h3>🧱 Block Divider</h3>
+      <p>Groups the raw sections into 3–7 cohesive teaching blocks. It only decides <i>which sections
+         group together</i> — it never rewrites content, so nothing is ever lost.</p>
+      <div class="io"><b>In:</b> normalized sections + objectives → <b>Out:</b> a BlockDivision (titles, groupings, reasoning)</div>
+      <div class="check">Rules (count 3–7, full coverage, balanced) + <b>block_divider</b> rubric → retry once.</div></div>
+    <div class="card"><span class="tag t-vis">LLM · vision</span><h3>✍️ Agent 1 — Content &amp; Layout</h3>
+      <p>The per-block orchestrator. Rewrites one block into clean house-style HTML and decides, per
+         image, whether it carries a concept worth animating. It is the <b>only</b> caller of Agent 2.</p>
+      <div class="io"><b>In:</b> one block + images + memory → <b>Out:</b> learner-facing HTML with animations placed inline</div>
+      <div class="check">Structural gate (real body text — catches empty blocks) + <b>content</b> rubric → retry.</div></div>
+    <div class="card"><span class="tag t-vis">LLM · vision</span><h3>🎬 Agent 2 — Animation</h3>
+      <p>Given one concept image, it re-draws the diagram natively as a self-contained, auto-looping
+         <b>step-by-step reveal</b> (inline SVG/CSS/JS), matching a reference-animation style library.</p>
+      <div class="io"><b>In:</b> one image + its alt/caption → <b>Out:</b> namespaced animation HTML fragment</div>
+      <div class="check">Rules (self-contained, namespaced, reduced-motion, has &lt;svg&gt;) + <b>visual</b> rubric → retry.</div></div>
+    <div class="card"><span class="tag t-llm">LLM + parser</span><h3>❓ Agent 3 — MCQs</h3>
+      <p>Writes the per-block multiple-choice questions that gate progress. Runs the fixed MCQ prompt
+         verbatim, then deterministically parses the <code>-END-</code> format into interactive <code>QUIZ_DATA</code>.</p>
+      <div class="io"><b>In:</b> the same raw block (not Agent 1's HTML) → <b>Out:</b> 2–3 MCQs per block</div>
+      <div class="check">MCQ rules (4 options, 1 correct, explanation, no leak) + <b>mcq</b> rubric → retry.</div></div>
+    <div class="card"><span class="tag t-llm">LLM</span><h3>📝 Agent 4 — Final Assessment</h3>
+      <p>Runs once after all blocks. Produces ~5 <b>descriptive, open-ended questions</b> with model
+         answers spanning the whole session (tagged with Bloom's levels), avoiding topics already quizzed.</p>
+      <div class="io"><b>In:</b> all built blocks + objectives → <b>Out:</b> descriptive Q&amp;A carousel</div>
+      <div class="check">Rules (answer present, right length, no padding) + <b>assessment</b> rubric → retry.</div></div>
+    <div class="card"><span class="tag t-judge">LLM · judge</span><h3>⚖️ Quality Judge</h3>
+      <p>Not a producer — a reviewer. Scores the <b>whole assembled session</b> on cross-block dimensions
+         no single agent can judge about itself: learning flow, objective coverage, depth consistency,
+         MCQ variety, assessment synthesis.</p>
+      <div class="io"><b>In:</b> the full draft → <b>Out:</b> per-dimension scores → weighted avg vs <b>7.0</b> → pass/fail</div>
+      <div class="check">Drives the bounded refine loop, then escalates to the human (HITL #2).</div></div>
+  </div>
+  <p class="sec-sub" style="margin-top:18px">
+    <b>Orchestration detail (for engineers):</b> per-block work fans out across a thread pool —
+    <code>N × (Agent 1 + Agent 3)</code> run concurrently, with Agent 2 nested inside Agent 1 per image.
+    State is stored as plain JSON dicts so it round-trips cleanly through the SQLite checkpointer.</p>
+</section>
+
+<!-- ════════ LEVELS ════════ -->
+<section id="levels">
+  <div class="eyebrow">The answer to "what are the levels?"</div>
+  <h2 class="sec-title">Four levels of quality control — defense in depth</h2>
+  <p class="sec-sub">Quality isn't one check at the end. It's four independent layers, cheapest first.
+     A problem has to slip past <i>all four</i> to reach the learner — and the last layer is a human.</p>
+  <div class="levels">
+    <div class="level lv1"><div class="lnum">1</div><div>
+      <h3>Deterministic rule checks &nbsp;·&nbsp; free, no LLM</h3>
+      <p>Fast structural guards on every agent's output: does the block have real body text (not just a
+         heading)? Does the animation have an <code>&lt;svg&gt;</code>, namespacing, and a reduced-motion query?
+         Do the MCQs have 4 options, exactly one correct, and an explanation? A failure triggers an immediate corrective re-run.</p>
+      <div class="who">Where: <code>tools/validation_tools.py</code>, <code>skills/*_validator.py</code> · runs on every agent</div></div></div>
+    <div class="level lv2"><div class="lnum">2</div><div>
+      <h3>Eval-set self-validation &nbsp;·&nbsp; the agent grades itself against its rubric</h3>
+      <p>Each agent's output is scored 0–10 on every dimension of <i>its own</i> eval-set rubric by an LLM
+         judge, calibrated with good/bad examples. Below threshold (7.0) → the agent regenerates once with
+         the reviewer's specific notes. Catches the qualitative problems rules can't see — thin explanations,
+         weak distractors, low-fidelity animations.</p>
+      <div class="who">Where: <code>self_validate()</code> + <code>eval-sets/&lt;agent&gt;/</code> · runs inside each agent</div></div></div>
+    <div class="level lv3"><div class="lnum">3</div><div>
+      <h3>Session-level judge + bounded self-refine &nbsp;·&nbsp; the whole tutorial, scored</h3>
+      <p>After draft assembly, one judge scores the entire session on cross-block dimensions. If it fails and
+         retries remain, the system re-runs <i>only the responsible stage</i> (content / MCQ / assessment) with
+         the judge's notes, then re-scores. Bounded: usually <b>one</b> retry, then it escalates — never an infinite loop.</p>
+      <div class="who">Where: <code>steps/final_quality_check.py</code> + the <code>quality → refine → quality</code> edge</div></div></div>
+    <div class="level lv4"><div class="lnum">4</div><div>
+      <h3>Human-in-the-loop gates &nbsp;·&nbsp; the final authority</h3>
+      <p><b>Gate #1 — Block review:</b> you approve the proposed division or send feedback to re-divide.
+         <b>Gate #2 — Final review:</b> you approve, edit, or reject the scored tutorial (reject loops all the
+         way back to division). A block that failed its own self-checks is <i>forced</i> to this gate even if the
+         overall score passed — nothing questionable ships silently.</p>
+      <div class="who">Where: LangGraph <code>interrupt_before</code> → surfaced in the web UI</div></div></div>
+  </div>
+</section>
+
+<!-- ════════ EVAL-SETS ════════ -->
+<section id="evalsets">
+  <div class="eyebrow">The spec, not an afterthought</div>
+  <h2 class="sec-title">Eval-sets — the rubrics that define "good"</h2>
+  <p class="sec-sub">Guiding principle of the build: <b>"eval-sets are the spec."</b> Each agent is built
+     against its rubric, not against vibes. An eval-set is a small folder per agent containing three things —
+     and the same files power both the self-validation (Level 2) and the final judge (Level 3).</p>
+  <div class="grid g3" style="margin-bottom:22px">
+    <div class="card"><h3>📋 rubric.json</h3><p>The weighted dimensions to score (e.g. clarity, accuracy, Bloom's level) and the pass threshold (7.0).</p></div>
+    <div class="card"><h3>✅ good_examples.json</h3><p>Reference outputs that should score high — calibrates the judge's top of the scale.</p></div>
+    <div class="card"><h3>❌ bad_examples.json</h3><p>Outputs that should score low — teaches the judge exactly what to penalize.</p></div>
+  </div>
+  <div class="card">
+    <div class="esrow"><span class="name">block_divider</span><span class="who">cohesion, coverage, sensible block count</span><span class="pill">Block Divider</span></div>
+    <div class="esrow"><span class="name">content</span><span class="who">accuracy, clarity, completeness of a rewritten block</span><span class="pill">Agent 1</span></div>
+    <div class="esrow"><span class="name">visual-decision</span><span class="who">animate-vs-skip calls (also used as few-shot examples)</span><span class="pill">Agent 1</span></div>
+    <div class="esrow"><span class="name">visual</span><span class="who">animation fidelity, staged reveal, self-containment</span><span class="pill">Agent 2</span></div>
+    <div class="esrow"><span class="name">mcq</span><span class="who">single clear problem, balanced options, Bloom's level</span><span class="pill">Agent 3</span></div>
+    <div class="esrow"><span class="name">assessment</span><span class="who">material alignment, answer quality, answer-not-revealed</span><span class="pill">Agent 4</span></div>
+    <div class="esrow"><span class="name">final_quality</span><span class="who">cross-block flow, objective coverage, synthesis</span><span class="pill">Quality Judge</span></div>
+  </div>
+</section>
+
+<!-- ════════ GOLDEN EVAL ════════ -->
+<section id="golden">
+  <div class="eyebrow">Are we using a golden dataset?</div>
+  <h2 class="sec-title">Golden examples &amp; the offline judge eval</h2>
+  <p class="sec-sub">Honest answer: outputs here are open-ended HTML, animations, and prose — there's no
+     single correct string to exact-match against. So instead of metric-based comparison, we keep
+     <b>human-authored, labelled golden exemplars</b> and evaluate with an <b>LLM-as-judge against a rubric</b>.
+     Those exemplars are used two ways.</p>
+  <div class="grid g2" style="margin-bottom:22px">
+    <div class="card"><span class="tag t-judge">at runtime</span><h3>Calibration for the judge</h3>
+      <p>Each agent's <code>good_examples</code> / <code>bad_examples</code> are injected into the self-validation and
+         quality prompts so the judge scores <i>calibrated</i> against known-good and known-bad — not on a hunch.</p></div>
+    <div class="card"><span class="tag t-judge">offline</span><h3>A golden-set regression eval</h3>
+      <p>A harness (<code>tutorial-builder eval</code>) replays every labelled exemplar through the same judge and checks
+         the labels hold: <b>good should pass, bad should fail</b>. It reports <b>judge accuracy</b> — a real,
+         ground-truth-labelled number.</p></div>
+  </div>
+  <div class="card">
+    <h3 style="margin-bottom:10px">How the offline eval avoids cheating — leave-one-out</h3>
+    <p style="font-size:.92rem;color:#334155">When an exemplar is scored, it is <b>removed from the few-shot
+       context the judge sees</b>, so the judge can't recognise and rubber-stamp itself. Headline metric =
+       (correctly-classified examples) ÷ (total), per agent and overall.</p>
+    <div style="margin-top:14px">
+      <div class="esrow"><div style="flex:1"><span class="name">block_divider</span></div><span class="who">3 good · 4 bad</span></div>
+      <div class="esrow"><div style="flex:1"><span class="name">content</span></div><span class="who">3 good · 3 bad</span></div>
+      <div class="esrow"><div style="flex:1"><span class="name">visual</span></div><span class="who">3 good · 5 bad</span></div>
+      <div class="esrow"><div style="flex:1"><span class="name">mcq</span></div><span class="who">5 good · 8 bad</span></div>
+      <div class="esrow"><div style="flex:1"><span class="name">assessment</span></div><span class="who">6 good · 7 bad</span></div>
+      <div class="esrow"><div style="flex:1"><span class="name">final_quality</span></div><span class="who">1 good · 1 bad</span></div>
+      <div class="esrow"><div style="flex:1"><span class="name" style="color:#15803d">Total golden set</span></div><span class="who" style="color:#15803d"><b>21 good · 28 bad · 49 labelled examples</b></span></div>
+    </div>
+    <div class="io" style="margin-top:14px"><b>Run it:</b> <code>tutorial-builder eval</code> (all agents) ·
+      <code>tutorial-builder eval --agent mcq --limit 2</code> (cheap smoke run). Needs the real judge, not mock.</div>
+  </div>
+  <p class="sec-sub" style="margin-top:14px">
+    <b>One-line framing for Q&amp;A:</b> "Yes — we have a curated golden set of labelled good/bad exemplars
+    per agent. It calibrates the judge at runtime, and an offline leave-one-out harness replays it to measure
+    judge accuracy. We don't do exact-match scoring because the outputs are open-ended by design."</p>
+</section>
+
+<!-- ════════ MEMORY ════════ -->
+<section id="memory">
+  <div class="eyebrow">It remembers</div>
+  <h2 class="sec-title">Cross-session memory — scoped per course</h2>
+  <p class="sec-sub">A lightweight JSON store keyed by course name, shared across all its sessions and updated
+     at the end of every run. It's how session 2 knows what session 1 already taught — and how your corrections
+     persist instead of being repeated.</p>
+  <div class="card">
+    <div class="mem-cat"><span class="ico">🧠</span><div><b>Prior concepts taught</b><p>Fed into Agent 1 as "reference, do not re-explain" — so later sessions reinforce instead of repeating.</p></div></div>
+    <div class="mem-cat"><span class="ico">❓</span><div><b>MCQ topics already used</b><p>Steers Agent 4 toward fresh angles and cross-block synthesis rather than re-testing the same sub-topics.</p></div></div>
+    <div class="mem-cat"><span class="ico">💬</span><div><b>Human feedback &amp; corrections</b><p>The notes you type at either review gate are captured — accumulated guidance for the course.</p></div></div>
+    <div class="mem-cat"><span class="ico">📈</span><div><b>Eval-score history</b><p>A per-session quality trend — a lightweight course/quality profile over time.</p></div></div>
+  </div>
+  <p class="sec-sub" style="margin-top:14px">Loaded at <b>ingest</b> (start of a run) and written back at the
+     <b>memory</b> node (end of a run) — the two violet bookends in the diagram. No LLM involved; it's a plain store.</p>
+</section>
+
+<!-- ════════ REFINEMENT ════════ -->
+<section id="refine">
+  <div class="eyebrow">Yes — and it's bounded</div>
+  <h2 class="sec-title">Self-refinement: two loops, always terminating</h2>
+  <p class="sec-sub">"Bounded autonomy" is a core principle: the system improves its own work, but can never
+     spin forever. There are two distinct self-correction loops, and both have hard limits.</p>
+  <div class="grid g2">
+    <div class="card"><span class="tag t-llm">Loop A · inside each agent</span><h3>Self-validation retry</h3>
+      <p>An agent scores its own output (Levels 1 &amp; 2). If it's below the bar, it regenerates <b>once</b>
+         with the specific fixes it was given — then keeps the better result. Local, cheap, immediate.</p>
+      <div class="io"><b>Limit:</b> <code>TB_SELF_VALIDATE_RETRIES</code> (default 1)</div></div>
+    <div class="card"><span class="tag t-judge">Loop B · whole session</span><h3>Quality-judge refine loop</h3>
+      <p>If the session judge fails, the graph re-runs <b>only the responsible stage</b> with the judge's
+         notes and re-scores. When retries are exhausted, it doesn't loop — it <b>escalates to the human</b> (HITL #2).</p>
+      <div class="io"><b>Limit:</b> <code>TB_MAX_REFINE_ATTEMPTS</code> (default 1) → then escalate</div></div>
+  </div>
+  <p class="sec-sub" style="margin-top:18px">
+    <b>The key safety property:</b> the graph always terminates. Retries are capped, the refine loop falls
+    through to a human, and a human reject loops back to division (also gated). There is no path to an infinite run.</p>
+</section>
+
+<!-- ════════ CHEAT SHEET ════════ -->
+<section id="cheat">
+  <div class="eyebrow">For Q&amp;A</div>
+  <h2 class="sec-title">Anticipated questions — crisp answers</h2>
+  <details><summary>Why agents instead of one big prompt?</summary>
+    <p>Narrow agents are individually testable and individually retryable. When the MCQ rubric fails, we
+       re-run just the MCQ agent — not the whole tutorial. Each agent also gets its own rubric and prompt,
+       which keeps quality measurable rather than a single black box.</p></details>
+  <details><summary>What stops it from hallucinating content?</summary>
+    <p>Three things: the Block Divider only <i>groups</i> sections (it never invents prose, so source content
+       can't be lost); Agent 2 is told to build animations only from what the image and its caption actually
+       show; and Levels 2–3 score accuracy and material-alignment against rubrics, with a human as the final gate.</p></details>
+  <details><summary>How expensive is a run?</summary>
+    <p>Deterministic stages (ingest, assembly, parsing) are free. LLM cost scales with the number of blocks
+       and images. The biggest multiplier is the refine loop — which is why it's bounded to one attempt by
+       default. A cost ledger is kept per run.</p></details>
+  <details><summary>What if the AI gets it wrong?</summary>
+    <p>Two human gates. At block review you can redirect the structure; at final review you can approve, edit
+       in place, or reject to regenerate from division. And any block that fails its own self-check is
+       force-routed to the human even if the overall score passed.</p></details>
+  <details><summary>Can I run it without spending on the API?</summary>
+    <p>Yes — there's a built-in mock LLM (<code>TB_LLM_MODE=mock</code>) that runs the whole graph end-to-end on
+       canned output, for testing the wiring at zero cost. Real runs use OpenRouter (Claude models by default).</p></details>
+  <details><summary>What does "interactive" mean in the output?</summary>
+    <p>One self-contained HTML file with a stepper UI: content reveals block by block, each block is locked
+       behind its MCQs until answered, concept diagrams are live animations, and it ends with the assessment
+       carousel — no server, no build, opens in any browser.</p></details>
+</section>
+
+<div class="foot">
+  Interactive Tutorial Builder · Agentic Workflow on LangGraph &nbsp;·&nbsp;
+  Pipeline: <code>ingest → divide → 👤 → build(×N) → assess → draft → quality ⟲ refine → 👤 → assemble → memory</code>
+  &nbsp;·&nbsp; This page is both the live workflow animation and the presentation deck — scroll, or use the nav above.
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const STEPS = [
+  {nodes:['n-inputA','n-inputB'], title:'Input — the session', text:'A single course session enters as an HTML page or a PPTX deck. This is the only input; everything downstream is derived from it.', metric:'Mode: <b>deterministic</b> · two front doors, one pipeline.', say:'“Everything starts from one file — either an HTML page or a PowerPoint. That’s the only thing we feed in.”'},
+  {nodes:['n-ingest'], edges:['e-inA','e-inB','c-mem-ing'], rails:['rail-memory'], title:'Stage 0 — Ingest & normalize', text:'Both formats are normalized into one clean contract (normalized_html + an image inventory), so nothing downstream cares about the source format. Course memory is loaded here.', metric:'<b>Deterministic</b> · no LLM · loads this course’s <b>memory</b>.', say:'“First we clean it into one standard format and catalogue every image — plain code, no AI. We also load this course’s memory here.”'},
+  {nodes:['n-divide'], edges:['e-ing-div','c-ev-div'], rails:['rail-eval'], title:'Stage 1 — Block Divider (LLM)', text:'The first agent groups the sections into 3–7 cohesive teaching blocks. It only decides which sections group together — it never rewrites content, so nothing is lost.', metric:'Self-check: rules (count 3–7, full coverage) + <b>block_divider</b> rubric → score vs <b>7.0</b>.', say:'“The first agent groups the material into a handful of teaching blocks — and immediately grades its own grouping against a rubric before anyone sees it.”'},
+  {nodes:['n-hitl1'], edges:['e-div-h1'], loops:['loop-feedback'], title:'👤 HITL #1 — Division review', text:'The first human checkpoint. You see the heading tree, block count, and reasoning. Accept to continue, or type feedback — which loops back to re-divide.', metric:'<b>Human gate #1.</b> Loop: feedback → re-divide (amber).', say:'“Here’s our first human checkpoint. You either accept the structure or type feedback, which sends it back to be re-divided.”'},
+  {nodes:['n-fanout'], edges:['e-h1-fan'], title:'Stage 3 — Per-block fan-out', text:'Once approved, every block is built in parallel across a thread pool. Each block runs its own little team of agents (next three steps).', metric:'Fan-out: <b>N blocks × (Agent 1 + Agent 3)</b>, plus Agent 2 per image — all concurrent.', say:'“Now the heavy lifting — and it happens in parallel. Every block is built at the same time, each by its own little team of agents.”'},
+  {nodes:['n-fanout','n-agent1'], rails:['rail-memory','rail-eval'], edges:['c-mem-a1'], title:'Agent 1 — Content & layout', text:'Rewrites the raw block into clean house-style HTML and decides, per image, whether it carries a concept worth animating (and hands those to Agent 2).', metric:'Self-check: structural gate (real body text — catches empty blocks) + <b>content</b> rubric → retry.', say:'“Agent 1 rewrites the block into clean teaching content and decides, image by image, which diagrams are worth animating.”'},
+  {nodes:['n-fanout','n-agent1','n-agent2','a1a2'], rails:['rail-eval'], title:'Agent 2 — Animation (vision)', text:'Called only by Agent 1. For each concept image it re-draws the diagram natively as a self-contained, looping step-by-step reveal — built from the image and its caption only.', metric:'Self-check: rules (self-contained, namespaced, reduced-motion, has &lt;svg&gt;) + <b>visual</b> rubric → retry.', say:'“Agent 2 takes a static diagram and re-draws it as a step-by-step animation — built natively in the page, not a screenshot.”'},
+  {nodes:['n-fanout','n-agent3'], rails:['rail-eval'], title:'Agent 3 — MCQs', text:'In parallel with Agent 1, on the same raw block, Agent 3 writes the per-block quiz, then deterministically converts the -END- text into the interactive QUIZ_DATA shape.', metric:'Self-check: rules (4 options, 1 correct, explanation, no leak) + <b>mcq</b> rubric → retry.', say:'“In parallel, Agent 3 writes the quiz that locks each block — the learner can’t move on until they answer.”'},
+  {nodes:['n-agent4'], edges:['e-fan-a4'], rails:['rail-eval'], title:'Stage 4 — Final assessment (Agent 4)', text:'After every block is built, Agent 4 writes the session-level assessment: ~5 descriptive, open-ended questions with model answers spanning the whole session.', metric:'Self-check: rules (answer present, right length) + <b>assessment</b> rubric. <b>Descriptive Q&amp;A — not MCQs.</b>', say:'“Once every block is done, Agent 4 writes the final assessment — open-ended questions, with model answers, that span the whole session.”'},
+  {nodes:['n-draft'], edges:['e-a4-draft'], title:'Stage 5 — Draft assemble', text:'All rewritten blocks, their MCQs, and the assessment are stitched into a draft tutorial HTML — purely so the judge has the whole session to score.', metric:'<b>Deterministic</b> · this is the DRAFT (a second, final assemble happens after approval).', say:'“We stitch it all into a draft — not the final file yet, just enough for the judge to review the whole thing together.”'},
+  {nodes:['n-quality'], edges:['e-draft-q','c-ev-q'], rails:['rail-eval'], title:'Stage 6 — Quality judge', text:'One LLM judge scores the whole session on cross-block dimensions no single agent could see about itself: learning flow, objective coverage, depth consistency, MCQ variety, synthesis.', metric:'Per-dimension scores → <b>weighted avg vs 7.0</b> → pass / fail.', say:'“Now a judge reviews the whole thing together — flow and coverage across blocks, things no single agent could judge about itself.”'},
+  {nodes:['n-quality'], loops:['loop-refine'], title:'Stage 6 — Bounded self-refine', text:'If quality fails and attempts remain, the system regenerates only the responsible stage with the judge’s notes, then re-scores. Capped at one attempt by default, then it escalates.', metric:'Loop: repeats while <b>retries &lt; TB_MAX_REFINE_ATTEMPTS</b> (usually 1). Never infinite.', say:'“If it falls short, the system fixes just the part that failed and re-scores — but only once. Then it hands off to a human. It can never loop forever.”'},
+  {nodes:['n-hitl2'], edges:['e-q-h2','e-pass'], loops:['loop-reject'], title:'👤 HITL #2 — Final review', text:'On a clean pass, the flow goes straight to assemble (the green “pass” arrow, skipping this gate). It only reaches a human when quality fails or a block was flagged: approve/edit → assemble, or reject → re-divide.', metric:'<b>Human gate #2.</b> pass ✓ → assemble · fail → review · reject ↻ → divide.', say:'“If quality passes cleanly, it skips straight ahead. If not — or if a block was flagged — it lands at the second human gate: approve, edit, or reject all the way back to division.”'},
+  {nodes:['n-assemble'], edges:['e-h2-asm','e-pass'], title:'Stage 7 — Final assemble', text:'The approved content is assembled into the final interactive stepper shell — a single, self-contained HTML file.', metric:'<b>Deterministic</b> · no LLM · the real, shippable output.', say:'“Once approved, we build the final interactive file — one self-contained HTML, opens anywhere.”'},
+  {nodes:['n-memory'], edges:['e-asm-mem','c-mem-write'], rails:['rail-memory'], title:'Memory — write-back', text:'Course memory is updated — concepts taught, MCQ topics used, your feedback, and the eval score — so the next session in this course builds on it.', metric:'<b>Deterministic</b> · JSON store keyed by course · no LLM.', say:'“We write back to memory — what we taught, what we tested, your feedback — so the next session in this course starts smarter.”'},
+  {nodes:['n-output'], edges:['e-mem-out'], title:'Output 🎉', text:'The finished interactive tutorial is saved to the course library, versioned on rebuilds.', metric:'File: <b>generated_tutorials/&lt;course&gt;/&lt;session&gt;.html</b>', say:'“And that’s the deliverable — a finished, interactive tutorial, saved and versioned in the course library.”'},
+];
+const LOOP_LBL = {'loop-feedback':'lbl-feedback','loop-refine':'lbl-refine','loop-reject':'lbl-reject'};
+const ALL_NODES = ['n-inputA','n-inputB','n-ingest','n-divide','n-hitl1','n-fanout','n-agent1','n-agent2','a1a2','n-agent3','n-agent4','n-draft','n-quality','n-hitl2','n-assemble','n-memory','n-output'];
+const ALL_RAILS = ['rail-memory','rail-eval'];
+const ALL_LOOPS = ['loop-feedback','loop-refine','loop-reject'];
+const ALL_EDGES = ['e-inA','e-inB','e-ing-div','e-div-h1','e-h1-fan','e-fan-a4','e-a4-draft','e-draft-q','e-q-h2','e-pass','e-h2-asm','e-asm-mem','e-mem-out',
+                   'c-mem-ing','c-mem-a1','c-mem-write','c-ev-div','c-ev-fan','c-ev-q'];
+
+let i = 0, timer = null, notesOn = false;
+function render(idx){
+  ALL_NODES.forEach(id => $(id) && $(id).classList.remove('active','done'));
+  ALL_EDGES.forEach(id => $(id) && $(id).classList.remove('active'));
+  ALL_RAILS.forEach(id => $(id) && $(id).classList.remove('active'));
+  ALL_LOOPS.forEach(id => { $(id) && $(id).classList.remove('active'); const l=$(LOOP_LBL[id]); if(l)l.classList.remove('active'); });
+  for(let k=0;k<idx;k++){ (STEPS[k].nodes||[]).forEach(id=> $(id) && $(id).classList.add('done')); }
+  const s = STEPS[idx];
+  (s.nodes||[]).forEach(id => { const el=$(id); if(el){ el.classList.remove('done'); el.classList.add('active'); } });
+  (s.edges||[]).forEach(id => $(id) && $(id).classList.add('active'));
+  (s.rails||[]).forEach(id => $(id) && $(id).classList.add('active'));
+  (s.loops||[]).forEach(id => { $(id) && $(id).classList.add('active'); const l=$(LOOP_LBL[id]); if(l)l.classList.add('active'); });
+  $('step-no').textContent = `Step ${idx+1} / ${STEPS.length}`;
+  $('counter').textContent = `${idx+1} / ${STEPS.length}`;
+  $('cap-title').textContent = s.title;
+  $('cap-text').textContent = s.text;
+  $('cap-metric').innerHTML = s.metric || '';
+  const say = $('cap-say'); say.innerHTML = '<b>🎤 Say:</b> ' + (s.say || '');
+  say.classList.toggle('on', notesOn && !!s.say);
+}
+function go(n){ i = (n + STEPS.length) % STEPS.length; render(i); }
+function play(){ if(timer) return; $('play').textContent='⏸ Pause'; $('play').classList.remove('primary');
+  timer = setInterval(()=>{ go(i+1); }, 3000); }
+function pause(){ clearInterval(timer); timer=null; $('play').textContent='▶ Play'; $('play').classList.add('primary'); }
+$('play').onclick = ()=> timer ? pause() : play();
+$('next').onclick = ()=>{ pause(); go(i+1); };
+$('prev').onclick = ()=>{ pause(); go(i-1); };
+$('restart').onclick = ()=>{ pause(); go(0); };
+$('notes').onclick = ()=>{ notesOn = !notesOn; $('notes').classList.toggle('on', notesOn); render(i); };
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight'){ pause(); go(i+1); }
+  else if(e.key==='ArrowLeft'){ pause(); go(i-1); }
+});
+render(0);
+play();
+</script>
+</body>
+</html>

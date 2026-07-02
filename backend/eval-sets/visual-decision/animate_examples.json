@@ -1,0 +1,37 @@
+[
+  {
+    "alt": "Waterfall model diagram with sequential phases and arrows",
+    "occurrences": 1,
+    "reason": "Process/flowchart that carries the concept — a step-by-step build aids understanding.",
+    "visual_type": "flowchart",
+    "decision": "animate"
+  },
+  {
+    "alt": "Three-tier web architecture: client, server, database",
+    "occurrences": 1,
+    "reason": "Architecture diagram — layers can be revealed to explain the structure.",
+    "visual_type": "architecture",
+    "decision": "animate"
+  },
+  {
+    "alt": "React component lifecycle: mount, update, unmount states",
+    "occurrences": 1,
+    "reason": "Lifecycle/state machine — highlighting states in sequence builds the mental model.",
+    "visual_type": "lifecycle",
+    "decision": "animate"
+  },
+  {
+    "alt": "Zero-shot vs few-shot prompting comparison table",
+    "occurrences": 1,
+    "reason": "Comparison structure — revealing rows one by one contrasts the two clearly.",
+    "visual_type": "comparison",
+    "decision": "animate"
+  },
+  {
+    "alt": "n8n workflow screenshot: an AI agent node wired to a chat model, a simple memory node, and a tool node",
+    "occurrences": 1,
+    "reason": "Process/workflow image provided in the material — MANDATORY animate (never skip a workflow as 'just a UI screenshot'). Build it node by node following the process the lesson describes — e.g. add the agent, attach the chat model, add the simple memory node and connect it to the agent, then attach the tool.",
+    "visual_type": "flowchart",
+    "decision": "animate"
+  }
+]

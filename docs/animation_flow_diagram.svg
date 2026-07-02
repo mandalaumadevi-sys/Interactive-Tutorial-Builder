@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1030" font-family="Segoe UI, Roboto, system-ui, sans-serif">
+  <defs>
+    <marker id="ah" markerWidth="10" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#94a3b8"/>
+    </marker>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <style>
+      .ttl   { fill:#f8fafc; font-size:15px; font-weight:700; }
+      .sub   { fill:#94a3b8; font-size:11px; }
+      .chip  { fill:#cbd5e1; font-size:12px; }
+      .chiph { font-size:11px; font-weight:700; }
+      .lbl   { fill:#64748b; font-size:10px; font-weight:700; letter-spacing:1px; }
+      .flow  { stroke-dasharray:7 7; animation:march 0.9s linear infinite; }
+      @keyframes march { to { stroke-dashoffset:-28; } }
+      .glow  { animation:pulse 8s linear infinite; opacity:0; }
+      @keyframes pulse {
+        0%{opacity:0} 3%{opacity:.95} 11%{opacity:.95} 15%{opacity:0} 100%{opacity:0}
+      }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="1030" fill="#0b1220"/>
+
+  <!-- header -->
+  <text x="600" y="40" text-anchor="middle" fill="#f1f5f9" font-size="24" font-weight="700">Animation Flow — Input → Block → Output</text>
+  <text x="600" y="66" text-anchor="middle" fill="#94a3b8" font-size="13">one concept image (img_b4_03, "Waterfall model phases") from start to end · highlight travels with the data</text>
+
+  <!-- column captions -->
+  <text x="210" y="100" text-anchor="middle" class="lbl" fill="#10b981">INPUT  (what goes in)</text>
+  <text x="610" y="100" text-anchor="middle" class="lbl" fill="#cbd5e1">BLOCK  (who runs it)</text>
+  <text x="1005" y="100" text-anchor="middle" class="lbl" fill="#f59e0b">OUTPUT  (what comes out)</text>
+
+  <!-- ============ ROW 1  cy=150  Ingest ============ -->
+  <rect class="glow" style="animation-delay:0s" x="442" y="110" width="336" height="80" rx="18" fill="#64748b" filter="url(#blur)"/>
+  <rect x="40" y="120" width="340" height="60" rx="10" fill="#06281f" stroke="#10b981"/>
+  <text x="60" y="155" class="chip">Raw slide-deck HTML</text>
+  <line x1="382" y1="150" x2="442" y2="150" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="450" y="118" width="320" height="64" rx="12" fill="#1f2937" stroke="#4b5563"/>
+  <text x="610" y="146" text-anchor="middle" class="ttl">BLOCK 0 · Ingest</text>
+  <text x="610" y="166" text-anchor="middle" class="sub">BeautifulSoup · <tspan fill="#94a3b8" font-weight="700">NO LLM</tspan></text>
+  <line x1="772" y1="150" x2="832" y2="150" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="840" y="120" width="330" height="60" rx="10" fill="#2a1605" stroke="#f59e0b"/>
+  <text x="858" y="155" class="chip">ImageRef {id, src, alt, size}</text>
+
+  <line x1="610" y1="182" x2="610" y2="226" stroke="#475569" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+
+  <!-- ============ ROW 2  cy=258  Decide ============ -->
+  <rect class="glow" style="animation-delay:-1s" x="442" y="218" width="336" height="80" rx="18" fill="#3b82f6" filter="url(#blur)"/>
+  <rect x="40" y="228" width="340" height="60" rx="10" fill="#06281f" stroke="#10b981"/>
+  <text x="60" y="253" class="chip">ImageRef + labelled examples</text>
+  <text x="60" y="271" class="chip" fill="#a78bfa">+ IMAGE PIXELS (vision)</text>
+  <line x1="382" y1="258" x2="442" y2="258" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="450" y="226" width="320" height="64" rx="12" fill="#16284d" stroke="#3b82f6"/>
+  <text x="610" y="254" text-anchor="middle" class="ttl">BLOCK 1 · Decide animate / skip</text>
+  <text x="610" y="274" text-anchor="middle" class="sub">Agent 1 · <tspan fill="#60a5fa" font-weight="700">LLM</tspan> + <tspan fill="#a78bfa" font-weight="700">VISION</tspan></text>
+  <line x1="772" y1="258" x2="832" y2="258" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="840" y="228" width="330" height="60" rx="10" fill="#2a1605" stroke="#f59e0b"/>
+  <text x="858" y="253" class="chip">decision = send_to_agent2</text>
+  <text x="858" y="271" class="chip">+ visual_type = "process_flow"</text>
+
+  <line x1="610" y1="290" x2="610" y2="334" stroke="#475569" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+
+  <!-- ============ ROW 3  cy=366  Pick reference ============ -->
+  <rect class="glow" style="animation-delay:-2s" x="442" y="326" width="336" height="80" rx="18" fill="#64748b" filter="url(#blur)"/>
+  <rect x="40" y="336" width="340" height="60" rx="10" fill="#06281f" stroke="#10b981"/>
+  <text x="60" y="371" class="chip">Concept / title text ("Waterfall…")</text>
+  <line x1="382" y1="366" x2="442" y2="366" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="450" y="334" width="320" height="64" rx="12" fill="#1f2937" stroke="#4b5563"/>
+  <text x="610" y="362" text-anchor="middle" class="ttl">BLOCK 2 · Pick reference style</text>
+  <text x="610" y="382" text-anchor="middle" class="sub">keyword match · <tspan fill="#94a3b8" font-weight="700">NO LLM</tspan></text>
+  <line x1="772" y1="366" x2="832" y2="366" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="840" y="336" width="330" height="60" rx="10" fill="#2a1605" stroke="#f59e0b"/>
+  <text x="858" y="371" class="chip">4 KB reference animation HTML</text>
+
+  <line x1="610" y1="398" x2="610" y2="442" stroke="#475569" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+
+  <!-- ============ ROW 4  cy=474  Generate (biggest cost) ============ -->
+  <rect class="glow" style="animation-delay:-3s" x="442" y="434" width="336" height="80" rx="18" fill="#3b82f6" filter="url(#blur)"/>
+  <rect x="40" y="444" width="340" height="60" rx="10" fill="#06281f" stroke="#10b981"/>
+  <text x="60" y="469" class="chip">alt/caption + 4 KB reference</text>
+  <text x="60" y="487" class="chip" fill="#a78bfa">+ IMAGE PIXELS (vision)</text>
+  <line x1="382" y1="474" x2="442" y2="474" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="450" y="442" width="320" height="64" rx="12" fill="#16284d" stroke="#3b82f6" stroke-width="2"/>
+  <text x="610" y="470" text-anchor="middle" class="ttl">BLOCK 3 · Generate animation</text>
+  <text x="610" y="490" text-anchor="middle" class="sub">Agent 2 · <tspan fill="#60a5fa" font-weight="700">LLM</tspan> + <tspan fill="#a78bfa" font-weight="700">VISION</tspan></text>
+  <line x1="772" y1="474" x2="832" y2="474" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="840" y="444" width="330" height="60" rx="10" fill="#3a1d05" stroke="#f59e0b" stroke-width="2"/>
+  <text x="858" y="469" class="chip">~10 KB animation HTML</text>
+  <text x="858" y="487" class="chip" fill="#fca5a5">$ biggest cost per call</text>
+
+  <line x1="610" y1="506" x2="610" y2="550" stroke="#475569" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+
+  <!-- ============ ROW 5  cy=582  Structural check ============ -->
+  <rect class="glow" style="animation-delay:-4s" x="442" y="542" width="336" height="80" rx="18" fill="#64748b" filter="url(#blur)"/>
+  <rect x="40" y="552" width="340" height="60" rx="10" fill="#06281f" stroke="#10b981"/>
+  <text x="60" y="587" class="chip">Animation HTML</text>
+  <line x1="382" y1="582" x2="442" y2="582" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="450" y="550" width="320" height="64" rx="12" fill="#1f2937" stroke="#4b5563"/>
+  <text x="610" y="578" text-anchor="middle" class="ttl">BLOCK 4 · Structural check</text>
+  <text x="610" y="598" text-anchor="middle" class="sub">4 rules · <tspan fill="#94a3b8" font-weight="700">NO LLM</tspan></text>
+  <line x1="772" y1="582" x2="832" y2="582" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="840" y="552" width="330" height="60" rx="10" fill="#2a1605" stroke="#f59e0b"/>
+  <text x="858" y="587" class="chip">issues[]  →  pass / regen Block 3</text>
+
+  <line x1="610" y1="614" x2="610" y2="658" stroke="#475569" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+
+  <!-- ============ ROW 6  cy=690  Eval judge ============ -->
+  <rect class="glow" style="animation-delay:-5s" x="442" y="650" width="336" height="80" rx="18" fill="#3b82f6" filter="url(#blur)"/>
+  <rect x="40" y="660" width="340" height="60" rx="10" fill="#06281f" stroke="#10b981"/>
+  <text x="60" y="685" class="chip">Animation HTML + rubric</text>
+  <text x="60" y="703" class="chip">+ good / bad examples</text>
+  <line x1="382" y1="690" x2="442" y2="690" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="450" y="658" width="320" height="64" rx="12" fill="#16284d" stroke="#3b82f6"/>
+  <text x="610" y="686" text-anchor="middle" class="ttl">BLOCK 5 · Eval judge</text>
+  <text x="610" y="706" text-anchor="middle" class="sub">self_validate · <tspan fill="#60a5fa" font-weight="700">LLM</tspan></text>
+  <line x1="772" y1="690" x2="832" y2="690" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="840" y="660" width="330" height="60" rx="10" fill="#2a1605" stroke="#f59e0b"/>
+  <text x="858" y="695" class="chip">score 0-10  →  pass / regen (&lt;7)</text>
+
+  <line x1="610" y1="722" x2="610" y2="766" stroke="#475569" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+
+  <!-- ============ ROW 7  cy=798  Place ============ -->
+  <rect class="glow" style="animation-delay:-6s" x="442" y="758" width="336" height="80" rx="18" fill="#64748b" filter="url(#blur)"/>
+  <rect x="40" y="768" width="340" height="60" rx="10" fill="#06281f" stroke="#10b981"/>
+  <text x="60" y="803" class="chip">Lesson HTML + animation HTML</text>
+  <line x1="382" y1="798" x2="442" y2="798" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="450" y="766" width="320" height="64" rx="12" fill="#1f2937" stroke="#4b5563"/>
+  <text x="610" y="794" text-anchor="middle" class="ttl">BLOCK 6 · Place into lesson</text>
+  <text x="610" y="814" text-anchor="middle" class="sub">_place() at marker · <tspan fill="#94a3b8" font-weight="700">NO LLM</tspan></text>
+  <line x1="772" y1="798" x2="832" y2="798" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="840" y="768" width="330" height="60" rx="10" fill="#2a1605" stroke="#f59e0b"/>
+  <text x="858" y="803" class="chip">&lt;div class="visual-block"&gt; wired in</text>
+
+  <line x1="610" y1="830" x2="610" y2="874" stroke="#475569" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+
+  <!-- ============ ROW 8  cy=906  Record ============ -->
+  <rect class="glow" style="animation-delay:-7s" x="442" y="866" width="336" height="80" rx="18" fill="#64748b" filter="url(#blur)"/>
+  <rect x="40" y="876" width="340" height="60" rx="10" fill="#06281f" stroke="#10b981"/>
+  <text x="60" y="911" class="chip">Final HTML + decision</text>
+  <line x1="382" y1="906" x2="442" y2="906" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="450" y="874" width="320" height="64" rx="12" fill="#1f2937" stroke="#4b5563"/>
+  <text x="610" y="902" text-anchor="middle" class="ttl">BLOCK 7 · Record verdict</text>
+  <text x="610" y="922" text-anchor="middle" class="sub">BlockResult · <tspan fill="#94a3b8" font-weight="700">NO LLM</tspan></text>
+  <line x1="772" y1="906" x2="832" y2="906" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)" class="flow"/>
+  <rect x="840" y="876" width="330" height="60" rx="10" fill="#2a1605" stroke="#f59e0b"/>
+  <text x="858" y="901" class="chip">Animation + VisualVerdict</text>
+  <text x="858" y="919" class="chip" fill="#86efac">(skipped imgs → SKIP verdict)</text>
+
+  <!-- legend -->
+  <g transform="translate(40,975)">
+    <rect x="0"   y="0" width="14" height="14" rx="3" fill="#16284d" stroke="#3b82f6"/><text x="20" y="11" class="sub">LLM block</text>
+    <rect x="120" y="0" width="14" height="14" rx="3" fill="#1f2937" stroke="#4b5563"/><text x="140" y="11" class="sub">No-LLM (deterministic)</text>
+    <rect x="320" y="0" width="14" height="14" rx="3" fill="#06281f" stroke="#10b981"/><text x="340" y="11" class="sub">Input</text>
+    <rect x="400" y="0" width="14" height="14" rx="3" fill="#2a1605" stroke="#f59e0b"/><text x="420" y="11" class="sub">Output</text>
+    <text x="490" y="11" class="sub" fill="#a78bfa">VISION = image pixels sent to the model</text>
+    <text x="800" y="11" class="sub" fill="#fca5a5">Only Blocks 3 &amp; 5 cost tokens</text>
+  </g>
+</svg>

@@ -1,0 +1,96 @@
+{
+  "agent_id": "agent_mcq_generator",
+  "agent_name": "MCQ Generation Agent",
+  "version": "1.0",
+  "pass_threshold": 7,
+  "dimensions": [
+    {
+      "id": "question_clarity",
+      "name": "Question clarity — generic & clean, no use-cases or analogies",
+      "description": "Is the question simple, direct, generic and clean, understandable in one reading? Questions MUST NOT be framed around use-cases, scenarios, stories, or analogies — they should ask directly about the concept/term itself.",
+      "weight": 0.18,
+      "anchors": {
+        "1": "The question is built from a use-case/scenario/story or an analogy, OR is confusing/complex, OR asks about topics outside the material.",
+        "5": "The question is mostly clear and generic but leans slightly on a scenario/example or has some ambiguous phrasing.",
+        "10": "The question is immediately clear, generic and clean — it asks directly about the concept/term with no use-case, scenario, story, or analogy framing. Readable in one pass."
+      }
+    },
+    {
+      "id": "option_quality",
+      "name": "Option quality — equal length, material-only words, one correct",
+      "description": "Are all four options plausible but only one correct? Are ALL options (including the WRONG ones) built ONLY from words/terminology present in the provided material/PPT — no external terms? Are all four options roughly EQUAL in length so length never hints at the answer? Wrong options must not be partial-correct consequences/symptoms, and must contain no analogies.",
+      "weight": 0.2,
+      "anchors": {
+        "1": "Wrong options introduce terms/tools/concepts NOT in the material, OR option lengths are clearly unequal (correct one longer/shorter), OR options contain analogies or partial-correct consequences.",
+        "5": "Options are mostly plausible but one or two introduce a term not found in the material, OR there is a noticeable length imbalance.",
+        "10": "Only one correct answer. EVERY option — including all distractors — uses ONLY words/terminology from the material (nothing external). All four options are roughly equal in length so length gives nothing away. No analogies; wrong options are genuinely incorrect, not partial consequences."
+      }
+    },
+    {
+      "id": "material_alignment",
+      "name": "Material alignment — only session content tested",
+      "description": "Does the question test only concepts explicitly covered in the session? Are terminology, examples, and contexts taken from the session material?",
+      "weight": 0.18,
+      "anchors": {
+        "1": "The question tests concepts not covered in the session (e.g. asks about software applications when it was not explained, references external tools or techniques never mentioned, introduces new terminology).",
+        "5": "The question is mostly aligned to session content but uses one or two terms or examples that were not explicitly covered.",
+        "10": "Every word in the question, options, and explanation is grounded in the session material. No external concepts. Exact terminology from the session is used where relevant."
+      }
+    },
+    {
+      "id": "question_specificity",
+      "name": "Question specificity — includes context",
+      "description": "Does the question include enough context (technique name, framework name, domain, node name) so it is standalone and specific? Vague generic questions score low.",
+      "weight": 0.12,
+      "anchors": {
+        "1": "Question is generic and vague — e.g. 'What does this do?' or 'What is the main purpose?' with no context. Could apply to any topic.",
+        "5": "Question has some context but could be made more specific by naming the technique, tool, or framework being tested.",
+        "10": "Question is fully specific. Includes the name of the tool, node, technique, or framework. A student can answer without guessing what context is being referred to."
+      }
+    },
+    {
+      "id": "question_type_correctness",
+      "name": "Question type and format correctness",
+      "description": "Is the correct QUESTION_TYPE used? Does the format match the prompt specification? Are all required fields present? Does -END- appear at the end?",
+      "weight": 0.08,
+      "anchors": {
+        "1": "Wrong QUESTION_TYPE used (e.g. MORE_THAN_ONE_MULTIPLE_CHOICE used when only one answer is correct). Required fields missing. -END- missing. QUESTION_KEY is duplicate or missing.",
+        "5": "Format is mostly correct but one field is wrong or missing — e.g. TRUE_FALSE question formatted as MULTIPLE_CHOICE, or LEARNING_OUTCOME is too verbose.",
+        "10": "Correct QUESTION_TYPE for the number of correct answers. All required fields present and correctly filled. QUESTION_KEY is unique. LEARNING_OUTCOME is 3-5 words in lowercase_snake_case. -END- present."
+      }
+    },
+    {
+      "id": "explanation_quality",
+      "name": "Explanation quality",
+      "description": "Does the explanation clearly justify the correct answer using session terminology? Does it address why wrong options are incorrect?",
+      "weight": 0.09,
+      "anchors": {
+        "1": "Explanation is missing, too short (e.g. just restates the correct option), or uses terminology not from the session.",
+        "5": "Explanation covers the correct answer but does not explain why the wrong options are incorrect.",
+        "10": "Explanation clearly justifies why the correct answer is right using session-specific terminology. Mentions key reasons why each wrong option is incorrect."
+      }
+    },
+    {
+      "id": "blooms_alignment",
+      "name": "Bloom's level alignment",
+      "weight": 0.08,
+      "description": "Does the question target an appropriate Bloom's level, and does the set vary levels (not all recall)? Is BLOOM_LEVEL set correctly for the question's verb/intent?",
+      "anchors": {
+        "1": "All questions are rote recall, or BLOOM_LEVEL is mislabelled relative to what the question actually asks.",
+        "5": "Most questions sit at a sensible level but the set lacks variety, or one label does not match the question's cognitive demand.",
+        "10": "Each question targets an appropriate Bloom's level, the set spans more than one level, and every BLOOM_LEVEL label matches the question's actual demand."
+      }
+    },
+    {
+      "id": "technical_accuracy",
+      "name": "Technical accuracy",
+      "weight": 0.07,
+      "description": "Are the stem, options, designated correct answer(s), and explanation all technically correct with respect to the source material?",
+      "anchors": {
+        "1": "The question, the keyed-correct option, or the explanation is technically wrong or contradicts the material.",
+        "5": "Largely correct but with a minor imprecision in an option or the explanation.",
+        "10": "Stem, all options, the correct answer(s), and the explanation are technically accurate and consistent with the material."
+      }
+    }
+  ]
+}

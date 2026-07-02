@@ -1,0 +1,150 @@
+{
+  "agent_id": "agent1_image_selector",
+  "agent_name": "Agent 1 — Image Identification and Selection Step",
+  "version": "1.0",
+  "examples": [
+    {
+      "example_id": "img_sel_bad_001",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "block_id": 2,
+        "block_title": "Understanding the Waterfall Model",
+        "block_content_summary": "Explains the Waterfall model sequential phases with a diagram and includes an analogy photo of a real waterfall.",
+        "images_in_block": [
+          { "image_id": "img_b2_01", "src": "https://example.com/waterfall-diagram.png", "alt": "Waterfall Model phases diagram", "caption": "" },
+          { "image_id": "img_b2_02", "src": "https://example.com/waterfall-photo.jpg", "alt": "A real waterfall in nature", "caption": "Just like a waterfall flows downward, the model moves in one direction only." }
+        ]
+      },
+      "output": {
+        "image_decisions": [
+          { "image_id": "img_b2_01", "decision": "skip", "reason": "The content block already explains the Waterfall model in text. The diagram is not necessary." },
+          { "image_id": "img_b2_02", "decision": "send_to_agent2", "visual_type": "concept", "reason": "This waterfall photo will help learners visualise the concept." }
+        ]
+      },
+      "scores": { "decision_correctness": 1, "reason_quality": 2, "visual_type_correctness": 2, "completeness": 10, "edge_case_handling": 2, "weighted_average": 2.45 },
+      "failure_labels": [
+        { "dimension": "decision_correctness", "reason": "Both decisions are inverted. The Waterfall phases diagram (img_b2_01) is a process flow with sequential phases and directional arrows — it should be sent to Agent 2. The nature photo (img_b2_02) is a real-waterfall analogy with no process structure — it should be skipped. The decisions are the exact opposite of what the rules require ('process flow → send', 'photo analogy → skip')." },
+        { "dimension": "reason_quality", "reason": "The skip reason ('the text already explains it') misunderstands animation: the criterion is structural visual content, not whether text covers the topic. The send reason ('will help learners visualise the concept') is circular and never says what makes the photo animatable." },
+        { "dimension": "visual_type_correctness", "reason": "The wrongly-sent photo was classified visual_type 'concept', but a photograph has no structural content to reveal and should not have been sent at all — there is no correct visual_type for it." }
+      ],
+      "notes": "The most critical failure pattern: inverting the two decisions in a block with one send-worthy image and one skip-worthy image. The analogy photo is the most common type of image incorrectly sent to Agent 2. Key distinction: does the image have STRUCTURAL CONTENT (phases, components, arrows, hierarchy) that benefits from sequential reveal? If yes — send; if purely illustrative/photographic — skip."
+    },
+    {
+      "example_id": "img_sel_bad_002",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Introduction to AI Agents",
+        "block_id": 2,
+        "block_title": "The Three Core Components of an AI Agent",
+        "block_content_summary": "Explains AI Model, Tools, and Memory as the three core components. Includes a layered architecture diagram.",
+        "images_in_block": [
+          { "image_id": "img_b2_01", "src": "https://example.com/ai-agent-architecture.png", "alt": "AI Agent architecture diagram showing AI Model, Tools, and Memory layers", "caption": "Figure 1: The three core components of an AI Agent" }
+        ]
+      },
+      "output": {
+        "image_decisions": [
+          { "image_id": "img_b2_01", "decision": "send_to_agent2", "reason": "Image found." }
+        ]
+      },
+      "scores": { "decision_correctness": 8, "reason_quality": 1, "visual_type_correctness": 2, "completeness": 10, "edge_case_handling": 3, "weighted_average": 4.75 },
+      "failure_labels": [
+        { "dimension": "reason_quality", "reason": "'Image found.' is an acknowledgement, not a reason. It does not name what the image shows (a layered architecture with three named components), does not explain why animation helps (revealing layers builds the mental model), and cites no rule. A reason must answer WHAT / WHY / WHICH rule." },
+        { "dimension": "visual_type_correctness", "reason": "The send decision carries no visual_type at all. A send must classify the image so Agent 2 can pick a reference template; this layered diagram should be visual_type 'architecture'. A missing type degrades the downstream animation." }
+      ],
+      "notes": "The decision (send) is correct but the output is otherwise hollow: no reason content and no visual_type. If a future case is ambiguous, an 'Image found.' reason gives the evaluator nothing to check. Sends must carry a substantive reason and a correct visual_type."
+    },
+    {
+      "example_id": "img_sel_bad_003",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Prompt Engineering",
+        "block_id": 3,
+        "block_title": "The RCATF Framework — Structuring Your Prompts",
+        "block_content_summary": "Explains RCATF framework components. Includes a ChatGPT screenshot and an RCATF framework diagram.",
+        "images_in_block": [
+          { "image_id": "img_b3_01", "src": "https://example.com/chatgpt-screenshot.png", "alt": "Screenshot of ChatGPT interface", "caption": "Example prompt entered into ChatGPT" },
+          { "image_id": "img_b3_02", "src": "https://example.com/rcatf-diagram.png", "alt": "RCATF Framework diagram", "caption": "The five components of the RCATF framework" }
+        ]
+      },
+      "output": {
+        "image_decisions": [
+          { "image_id": "img_b3_01", "decision": "send_to_agent2", "reason": "This screenshot shows the ChatGPT interface which is relevant to prompt engineering and will help learners see where prompts are used in practice." },
+          { "image_id": "img_b3_02", "decision": "send_to_agent2", "visual_type": "concept", "reason": "This diagram shows the RCATF framework components and should be animated." }
+        ]
+      },
+      "scores": { "decision_correctness": 4, "reason_quality": 3, "visual_type_correctness": 3, "completeness": 10, "edge_case_handling": 3, "weighted_average": 4.05 },
+      "failure_labels": [
+        { "dimension": "decision_correctness", "reason": "img_b3_01 (ChatGPT screenshot) should be skipped. A UI screenshot is a visual example of WHERE prompts are entered — not a process flow, architecture, lifecycle, or comparison. The rule is explicit: 'a screenshot of a UI example → skip.' Topic relevance does not qualify an image for animation." },
+        { "dimension": "reason_quality", "reason": "The reason for img_b3_01 argues topic relevance, not animation suitability — different things. The reason for img_b3_02 ('should be animated') is circular and never explains what makes the framework diagram animatable." },
+        { "dimension": "visual_type_correctness", "reason": "The wrongly-sent screenshot has no visual_type (correctly — it should not have been sent). The framework diagram's 'concept' type is acceptable, but overall the send set is polluted by an image that should not carry a type at all." },
+        { "dimension": "edge_case_handling", "reason": "The ChatGPT screenshot is a clear case, not ambiguous — it is definitively a UI screenshot. Agent 1 treated it as a judgement call and found a relevance-based excuse to send it, showing no engagement with the UI-screenshot skip rule." }
+      ],
+      "notes": "Topic relevance is NOT a criterion for animation. Many images are topically relevant yet should be skipped — screenshots, illustrative photos, decorative icons. The only question: does the image have STRUCTURAL VISUAL CONTENT (process, architecture, lifecycle, hierarchy, comparison) that a step-by-step reveal makes clearer? For the ChatGPT screenshot, the answer is definitively no."
+    },
+    {
+      "example_id": "img_sel_bad_004",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "V-Model",
+        "block_id": 1,
+        "block_title": "Understanding the V-Model",
+        "block_content_summary": "Explains the V-Model with its two arms and phase correspondence. Includes a V-shaped diagram and a decorative checkmark icon.",
+        "images_in_block": [
+          { "image_id": "img_b1_01", "src": "https://example.com/v-model-diagram.png", "alt": "V-Model diagram", "caption": "The V-Model" },
+          { "image_id": "img_b1_02", "src": "https://example.com/checkmark-icon.svg", "alt": "Green checkmark icon", "caption": "" }
+        ]
+      },
+      "output": {
+        "image_decisions": [
+          { "image_id": "img_b1_01", "decision": "send_to_agent2", "reason": "V-Model diagram — send for animation." }
+        ]
+      },
+      "scores": { "decision_correctness": 5, "reason_quality": 1, "visual_type_correctness": 1, "completeness": 1, "edge_case_handling": 2, "weighted_average": 2.5 },
+      "failure_labels": [
+        { "dimension": "completeness", "reason": "Only one decision was returned for two images. img_b1_02 (the checkmark icon) has no decision entry at all. Every image in the block's images array must have exactly one decision — the output is structurally incomplete." },
+        { "dimension": "reason_quality", "reason": "'V-Model diagram — send for animation.' is a label, not a reason. It does not describe what the diagram shows (two arms, phase correspondence, directional arrows), does not explain why animation helps (revealing the left arm then the right clarifies the paired structure), and cites no rule." },
+        { "dimension": "visual_type_correctness", "reason": "The send decision carries no visual_type. The V-shape mapping development phases to test phases should be classified (e.g. 'flowchart' for the directional V, or 'comparison' for the dev↔test pairing) so Agent 2 can choose a template. A missing type leaves the animation undirected." }
+      ],
+      "notes": "Two failure patterns in one example: structural incompleteness (no decision for the second image) and a label-only reason with no visual_type. Beyond the missing decision, the send is unusable downstream because Agent 2 has neither a real reason nor a visual_type to work from."
+    },
+    {
+      "example_id": "img_sel_bad_005",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Agile Model and Frameworks",
+        "block_id": 3,
+        "block_title": "Popular Agile Frameworks — Scrum and Kanban",
+        "block_content_summary": "Explains Scrum (sprint cycles, roles) and Kanban (board with three columns). Includes a Scrum sprint cycle diagram and a Kanban board screenshot from Jira.",
+        "images_in_block": [
+          { "image_id": "img_b3_01", "src": "https://example.com/scrum-sprint-diagram.png", "alt": "Scrum sprint cycle diagram showing iterative loop", "caption": "The Scrum sprint cycle" },
+          { "image_id": "img_b3_02", "src": "https://example.com/jira-kanban-screenshot.png", "alt": "Screenshot of a Jira Kanban board showing To Do, In Progress, and Done columns", "caption": "A Kanban board in Jira" }
+        ]
+      },
+      "output": {
+        "image_decisions": [
+          { "image_id": "img_b3_01", "decision": "skip", "reason": "The Scrum sprint cycle is already explained in the content text. Animation is not needed." },
+          { "image_id": "img_b3_02", "decision": "send_to_agent2", "visual_type": "comparison", "reason": "The Kanban board screenshot from Jira shows the three columns (To Do, In Progress, Done) which is central to understanding how Kanban works. Animating this will help learners understand the workflow." }
+        ]
+      },
+      "scores": { "decision_correctness": 2, "reason_quality": 4, "visual_type_correctness": 2, "completeness": 10, "edge_case_handling": 3, "weighted_average": 3.4 },
+      "failure_labels": [
+        { "dimension": "decision_correctness", "reason": "img_b3_01 (Scrum sprint cycle) should be sent. A sprint cycle is a lifecycle/state machine — a loop showing how sprints repeat — exactly where cycling animation makes the repeating nature tangible. The rule 'lifecycle / state machine → send' applies." },
+        { "dimension": "decision_correctness", "reason": "img_b3_02 (Jira Kanban screenshot) should be skipped. It is a screenshot of a real software interface — a UI screenshot. The rule is explicit: 'screenshot of a UI example → skip.' Showing the three columns does not make a UI screenshot a structural diagram." },
+        { "dimension": "reason_quality", "reason": "The skip reason for img_b3_01 ('already explained in the text') repeats the wrong criterion from bad_001 — text coverage does not disqualify an image. The send reason for img_b3_02 identifies the columns but never applies the UI-screenshot rule." },
+        { "dimension": "visual_type_correctness", "reason": "The wrongly-sent Jira screenshot was tagged 'comparison', but a UI screenshot should not have been sent at all and has no valid visual_type. Meanwhile the genuinely send-worthy sprint cycle (which should be 'lifecycle') was skipped, so no correct type was produced." }
+      ],
+      "notes": "Both decisions are inverted: a lifecycle diagram (Scrum sprint cycle) is skipped while a UI screenshot (Jira) is sent and mis-typed as 'comparison'. The error pattern is focusing on topic relevance and text coverage instead of the structural animation value. Correct framework: (1) What TYPE of image is this? (2) Does it have structural content worth animating? (3) Which rule applies?"
+    }
+  ]
+}

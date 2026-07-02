@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Development Models</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            min-height: 100vh;
+            color: #374151;
+            padding-bottom: 110px;
+            scroll-behavior: smooth;
+        }
+
+        /* ── BLOCK VISIBILITY ──
+           Scrolling-feed version: once a block is revealed it STAYS visible.
+           Each new block is appended below the previous ones so the learner
+           can scroll back up to review earlier content at any time. */
+        .block { display: none; }
+        .block.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+            scroll-margin-top: 16px;        /* breathing room when scrolled into view */
+        }
+        /* subtle separator between stacked blocks */
+        .block.active + .block.active { border-top: 1px solid #e5e7eb; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── CONTINUE BAR ── */
+        .continue-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            padding: 14px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.06);
+        }
+        .progress-steps { display: flex; align-items: center; gap: 8px; }
+        .step-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background-color: #e5e7eb;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .step-dot.done   { background-color: #93c5fd; }
+        .step-dot.active { background-color: #3b82f6; transform: scale(1.3); }
+        .step-label { font-size: 0.8rem; color: #9ca3af; margin-left: 12px; }
+
+        #continue-btn {
+            background-color: #3b82f6;
+            color: white; border: none;
+            border-radius: 8px;
+            padding: 10px 24px;
+            font-size: 0.9rem; font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+        #continue-btn:hover:not(:disabled)  { background-color: #2563eb; }
+        #continue-btn:active:not(:disabled) { transform: scale(0.97); }
+        #continue-btn:disabled { opacity: 0.38; cursor: default; pointer-events: none; }
+        #continue-btn.finish  { background-color: #22c55e; }
+        #continue-btn.finish:hover:not(:disabled) { background-color: #16a34a; }
+
+        /* ── HEADER ── */
+        .header { display: flex; }
+        .header-accent { width: 8px; background-color: #3b82f6; min-height: 128px; flex-shrink: 0; }
+        .header-content { padding: 40px 0 40px 16px; }
+        .header h1 { font-size: 2.25rem; font-weight: 700; color: #1f2937; margin-bottom: 8px; }
+        .header p  { font-size: 1.25rem; color: #6b7280; font-style: italic; }
+
+        .intro-section { padding: 24px 40px 0 40px; }
+        .intro-section p { font-size: 0.95rem; color: #6b7280; line-height: 1.75; max-width: 820px; }
+
+        .section-label h2 { font-size: 1.375rem; font-weight: 700; color: #1f2937; margin-bottom: 4px; }
+        .section-label p  { font-size: 0.9rem; color: #6b7280; font-style: italic; }
+
+        .divider { border: none; border-top: 1px solid #e5e7eb; margin: 32px 40px; }
+
+        .main-content { padding: 24px 40px; }
+
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+
+        .card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; background-color: white; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1); transition: all 0.3s ease; }
+        .card:hover { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border-color: #93c5fd; }
+        .card-header { display: flex; align-items: center; margin-bottom: 12px; }
+        .card-icon { width: 24px; height: 24px; color: #3b82f6; margin-right: 8px; flex-shrink: 0; }
+        .card-title { font-weight: 700; color: #1f2937; font-size: 0.95rem; }
+
+        .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .bullet-item { display: flex; align-items: flex-start; line-height: 1.5; }
+        .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background-color: #3b82f6; margin-top: 8px; margin-right: 8px; flex-shrink: 0; }
+        .bullet-dot.green { background-color: #22c55e; }
+        .bullet-dot.red   { background-color: #ef4444; }
+        .bullet-text { color: #6b7280; font-size: 0.9rem; }
+
+        .callout { background-color: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 0 8px 8px 0; padding: 16px 20px; margin: 20px 0; color: #374151; font-size: 0.9rem; line-height: 1.7; }
+        .callout strong { color: #1d4ed8; }
+
+        .table-wrap { overflow-x: auto; margin: 16px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        thead tr { background-color: #f9fafb; }
+        thead th { text-align: left; padding: 10px 16px; color: #374151; font-weight: 600; border-bottom: 2px solid #e5e7eb; }
+        tbody tr { border-bottom: 1px solid #e5e7eb; }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr:hover { background-color: #f9fafb; }
+        tbody td { padding: 10px 16px; color: #6b7280; vertical-align: top; }
+        tbody td:first-child { color: #1f2937; font-weight: 500; }
+
+        .model-section { margin-bottom: 40px; }
+        .model-header { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+        .model-number { width: 40px; height: 40px; background-color: #3b82f6; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .model-number span { font-size: 1rem; font-weight: 700; color: white; }
+        .model-title { font-size: 1.25rem; font-weight: 700; color: #1f2937; }
+        .model-tagline { color: #6b7280; font-style: italic; font-size: 0.9rem; margin-bottom: 20px; margin-left: 52px; }
+        .model-body { margin-left: 52px; }
+
+        .img-box { border: none; border-radius: 0; padding: 8px 0; background-color: transparent; margin: 16px 0; text-align: center; }
+        .img-box img { max-width: 100%; border-radius: 6px; }
+        .img-caption { font-size: 0.8rem; color: #9ca3af; margin-top: 8px; font-style: italic; }
+
+        .pros-cons-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 16px 0; }
+        .pros-card { border: 1px solid #bbf7d0; border-top: 3px solid #22c55e; border-radius: 8px; padding: 16px 20px; background-color: #f0fdf4; }
+        .cons-card { border: 1px solid #fecaca; border-top: 3px solid #ef4444; border-radius: 8px; padding: 16px 20px; background-color: #fff5f5; }
+        .pros-card h4 { font-weight: 700; color: #15803d; margin-bottom: 12px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .cons-card h4 { font-weight: 700; color: #b91c1c; margin-bottom: 12px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        .when-card { background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+        .when-card h4 { font-weight: 600; color: #0369a1; margin-bottom: 10px; font-size: 0.9rem; }
+
+        .tags-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+        .tag { border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 14px; background-color: #f9fafb; color: #374151; font-size: 0.875rem; font-weight: 500; }
+
+        .kanban { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 16px 0; }
+        .kanban-col { border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px; background-color: #f9fafb; }
+        .kanban-col-title { font-size: 0.75rem; font-weight: 700; color: #374151; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #e5e7eb; }
+        .kanban-task { background-color: white; border: 1px solid #e5e7eb; border-radius: 6px; padding: 8px 10px; font-size: 0.8rem; color: #6b7280; margin-bottom: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+
+        .vv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+        .vv-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px 20px; background-color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.07); }
+        .vv-label { display: inline-block; background-color: #eff6ff; color: #2563eb; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 3px 8px; border-radius: 4px; margin-bottom: 10px; }
+        .vv-question { font-size: 0.95rem; font-weight: 600; color: #1f2937; margin-bottom: 6px; }
+        .vv-how { font-size: 0.875rem; color: #6b7280; line-height: 1.6; }
+
+        .role-badge { display: inline-block; background-color: #eff6ff; color: #1d4ed8; font-size: 0.8rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; border: 1px solid #bfdbfe; }
+
+        .checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+        .checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: #374151; }
+        .check-icon { width: 18px; height: 18px; color: #22c55e; flex-shrink: 0; margin-top: 1px; }
+
+        h3 { font-size: 1rem; font-weight: 700; color: #1f2937; margin: 24px 0 10px 0; }
+        h3:first-child { margin-top: 0; }
+        p { font-size: 0.9rem; color: #6b7280; line-height: 1.7; margin-bottom: 12px; }
+        strong { color: #1f2937; }
+
+        /* ══ QUIZ BLOCK ══
+           In the scrolling feed the quiz flows directly below its content block
+           (no full-viewport centering), so the learner reads content → quiz →
+           next content as one continuous column. */
+        .quiz-block-wrapper {
+            padding: 40px 40px 44px;
+            background: white;
+        }
+
+        .quiz-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 28px;
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        .quiz-icon-box {
+            width: 44px; height: 44px;
+            background: #eff6ff;
+            border: 1.5px solid #bfdbfe;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .quiz-icon-box svg { width: 22px; height: 22px; color: #3b82f6; }
+
+        .quiz-header-text h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 2px;
+        }
+
+        .quiz-header-text p {
+            font-size: 0.83rem;
+            color: #9ca3af;
+            margin: 0;
+        }
+
+        /* Carousel */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            max-width: 720px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            padding: 0 2px;
+        }
+
+        /* Question card */
+        .question-card {
+            background: white;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 28px 28px 22px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+
+        .q-progress-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .q-dots { display: flex; gap: 6px; align-items: center; }
+
+        .q-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            transition: background 0.25s, transform 0.2s;
+        }
+        .q-dot.current  { background: #3b82f6; transform: scale(1.3); }
+        .q-dot.answered { background: #93c5fd; }
+        .q-dot.correct-dot { background: #22c55e; }
+        .q-dot.wrong-dot   { background: #f87171; }
+
+        .q-counter { font-size: 0.78rem; font-weight: 600; color: #9ca3af; }
+
+        .question-text {
+            font-size: 0.975rem;
+            font-weight: 600;
+            color: #1f2937;
+            line-height: 1.55;
+            margin-bottom: 20px;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: white;
+        }
+        .option-item:hover:not(.disabled) { border-color: #93c5fd; background-color: #f0f9ff; }
+        .option-item input { width: 16px; height: 16px; accent-color: #3b82f6; margin-top: 2px; flex-shrink: 0; cursor: pointer; }
+        .option-label { font-size: 0.9rem; color: #374151; line-height: 1.5; cursor: pointer; }
+
+        .option-item.selected { border-color: #3b82f6; background-color: #eff6ff; }
+        .option-item.selected .option-label { color: #1d4ed8; font-weight: 500; }
+
+        .option-item.correct { border-color: #22c55e; background-color: #f0fdf4; }
+        .option-item.correct .option-label { color: #15803d; font-weight: 500; }
+
+        .option-item.incorrect { border-color: #ef4444; background-color: #fff5f5; }
+        .option-item.incorrect .option-label { color: #b91c1c; font-weight: 500; }
+
+        .option-item.show-correct { border-color: #22c55e; background-color: #f0fdf4; }
+        .option-item.show-correct .option-label { color: #15803d; font-weight: 500; }
+
+        .option-item.disabled { pointer-events: none; cursor: default; }
+
+        .explanation {
+            display: none;
+            background: #f0f9ff;
+            border-left: 3px solid #3b82f6;
+            border-radius: 0 6px 6px 0;
+            padding: 12px 14px;
+            font-size: 0.875rem;
+            color: #374151;
+            line-height: 1.65;
+            margin: 4px 0 16px;
+        }
+        .explanation.visible { display: block; }
+        .explanation strong { color: #1d4ed8; }
+
+        .result-badge {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+        .result-badge.visible { display: flex; }
+        .result-badge.correct-badge { color: #15803d; }
+        .result-badge.incorrect-badge { color: #b91c1c; }
+
+        .question-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-show-answer {
+            padding: 8px 18px;
+            border: 1.5px solid #d1d5db;
+            border-radius: 8px;
+            background: white;
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .btn-show-answer:hover:not(:disabled) { border-color: #3b82f6; color: #3b82f6; background: #eff6ff; }
+        .btn-show-answer:disabled { opacity: 0.38; cursor: default; }
+
+        .btn-submit {
+            padding: 8px 22px;
+            border: none;
+            border-radius: 8px;
+            background: #3b82f6;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .btn-submit:hover:not(:disabled) { background: #2563eb; }
+        .btn-submit:disabled { opacity: 0.38; cursor: default; }
+
+        .btn-next-q {
+            padding: 8px 22px;
+            border: none;
+            border-radius: 8px;
+            background: #1f2937;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.15s;
+        }
+        .btn-next-q.visible { display: flex; }
+        .btn-next-q:hover { background: #374151; }
+
+        .mcq-error {
+            padding: 20px;
+            background: #fff5f5;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            color: #b91c1c;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.6rem; }
+            .header p { font-size: 1rem; }
+            .main-content, .intro-section { padding-left: 20px; padding-right: 20px; }
+            .divider { margin-left: 20px; margin-right: 20px; }
+            .info-grid, .pros-cons-row, .vv-grid, .kanban { grid-template-columns: 1fr; }
+            .model-body, .model-tagline { margin-left: 0; }
+            .continue-bar { padding: 12px 20px; }
+            .quiz-block-wrapper { padding: 32px 20px 36px; }
+        }
+    </style>
+
+    <!-- ===== Embedded SDLC model animations (replace the static diagram images) ===== -->
+    <style>
+        .anim { width: 100%; max-width: 720px; margin: 0 auto; }
+        .anim svg { width: 100%; height: auto; display: block; }
+        .anim text { font-family: 'Inter', sans-serif; }
+        .anim .reveal { opacity: 0; transform-box: fill-box; transform-origin: center; }
+
+        /* shared reveal (agile + v-model) */
+        .anim-ag .reveal, .anim-vm .reveal { transform: scale(0.84); transition: opacity .4s ease, transform .45s cubic-bezier(.2,.75,.25,1); }
+        .anim-ag .reveal.show, .anim-vm .reveal.show { opacity: 1; transform: scale(1); }
+        .anim-vm .link.reveal { transform: scaleX(0.4); }
+        .anim-vm .link.reveal.show { transform: scaleX(1); }
+
+        /* ── Waterfall ── */
+        .anim-wf { --req:#1b5e9c; --des:#6c7fd0; --dev:#1f9bbf; --test:#93bf3f; --dep:#c33d2e; --mnt:#e6a200; --arrow:#ef8f2e; --lblText:#5b6470; --lblBorder:#e3e7ec; --em:#2563eb; }
+        .anim-wf .blk-t  { fill:#fff; font-weight:700; font-size:15px; }
+        .anim-wf .lbl-box { fill:#fff; stroke:var(--lblBorder); stroke-width:1.5; }
+        .anim-wf .lbl-t  { fill:var(--lblText); font-weight:500; font-size:14px; }
+        .anim-wf .lbl-t .em { fill:var(--em); font-weight:700; }
+        .anim-wf .blk rect { filter: drop-shadow(0 2px 3px rgba(0,0,0,.16)); }
+        .anim-wf .reveal { transform: translateY(10px) scale(.96); transition: opacity .45s ease, transform .5s cubic-bezier(.2,.75,.25,1); }
+        .anim-wf .reveal.show { opacity:1; transform: translateY(0) scale(1); }
+        .anim-wf .arrow-shaft { fill:none; stroke:var(--arrow); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:1; stroke-dashoffset:1; transition: stroke-dashoffset .5s ease; }
+        .anim-wf .arrow-shaft.show { stroke-dashoffset:0; }
+        .anim-wf .arrow-head { fill:var(--arrow); opacity:0; transform: scale(.3); transform-box: fill-box; transform-origin:center; transition: opacity .25s ease .32s, transform .25s ease .32s; }
+        .anim-wf .arrow-head.show { opacity:1; transform: scale(1); }
+
+        /* ── Agile ── */
+        .anim-ag .hub-name { fill:#6b7280; font-weight:800; font-size:17px; letter-spacing:.5px; }
+        .anim-ag .hub-num  { fill:#6b7280; font-weight:800; font-size:22px; }
+        .anim-ag .phase-t, .anim-ag .launch-t { fill:#fff; font-weight:700; font-size:11px; letter-spacing:.6px; }
+        .anim-ag .seg path, .anim-ag .launch path { filter: drop-shadow(0 2px 3px rgba(0,0,0,.16)); }
+        .anim-ag .hub circle { filter: drop-shadow(0 2px 4px rgba(0,0,0,.06)); }
+
+        /* ── V-Model ── */
+        .anim-vm .box-t { fill:#fff; font-weight:700; font-size:13px; }
+        .anim-vm .arm-t { fill:#fff; font-weight:800; font-size:17px; letter-spacing:.5px; }
+        .anim-vm .box polygon, .anim-vm .coding polygon { filter: drop-shadow(0 2px 4px rgba(0,0,0,.20)); }
+        .anim-vm .arm polygon { filter: drop-shadow(0 2px 4px rgba(0,0,0,.10)); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .anim .reveal, .anim-wf .arrow-shaft, .anim-wf .arrow-head { transition: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- STEP 1 — Content: Intro -->
+<div id="step-1" class="block active">
+    <div class="header">
+        <div class="header-accent"></div>
+        <div class="header-content">
+            <h1>Software Development Models</h1>
+            <p>Understanding how SDLC phases are arranged to fit different projects</p>
+        </div>
+    </div>
+
+    <div class="intro-section">
+        In the previous session, we explored the <strong>Software Development Life Cycle (SDLC)</strong> and how AI is transforming each of its 7 phases. Now, let's shift focus to <strong>Software Development Models</strong> — the different ways the SDLC phases can be arranged to fit different types of projects. We'll look at three of the most commonly used models: the <strong>Waterfall Model</strong>, the <strong>Agile Model</strong>, and the <strong>V-Model</strong>.
+    </div>
+
+    <hr class="divider">
+
+    <div class="main-content">
+        <div class="section-label" style="padding: 0 0 16px 0;">
+            <h2>Why Not One SDLC for All?</h2>
+            <p>Every project differs in size, requirements, and flexibility — one approach doesn't fit all.</p>
+        </div>
+
+        <h3>Types of Software Projects</h3>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Dimension</th><th>Range</th></tr></thead>
+                <tbody>
+                    <tr><td>Size</td><td>Small → Big</td></tr>
+                    <tr><td>Requirements</td><td>Fixed → Always Changing</td></tr>
+                    <tr><td>Flexibility</td><td>Low → High</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>For Example</h3>
+        <div class="info-grid">
+            <div class="card">
+                <div class="card-header">
+                    <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                    <span class="card-title">Example 1 — Simple Task App</span>
+                </div>
+                <ul class="bullet-list">
+                    <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">Small, simple project with just a few basic features</span></li>
+                    <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">Requirements are known from the start</span></li>
+                    <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">Once built, it doesn't change much</span></li>
+                    <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">Example: A basic to-do list app</span></li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <span class="card-title">Example 2 — Instagram</span>
+                </div>
+                <ul class="bullet-list">
+                    <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">Big, complex project with many features</span></li>
+                    <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">Requirements constantly change based on user feedback</span></li>
+                    <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">Always adding new features and updates</span></li>
+                    <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">Began as photo sharing — now includes stories, videos, and shopping</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="callout">
+            If we followed a very strict, step-by-step SDLC for Instagram, each phase could take months or years. Adding a new feature halfway through becomes incredibly difficult. <strong>One single SDLC approach doesn't fit every project.</strong>
+        </div>
+
+        <h3>Project Objectives Every Team Must Balance</h3>
+        <ul class="checklist">
+            <li><svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Deliver the application faster to users</li>
+            <li><svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Incorporate user feedback</li>
+            <li><svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Ensure the application is high quality and free of errors</li>
+        </ul>
+
+        <hr class="divider" style="margin: 32px 0;">
+
+        <div class="section-label" style="padding: 0 0 16px 0;">
+            <h2>What are Software Development Models?</h2>
+        </div>
+        <p>According to the specific needs of a project, the phases of the SDLC can be <strong>adjusted</strong>. The different ways of adjusting the phases of the SDLC are known as <strong>Software Development Models</strong>.</p>
+
+        <h3>Most Commonly Used Models</h3>
+        <div class="tags-row">
+            <span class="tag">Waterfall Model</span>
+            <span class="tag">Agile Model</span>
+            <span class="tag">V-Model</span>
+        </div>
+    </div>
+</div>
+
+
+<!-- STEP 2 — Quiz 1 -->
+<div id="step-2" class="block">
+    <div class="quiz-block-wrapper">
+        <div class="quiz-header">
+            <div class="quiz-icon-box">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </div>
+            <div class="quiz-header-text">
+                <h2>Quick Check — Software Development Models</h2>
+                <p>Answer all questions to continue</p>
+            </div>
+        </div>
+        <div id="quiz-area-1"></div>
+    </div>
+</div>
+
+
+<!-- STEP 3 — Content: Waterfall -->
+<div id="step-3" class="block">
+    <div class="header">
+        <div class="header-accent"></div>
+        <div class="header-content">
+            <h1>Software Development Models</h1>
+            <p>Model 1 of 3 — Waterfall Model</p>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="model-section">
+            <div class="model-header">
+                <div class="model-number"><span>1</span></div>
+                <span class="model-title">Waterfall Model</span>
+            </div>
+            <p class="model-tagline">A step-by-step approach where each phase completes before the next begins</p>
+            <div class="model-body">
+                <p>It is a <strong>step-by-step way of developing software</strong> where each phase must be completed fully before moving to the next.</p>
+                <h3>How it Works</h3>
+                <div class="img-box">
+                    <div class="anim anim-wf">
+                        <svg id="anim-wf-svg" viewBox="0 0 890 460" role="img" aria-label="Animated Waterfall Model diagram">
+                            <!-- connector arrows -->
+                            <path class="arrow-shaft" id="wf-a-req-l1" pathLength="1" d="M170,59 L206,59"/>
+                            <polygon class="arrow-head" id="wf-h-req-l1" points="210,59 201,54 201,64"/>
+                            <path class="arrow-shaft" id="wf-a-req-des" pathLength="1" d="M64,88 L64,123 L151,123"/>
+                            <polygon class="arrow-head" id="wf-h-req-des" points="155,123 146,118 146,128"/>
+                            <path class="arrow-shaft" id="wf-a-des-dev" pathLength="1" d="M179,146 L179,193 L266,193"/>
+                            <polygon class="arrow-head" id="wf-h-des-dev" points="270,193 261,188 261,198"/>
+                            <path class="arrow-shaft" id="wf-a-dev-l2" pathLength="1" d="M420,193 L466,193"/>
+                            <polygon class="arrow-head" id="wf-h-dev-l2" points="470,193 461,188 461,198"/>
+                            <path class="arrow-shaft" id="wf-a-dev-test" pathLength="1" d="M294,216 L294,263 L381,263"/>
+                            <polygon class="arrow-head" id="wf-h-dev-test" points="385,263 376,258 376,268"/>
+                            <path class="arrow-shaft" id="wf-a-test-l3" pathLength="1" d="M489,263 L541,263"/>
+                            <polygon class="arrow-head" id="wf-h-test-l3" points="545,263 536,258 536,268"/>
+                            <path class="arrow-shaft" id="wf-a-test-dep" pathLength="1" d="M409,286 L409,333 L496,333"/>
+                            <polygon class="arrow-head" id="wf-h-test-dep" points="500,333 491,328 491,338"/>
+                            <path class="arrow-shaft" id="wf-a-dep-mnt" pathLength="1" d="M524,356 L524,403 L611,403"/>
+                            <polygon class="arrow-head" id="wf-h-dep-mnt" points="615,403 606,398 606,408"/>
+                            <path class="arrow-shaft" id="wf-a-mnt-l4" pathLength="1" d="M615,403 L589,403"/>
+                            <polygon class="arrow-head" id="wf-h-mnt-l4" points="585,403 594,398 594,408"/>
+                            <!-- phase blocks -->
+                            <g class="reveal blk" id="wf-b-req">
+                                <rect x="40" y="30" width="130" height="58" rx="8" fill="var(--req)"/>
+                                <text x="105" y="53" text-anchor="middle" class="blk-t">Requirement</text>
+                                <text x="105" y="73" text-anchor="middle" class="blk-t">Analysis</text>
+                            </g>
+                            <g class="reveal blk" id="wf-b-des">
+                                <rect x="155" y="100" width="104" height="46" rx="8" fill="var(--des)"/>
+                                <text x="207" y="128" text-anchor="middle" class="blk-t">Design</text>
+                            </g>
+                            <g class="reveal blk" id="wf-b-dev">
+                                <rect x="270" y="170" width="150" height="46" rx="8" fill="var(--dev)"/>
+                                <text x="345" y="198" text-anchor="middle" class="blk-t">Development</text>
+                            </g>
+                            <g class="reveal blk" id="wf-b-test">
+                                <rect x="385" y="240" width="104" height="46" rx="8" fill="var(--test)"/>
+                                <text x="437" y="268" text-anchor="middle" class="blk-t">Testing</text>
+                            </g>
+                            <g class="reveal blk" id="wf-b-dep">
+                                <rect x="500" y="310" width="150" height="46" rx="8" fill="var(--dep)"/>
+                                <text x="575" y="338" text-anchor="middle" class="blk-t">Deployment</text>
+                            </g>
+                            <g class="reveal blk" id="wf-b-mnt">
+                                <rect x="615" y="380" width="150" height="46" rx="8" fill="var(--mnt)"/>
+                                <text x="690" y="408" text-anchor="middle" class="blk-t">Maintenance</text>
+                            </g>
+                            <!-- explanation labels -->
+                            <g class="reveal lbl" id="wf-l1">
+                                <rect class="lbl-box" x="210" y="39" width="235" height="40" rx="8"/>
+                                <text x="224" y="64" class="lbl-t">Plan everything <tspan class="em">beforehand</tspan></text>
+                            </g>
+                            <g class="reveal lbl" id="wf-l2">
+                                <rect class="lbl-box" x="470" y="173" width="250" height="40" rx="8"/>
+                                <text x="484" y="198" class="lbl-t">Developers <tspan class="em">code complete app</tspan></text>
+                            </g>
+                            <g class="reveal lbl" id="wf-l3">
+                                <rect class="lbl-box" x="545" y="243" width="320" height="40" rx="8"/>
+                                <text x="559" y="268" class="lbl-t">Testing after <tspan class="em">everything has developed</tspan></text>
+                            </g>
+                            <g class="reveal lbl" id="wf-l4">
+                                <rect class="lbl-box" x="335" y="383" width="250" height="40" rx="8"/>
+                                <text x="349" y="408" class="lbl-t">Maintenance <tspan class="em">after deployment</tspan></text>
+                            </g>
+                        </svg>
+                    </div>
+                    <p class="img-caption">Waterfall Model — sequential phase flow</p>
+                </div>
+                <h3>When to Use</h3>
+                <div class="when-card">
+                    <h4>Best suited when:</h4>
+                    <ul class="bullet-list">
+                        <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">Requirements are <strong>very clear and fixed</strong></span></li>
+                        <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">The project is <strong>small or simple</strong></span></li>
+                        <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">The customer <strong>won't change their mind</strong> often</span></li>
+                    </ul>
+                </div>
+                <h3>Advantages &amp; Disadvantages</h3>
+                <div class="pros-cons-row">
+                    <div class="pros-card">
+                        <h4>Advantages</h4>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><span class="bullet-dot green"></span><span class="bullet-text">Simple to understand and use</span></li>
+                            <li class="bullet-item"><span class="bullet-dot green"></span><span class="bullet-text">Every phase has clear documentation — easy to track progress</span></li>
+                        </ul>
+                    </div>
+                    <div class="cons-card">
+                        <h4>Disadvantages</h4>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><span class="bullet-dot red"></span><span class="bullet-text">No feedback until the end</span></li>
+                            <li class="bullet-item"><span class="bullet-dot red"></span><span class="bullet-text">Hard to go back and fix something in earlier steps</span></li>
+                            <li class="bullet-item"><span class="bullet-dot red"></span><span class="bullet-text">If something is wrong, it's too late and costly to fix</span></li>
+                            <li class="bullet-item"><span class="bullet-dot red"></span><span class="bullet-text">Miscommunication</span></li>
+                            <li class="bullet-item"><span class="bullet-dot red"></span><span class="bullet-text">Slower time to reach users</span></li>
+                            <li class="bullet-item"><span class="bullet-dot red"></span><span class="bullet-text">Difficult to integrate new requirements or feedback</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- STEP 4 — Quiz 2 -->
+<div id="step-4" class="block">
+    <div class="quiz-block-wrapper">
+        <div class="quiz-header">
+            <div class="quiz-icon-box">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </div>
+            <div class="quiz-header-text">
+                <h2>Quick Check — Waterfall Model</h2>
+                <p>Answer all questions to continue</p>
+            </div>
+        </div>
+        <div id="quiz-area-2"></div>
+    </div>
+</div>
+
+
+<!-- STEP 5 — Content: Agile -->
+<div id="step-5" class="block">
+    <div class="header">
+        <div class="header-accent"></div>
+        <div class="header-content">
+            <h1>Software Development Models</h1>
+            <p>Model 2 of 3 — Agile Model, Scrum &amp; Kanban</p>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="model-section">
+            <div class="model-header">
+                <div class="model-number"><span>2</span></div>
+                <span class="model-title">Agile Model</span>
+            </div>
+            <p class="model-tagline">Build in small pieces through short, repeated cycles called sprints</p>
+            <div class="model-body">
+                <p>Agile is a software development approach where the product is <strong>built in small pieces</strong> through short, repeated cycles called <strong>sprints</strong> (typically 1–4 weeks each).</p>
+                <div class="img-box">
+                    <div class="anim anim-ag">
+                        <svg id="anim-agile-svg" viewBox="0 0 900 360" role="img" aria-label="Animated Agile Model diagram with three sprint cycles"></svg>
+                    </div>
+                    <p class="img-caption">Agile Model — iterative sprint cycles</p>
+                </div>
+                <h3>Behind the Scenes — Two Key Teams</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Team</th><th>Responsibility</th></tr></thead>
+                        <tbody>
+                            <tr><td>Development Team</td><td>Planning, designing, and building the software</td></tr>
+                            <tr><td>Operations Team</td><td>Implementing and running the software once it's built</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3>Agile Workflow</h3>
+                <p>In Agile, we don't build the whole app at once. Instead, we break it into smaller pieces called <strong>features</strong> (e.g., the login screen, the add-to-cart button).</p>
+                <ul class="bullet-list" style="margin-bottom:12px;">
+                    <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">Each feature is built in short cycles</span></li>
+                    <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">Different teams can work on many features at the same time</span></li>
+                    <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">Developers pick up a feature, write the code, and mark it as done</span></li>
+                </ul>
+                <h3>The Delay Problem</h3>
+                <div class="callout">
+                    Every time a new feature is ready, the Operations Team must manually handle servers, documents, system connections, and databases — creating a <strong>bottleneck</strong> that leads to delays, inconsistencies, and a higher chance of mistakes.
+                </div>
+                <h3>When to Use Agile</h3>
+                <div class="when-card">
+                    <h4>Best suited when:</h4>
+                    <ul class="bullet-list">
+                        <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">Requirements are <strong>unclear or expected to change frequently</strong></span></li>
+                        <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">The client/stakeholder is available for <strong>regular feedback</strong></span></li>
+                        <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">The project is <strong>medium to large</strong> with evolving scope</span></li>
+                    </ul>
+                </div>
+                <h3>Advantages &amp; Disadvantages</h3>
+                <div class="pros-cons-row">
+                    <div class="pros-card">
+                        <h4>Advantages</h4>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><span class="bullet-dot green"></span><span class="bullet-text">Reduces time to deliver the application</span></li>
+                            <li class="bullet-item"><span class="bullet-dot green"></span><span class="bullet-text">Reduces time to receive feedback</span></li>
+                            <li class="bullet-item"><span class="bullet-dot green"></span><span class="bullet-text">Flexible — easy to change plans if needed</span></li>
+                            <li class="bullet-item"><span class="bullet-dot green"></span><span class="bullet-text">Less risky — mistakes are caught early</span></li>
+                        </ul>
+                    </div>
+                    <div class="cons-card">
+                        <h4>Disadvantages</h4>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><span class="bullet-dot red"></span><span class="bullet-text">Miscommunication between Dev and Ops teams</span></li>
+                            <li class="bullet-item"><span class="bullet-dot red"></span><span class="bullet-text">Delay in Operations bottleneck</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <h3>Popular Agile Frameworks</h3>
+                <div class="tags-row">
+                    <span class="tag">Scrum</span>
+                    <span class="tag">Kanban</span>
+                    <span class="tag">SAFe</span>
+                    <span class="tag">eXtreme Programming (XP)</span>
+                </div>
+
+                <hr class="divider" style="margin: 28px 0;">
+
+                <div class="card" style="margin-top:20px;">
+                    <div class="card-header">
+                        <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                        <span class="card-title">Scrum</span>
+                    </div>
+                    <p style="margin-bottom:14px;">A structured framework where work is done in <strong>fixed-length cycles called sprints</strong> (1–4 weeks). Each sprint delivers a working piece of the product.</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Role</th><th>Responsibility</th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="role-badge">Product Owner</span></td><td>Decides what to build, prioritizes the backlog</td></tr>
+                                <tr><td><span class="role-badge">Scrum Master</span></td><td>Facilitates the process, removes blockers</td></tr>
+                                <tr><td><span class="role-badge">Development Team</span></td><td>Builds the product (5–9 people)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top:16px;">
+                    <div class="card-header">
+                        <svg class="card-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path></svg>
+                        <span class="card-title">Kanban</span>
+                    </div>
+                    <p style="margin-bottom:14px;">Kanban is a <strong>visual workflow method</strong> where teams track tasks on a board with columns.</p>
+                    <div class="kanban">
+                        <div class="kanban-col">
+                            <div class="kanban-col-title">To Do</div>
+                            <div class="kanban-task">Design login screen</div>
+                            <div class="kanban-task">Write API spec</div>
+                        </div>
+                        <div class="kanban-col">
+                            <div class="kanban-col-title">In Progress</div>
+                            <div class="kanban-task">Build cart feature</div>
+                        </div>
+                        <div class="kanban-col">
+                            <div class="kanban-col-title">Completed</div>
+                            <div class="kanban-task">User registration</div>
+                            <div class="kanban-task">Database schema</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- STEP 6 — Quiz 3 -->
+<div id="step-6" class="block">
+    <div class="quiz-block-wrapper">
+        <div class="quiz-header">
+            <div class="quiz-icon-box">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </div>
+            <div class="quiz-header-text">
+                <h2>Quick Check — Agile, Scrum &amp; Kanban</h2>
+                <p>Answer all questions to continue</p>
+            </div>
+        </div>
+        <div id="quiz-area-3"></div>
+    </div>
+</div>
+
+
+<!-- STEP 7 — Content: V-Model -->
+<div id="step-7" class="block">
+    <div class="header">
+        <div class="header-accent"></div>
+        <div class="header-content">
+            <h1>Software Development Models</h1>
+            <p>Model 3 of 3 — V-Model</p>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="model-section">
+            <div class="model-header">
+                <div class="model-number"><span>3</span></div>
+                <span class="model-title">V-Model</span>
+            </div>
+            <p class="model-tagline">Verification and Validation — testing mapped to every development phase</p>
+            <div class="model-body">
+                <p>V-Model stands for <strong>Verification and Validation Model</strong>. It is an <strong>extension of Waterfall</strong> — same sequential flow, but with a <strong>testing phase mapped to every development phase</strong>.</p>
+                <div class="img-box">
+                    <div class="anim anim-vm">
+                        <svg id="anim-vmodel-svg" viewBox="0 0 900 540" role="img" aria-label="Animated V-Model diagram: verification phase, validation phase, and Coding at the vertex"></svg>
+                    </div>
+                    <p class="img-caption">V-Model — verification and validation mapped at each phase</p>
+                </div>
+                <h3>Verification vs Validation</h3>
+                <div class="vv-grid">
+                    <div class="vv-card">
+                        <span class="vv-label">Verification</span>
+                        <div class="vv-question">"Are we building the product right?"</div>
+                        <div class="vv-how">Checking that each phase is done correctly through reviews and walkthroughs — no code execution.</div>
+                    </div>
+                    <div class="vv-card">
+                        <span class="vv-label">Validation</span>
+                        <div class="vv-question">"Are we building the right product?"</div>
+                        <div class="vv-how">Running actual tests on the code to confirm it meets user expectations.</div>
+                    </div>
+                </div>
+                <h3>When to Use</h3>
+                <div class="when-card">
+                    <h4>Best suited when:</h4>
+                    <ul class="bullet-list">
+                        <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">Requirements are <strong>fixed and well-understood</strong> from the start</span></li>
+                        <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">The project demands <strong>high quality and strict testing</strong></span></li>
+                        <li class="bullet-item"><span class="bullet-dot"></span><span class="bullet-text">The project is <strong>small to medium</strong> with a stable scope</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- STEP 8 — Quiz 4 -->
+<div id="step-8" class="block">
+    <div class="quiz-block-wrapper">
+        <div class="quiz-header">
+            <div class="quiz-icon-box">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </div>
+            <div class="quiz-header-text">
+                <h2>Quick Check — V-Model</h2>
+                <p>Answer all questions to finish the module</p>
+            </div>
+        </div>
+        <div id="quiz-area-4"></div>
+    </div>
+</div>
+
+
+<!-- CONTINUE BAR -->
+<div class="continue-bar">
+    <div class="progress-steps">
+        <div class="step-dot active" id="dot-1"></div>
+        <div class="step-dot" id="dot-2"></div>
+        <div class="step-dot" id="dot-3"></div>
+        <div class="step-dot" id="dot-4"></div>
+        <div class="step-dot" id="dot-5"></div>
+        <div class="step-dot" id="dot-6"></div>
+        <div class="step-dot" id="dot-7"></div>
+        <div class="step-dot" id="dot-8"></div>
+        <span class="step-label" id="step-label-text">Intro</span>
+    </div>
+    <button id="continue-btn" onclick="nextStep()">
+        Continue
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+    </button>
+</div>
+
+
+<script>
+    const TOTAL = 8;
+    let current = 1;
+    const quizGenerated = {};
+
+    // Quiz steps: step number → quiz index
+    const quizStepMap = { 2: 1, 4: 2, 6: 3, 8: 4 };
+    const isQuizStep = (s) => !!quizStepMap[s];
+
+    const stepLabels = {
+        1: 'Intro',
+        2: 'Quiz — Section 1',
+        3: 'Waterfall Model',
+        4: 'Quiz — Waterfall',
+        5: 'Agile + Scrum + Kanban',
+        6: 'Quiz — Agile',
+        7: 'V-Model',
+        8: 'Quiz — V-Model',
+    };
+
+    // ── STATIC QUESTION BANK ──
+    // Each quiz index maps to a content block:
+    //   1 → Intro,  2 → Waterfall,  3 → Agile/Scrum/Kanban,  4 → V-Model
+    // multi: true renders checkboxes (more than one correct answer).
+    const QUIZ_DATA = {
+        1: [
+            {
+                question: "What are Software Development Models?",
+                options: [
+                    "Different ways of adjusting the phases of the SDLC to fit specific project needs",
+                    "Programming languages used to build different types of software applications",
+                    "Testing frameworks used to validate software quality and performance",
+                    "Deployment strategies used to release software to end users"
+                ],
+                multi: false,
+                correctIndexes: [0],
+                explanation: "Software Development Models are the different ways of adjusting the phases of the Software Development Life Cycle (SDLC) according to the specific needs of a project. The most commonly used models are the Waterfall Model, Agile Model, and V-Model."
+            },
+            {
+                question: "Which of the following are commonly used Software Development Models?",
+                options: ["Waterfall Model", "Agile Model", "V-Model", "All of the given options"],
+                multi: false,
+                correctIndexes: [3],
+                explanation: "Waterfall Model, Agile Model, and V-Model are commonly used Software Development Models."
+            }
+        ],
+
+        2: [
+            {
+                question: "What is the Waterfall Model in software development?",
+                options: [
+                    "A step-by-step approach where each phase must be fully completed before moving to the next",
+                    "A flexible approach where phases can be revisited and updated at any time",
+                    "A parallel approach where multiple phases are executed simultaneously",
+                    "An iterative approach where small features are delivered in short cycles"
+                ],
+                multi: false,
+                correctIndexes: [0],
+                explanation: "The Waterfall Model is a step-by-step way of developing software where each phase must be completed fully before moving to the next."
+            },
+            {
+                question: "Which of the following are advantages of the Waterfall Model? (Select all that apply)",
+                options: [
+                    "Simple to understand and use",
+                    "Clear documentation for every phase",
+                    "Easy to change requirements at any time",
+                    "Continuous feedback after every short cycle"
+                ],
+                multi: true,
+                correctIndexes: [0, 1],
+                explanation: "The Waterfall Model is simple to understand and provides clear documentation for every phase."
+            },
+            {
+                question: "Which of the following correctly describe disadvantages of the Waterfall Model?",
+                options: [
+                    "Feedback is received late in the process",
+                    "Earlier mistakes can become costly to fix",
+                    "New requirements are difficult to integrate later",
+                    "All of the given options"
+                ],
+                multi: false,
+                correctIndexes: [3],
+                explanation: "Waterfall Model has late feedback, costly changes, and difficulty in handling new requirements."
+            }
+        ],
+
+        3: [
+            {
+                question: "Which statement best describes the Agile Model in software development?",
+                options: [
+                    "A model where the product is built in small pieces through short repeated cycles",
+                    "A model where each phase must be completed fully before moving to the next",
+                    "A model where testing is mapped to every development phase",
+                    "A model where the product is released only after all feedback is collected"
+                ],
+                multi: false,
+                correctIndexes: [0],
+                explanation: "The Agile Model builds the product in small pieces through short repeated cycles called sprints, usually lasting 1 to 4 weeks."
+            },
+            {
+                question: "How does Kanban help manage work in the Agile Model?",
+                options: [
+                    "It tracks tasks visually using stages like To Do, In Progress, and Completed",
+                    "It completes all Software Development Life Cycle (SDLC) phases in one fixed sequence",
+                    "It maps a testing phase to every development phase",
+                    "It builds the product only after all requirements are fixed"
+                ],
+                multi: false,
+                correctIndexes: [0],
+                explanation: "Kanban is a visual workflow method where tasks are tracked on a board and moved through stages such as To Do, In Progress, and Completed."
+            }
+        ],
+
+        4: [
+            {
+                question: "Which statement best describes the V-Model in software development?",
+                options: [
+                    "An extension of Waterfall with testing mapped to every development phase",
+                    "An Agile framework where work is completed in short repeated sprints",
+                    "A visual workflow method used to move tasks across a board",
+                    "A model used mainly when requirements change frequently"
+                ],
+                multi: false,
+                correctIndexes: [0],
+                explanation: "The V-Model stands for Verification and Validation Model. It extends the Waterfall Model by mapping a testing phase to every development phase."
+            }
+        ]
+    };
+
+    // ── Render MCQs from the static question bank ──
+    function generateMCQs(quizIndex) {
+        if (quizGenerated[quizIndex]) return;
+        quizGenerated[quizIndex] = true;
+
+        const area = document.getElementById('quiz-area-' + quizIndex);
+        const questions = QUIZ_DATA[quizIndex];
+
+        if (!questions || questions.length === 0) {
+            area.innerHTML = `<div class="mcq-error">No questions available for this section.</div>`;
+            return;
+        }
+
+        renderCarousel(area, questions, quizIndex);
+    }
+
+    // ── Render carousel ──
+    function renderCarousel(area, questions, quizIndex) {
+        area.innerHTML = '';
+        const total = questions.length;
+
+        const state = {
+            current: 0,
+            answered: new Array(total).fill(false), // has the student responded to this q
+            results: new Array(total).fill(null)     // null | 'correct' | 'wrong' | 'shown'
+        };
+
+        function allAnswered() {
+            return state.answered.every(Boolean);
+        }
+
+        function checkUnlockContinue() {
+            if (allAnswered()) {
+                document.getElementById('continue-btn').disabled = false;
+            }
+        }
+
+        // Slides HTML
+        const slidesHtml = questions.map((q, qi) => {
+            const inputType = q.multi ? 'checkbox' : 'radio';
+            const optHtml = q.options.map((opt, oi) => `
+                <label class="option-item" id="copt-${quizIndex}-${qi}-${oi}" for="cr-${quizIndex}-${qi}-${oi}">
+                    <input type="${inputType}" name="cq-${quizIndex}-${qi}" id="cr-${quizIndex}-${qi}-${oi}" value="${oi}">
+                    <span class="option-label">${opt}</span>
+                </label>
+            `).join('');
+
+            const isLast = qi === total - 1;
+
+            return `
+                <div class="carousel-slide">
+                    <div class="question-card">
+                        <div class="q-progress-row">
+                            <div class="q-dots" id="qdots-${quizIndex}-${qi}"></div>
+                            <span class="q-counter">Question ${qi + 1} of ${total}</span>
+                        </div>
+                        <div class="question-text">${q.question}</div>
+                        <div class="options-list" id="copts-${quizIndex}-${qi}">${optHtml}</div>
+                        <div class="explanation" id="cexp-${quizIndex}-${qi}"><strong>Explanation:</strong> ${q.explanation}</div>
+                        <div class="result-badge" id="cresult-${quizIndex}-${qi}">
+                            <span id="cresult-text-${quizIndex}-${qi}"></span>
+                        </div>
+                        <div class="question-actions">
+                            <button class="btn-show-answer" id="cshow-${quizIndex}-${qi}"
+                                onclick="carouselShowAnswer(${quizIndex},${qi})">Show Answer</button>
+                            <div style="display:flex;gap:8px;align-items:center;">
+                                <button class="btn-submit" id="csubmit-${quizIndex}-${qi}"
+                                    onclick="carouselSubmit(${quizIndex},${qi})">Submit</button>
+                                <button class="btn-next-q" id="cnext-${quizIndex}-${qi}"
+                                    onclick="carouselNext(${quizIndex},${total})">
+                                    ${isLast ? 'Done' : 'Next'}
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }).join('');
+
+        area.innerHTML = `
+            <div class="carousel-container">
+                <div class="carousel-track" id="ctrack-${quizIndex}">
+                    ${slidesHtml}
+                </div>
+            </div>`;
+
+        // Store state
+        area._state = state;
+        area._questions = questions;
+        area._checkUnlock = checkUnlockContinue;
+
+        // Init dots + input listeners
+        questions.forEach((q, qi) => {
+            refreshDots(quizIndex, state, total, qi);
+
+            q.options.forEach((_, oi) => {
+                const input = document.getElementById(`cr-${quizIndex}-${qi}-${oi}`);
+                const label = document.getElementById(`copt-${quizIndex}-${qi}-${oi}`);
+                if (input) {
+                    input.addEventListener('change', () => {
+                        if (q.multi) {
+                            label.classList.toggle('selected', input.checked);
+                        } else {
+                            document.querySelectorAll(`#copts-${quizIndex}-${qi} .option-item`)
+                                .forEach(el => el.classList.remove('selected'));
+                            label.classList.add('selected');
+                        }
+                    });
+                }
+            });
+        });
+    }
+
+    function refreshDots(quizIndex, state, total, activeSlide) {
+        const idx = activeSlide !== undefined ? activeSlide : state.current;
+        const dotsEl = document.getElementById(`qdots-${quizIndex}-${idx}`);
+        if (!dotsEl) return;
+        dotsEl.innerHTML = Array.from({ length: total }, (_, i) => {
+            let cls = 'q-dot';
+            if (i === state.current) cls += ' current';
+            else if (state.results[i] === 'correct') cls += ' correct-dot';
+            else if (state.results[i] === 'wrong')   cls += ' wrong-dot';
+            else if (state.results[i] !== null)       cls += ' answered';
+            return `<div class="${cls}"></div>`;
+        }).join('');
+    }
+
+    function carouselSubmit(quizIndex, qi) {
+        const area = document.getElementById('quiz-area-' + quizIndex);
+        const state = area._state;
+        const q = area._questions[qi];
+        const checked = Array.from(document.querySelectorAll(`input[name="cq-${quizIndex}-${qi}"]:checked`));
+
+        if (checked.length === 0) {
+            const btn = document.getElementById(`csubmit-${quizIndex}-${qi}`);
+            btn.style.transform = 'scale(0.95)';
+            setTimeout(() => btn.style.transform = '', 200);
+            return;
+        }
+
+        const chosen = checked.map(el => parseInt(el.value));
+        const correct = q.correctIndexes;
+        const isCorrect = chosen.length === correct.length && correct.every(c => chosen.includes(c));
+        state.results[qi] = isCorrect ? 'correct' : 'wrong';
+        state.answered[qi] = true;
+
+        lockCarouselQuestion(quizIndex, qi, chosen, correct, isCorrect);
+
+        const resultEl = document.getElementById(`cresult-${quizIndex}-${qi}`);
+        resultEl.classList.add('visible', isCorrect ? 'correct-badge' : 'incorrect-badge');
+        document.getElementById(`cresult-text-${quizIndex}-${qi}`).textContent = isCorrect ? 'Correct' : 'Incorrect — see the explanation below.';
+
+        document.getElementById(`cexp-${quizIndex}-${qi}`).classList.add('visible');
+        document.getElementById(`cshow-${quizIndex}-${qi}`).disabled = true;
+        document.getElementById(`csubmit-${quizIndex}-${qi}`).disabled = true;
+        document.getElementById(`cnext-${quizIndex}-${qi}`).classList.add('visible');
+
+        refreshDots(quizIndex, state, area._questions.length, qi);
+        area._checkUnlock();
+    }
+
+    function carouselShowAnswer(quizIndex, qi) {
+        const area = document.getElementById('quiz-area-' + quizIndex);
+        const state = area._state;
+        const q = area._questions[qi];
+
+        state.results[qi] = 'shown';
+        state.answered[qi] = true;
+
+        lockCarouselQuestion(quizIndex, qi, [], q.correctIndexes, null);
+
+        document.getElementById(`cexp-${quizIndex}-${qi}`).classList.add('visible');
+        document.getElementById(`cshow-${quizIndex}-${qi}`).disabled = true;
+        document.getElementById(`csubmit-${quizIndex}-${qi}`).disabled = true;
+        document.getElementById(`cnext-${quizIndex}-${qi}`).classList.add('visible');
+
+        refreshDots(quizIndex, state, area._questions.length, qi);
+        area._checkUnlock();
+    }
+
+    function lockCarouselQuestion(quizIndex, qi, chosen, correct, isCorrect) {
+        const shownMode = isCorrect === null; // "Show Answer" was used
+        const opts = document.querySelectorAll(`#copts-${quizIndex}-${qi} .option-item`);
+        opts.forEach((el, oi) => {
+            el.classList.add('disabled');
+            el.classList.remove('selected');
+            const input = el.querySelector('input');
+            if (input) input.disabled = true;
+            if (correct.includes(oi)) {
+                el.classList.add(shownMode ? 'show-correct' : 'correct');
+            }
+            if (!shownMode && chosen.includes(oi) && !correct.includes(oi)) {
+                el.classList.add('incorrect');
+            }
+        });
+    }
+
+    function carouselNext(quizIndex, total) {
+        const area = document.getElementById('quiz-area-' + quizIndex);
+        const state = area._state;
+
+        if (state.current < total - 1) {
+            state.current++;
+            const track = document.getElementById(`ctrack-${quizIndex}`);
+            track.style.transform = `translateX(-${state.current * 100}%)`;
+            setTimeout(() => refreshDots(quizIndex, state, total, state.current), 50);
+        }
+        // No summary — just stay on last question; Continue unlocks once all answered
+    }
+
+    // ── Navigation (scrolling feed) ──
+    // The functional change vs. the swap version: previously revealed blocks are
+    // NEVER hidden. Each Continue click appends the next block below and scrolls
+    // down to it, so all earlier content remains scrollable above.
+    function nextStep() {
+        const btn = document.getElementById('continue-btn');
+        if (btn.disabled) return;
+        if (current >= TOTAL) return;
+
+        // Mark the current step's dot as done (its block stays on screen)
+        document.getElementById('dot-' + current).classList.remove('active');
+        document.getElementById('dot-' + current).classList.add('done');
+
+        current++;
+
+        // Reveal the next block beneath the existing ones — do NOT hide anything
+        const nextEl = document.getElementById('step-' + current);
+        nextEl.classList.add('active');
+        document.getElementById('dot-' + current).classList.add('active');
+        document.getElementById('step-label-text').textContent = stepLabels[current];
+
+        // Build quiz content first so the block has its full height before scrolling
+        if (isQuizStep(current)) {
+            btn.disabled = true;
+            generateMCQs(quizStepMap[current]);
+        }
+
+        // Scroll down to the freshly revealed block (top aligned to viewport)
+        nextEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Last step — switch Continue to a Finish action
+        if (current === TOTAL) {
+            btn.classList.add('finish');
+            btn.innerHTML = 'Finish <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>';
+        }
+    }
+
+    // Finish click on the last step (after its quiz is answered, Continue unlocks)
+    document.getElementById('continue-btn').addEventListener('click', function () {
+        if (current === TOTAL && this.classList.contains('finish') && !this.disabled) {
+            this.innerHTML = 'Module Complete';
+            this.disabled = true;
+            document.getElementById('dot-' + current).classList.remove('active');
+            document.getElementById('dot-' + current).classList.add('done');
+        }
+    });
+</script>
+
+<!-- ===== SDLC model animation drivers =====
+     Builds the Agile + V-Model SVGs (the markup ships empty), defines the
+     Waterfall reveal order (its SVG is inline with wf- prefixed ids), and
+     plays each diagram's step-by-step reveal whenever its block scrolls into
+     view. Same .reveal/.show + replay-loop technique as the standalone files. -->
+<script>
+(function () {
+    const SVGNS = "http://www.w3.org/2000/svg";
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function el(tag, attrs, parent) {
+        const n = document.createElementNS(SVGNS, tag);
+        for (const k in attrs) n.setAttribute(k, attrs[k]);
+        if (parent) parent.appendChild(n);
+        return n;
+    }
+
+    // ─────────────────────────── WATERFALL ───────────────────────────
+    // Markup is inline (ids prefixed wf-); we only need the reveal order.
+    const wfSteps = [
+        ['#wf-b-req'],
+        ['#wf-a-req-l1', '#wf-h-req-l1', '#wf-l1'],
+        ['#wf-a-req-des', '#wf-h-req-des'],
+        ['#wf-b-des'],
+        ['#wf-a-des-dev', '#wf-h-des-dev'],
+        ['#wf-b-dev'],
+        ['#wf-a-dev-l2', '#wf-h-dev-l2', '#wf-l2'],
+        ['#wf-a-dev-test', '#wf-h-dev-test'],
+        ['#wf-b-test'],
+        ['#wf-a-test-l3', '#wf-h-test-l3', '#wf-l3'],
+        ['#wf-a-test-dep', '#wf-h-test-dep'],
+        ['#wf-b-dep'],
+        ['#wf-a-dep-mnt', '#wf-h-dep-mnt'],
+        ['#wf-b-mnt'],
+        ['#wf-a-mnt-l4', '#wf-h-mnt-l4', '#wf-l4'],
+    ];
+
+    // ───────────────────────────── AGILE ─────────────────────────────
+    function buildAgile(svg) {
+        const steps = [];
+        const PHASES = [
+            { key: "plan",    label: "PLAN",    angle: 120 },
+            { key: "design",  label: "DESIGN",  angle: 60  },
+            { key: "develop", label: "DEVELOP", angle: 0   },
+            { key: "test",    label: "TEST",    angle: 300 },
+            { key: "deploy",  label: "DEPLOY",  angle: 240 },
+            { key: "review",  label: "REVIEW",  angle: 180 },
+        ];
+        const SPRINTS = [
+            { num: "1", cx: 175, c0: "#e74c3c", c1: "#7d1620", launch: "#a52a22" },
+            { num: "2", cx: 450, c0: "#f6cf3f", c1: "#e2761a", launch: "#ef9b18" },
+            { num: "3", cx: 725, c0: "#b6cc3b", c1: "#1e7a3a", launch: "#5aa02f" },
+        ];
+        const CY = 168, RO = 88, RI = 54, RMID = (RO + RI) / 2;
+        const rad = d => d * Math.PI / 180;
+        const P = (cx, cy, r, deg) => ({ x: cx + r * Math.cos(rad(deg)), y: cy + r * Math.sin(rad(deg)) });
+        function lerpColor(a, b, t) {
+            const pa = [parseInt(a.slice(1, 3), 16), parseInt(a.slice(3, 5), 16), parseInt(a.slice(5, 7), 16)];
+            const pb = [parseInt(b.slice(1, 3), 16), parseInt(b.slice(3, 5), 16), parseInt(b.slice(5, 7), 16)];
+            const mix = pa.map((v, i) => Math.round(v + (pb[i] - v) * t));
+            return "#" + mix.map(v => v.toString(16).padStart(2, "0")).join("");
+        }
+        function segPath(cx, cy, c) {
+            const aT = c + 25, aB = c - 11, aTip = c - 25, barb = 7;
+            const oT = P(cx, cy, RO, aT), oB = P(cx, cy, RO, aB);
+            const iT = P(cx, cy, RI, aT), iB = P(cx, cy, RI, aB);
+            const bo = P(cx, cy, RO + barb, aB), bi = P(cx, cy, RI - barb, aB);
+            const tip = P(cx, cy, RMID, aTip);
+            return `M${oT.x},${oT.y} A${RO},${RO} 0 0 0 ${oB.x},${oB.y}`
+                 + ` L${bo.x},${bo.y} L${tip.x},${tip.y} L${bi.x},${bi.y} L${iB.x},${iB.y}`
+                 + ` A${RI},${RI} 0 0 1 ${iT.x},${iT.y} Z`;
+        }
+        function launchPath(cx) {
+            const x0 = cx - 96, x1 = cx + 96, yb = CY + RO + 28, h = 14, head = 16;
+            return `M${x0},${yb - h} L${x1 - head},${yb - h} L${x1 - head},${yb - h - 7}`
+                 + ` L${x1},${yb} L${x1 - head},${yb + h + 7} L${x1 - head},${yb + h} L${x0},${yb + h} Z`;
+        }
+        SPRINTS.forEach(sp => {
+            const sid = `s${sp.num}`;
+            const hub = el("g", { id: `${sid}-hub`, class: "reveal hub" }, svg);
+            el("circle", { cx: sp.cx, cy: CY, r: RI - 4, fill: "#ffffff", stroke: "var(--hubBorder, #e3e7ec)", "stroke-width": 1.5 }, hub);
+            const tName = el("text", { x: sp.cx, y: CY - 4, "text-anchor": "middle", class: "hub-name" }, hub);
+            tName.textContent = "SPRINT";
+            const tNum = el("text", { x: sp.cx, y: CY + 20, "text-anchor": "middle", class: "hub-num" }, hub);
+            tNum.textContent = sp.num;
+            steps.push([`#${sid}-hub`]);
+            PHASES.forEach((ph, i) => {
+                const fill = lerpColor(sp.c0, sp.c1, i / (PHASES.length - 1));
+                const g = el("g", { id: `${sid}-${ph.key}`, class: "reveal seg" }, svg);
+                el("path", { d: segPath(sp.cx, CY, ph.angle), fill }, g);
+                const pos = P(sp.cx, CY, RMID, ph.angle);
+                let rot = ph.angle + 90;
+                if (rot >= 90 && rot <= 270) rot -= 180;
+                const t = el("text", {
+                    x: pos.x, y: pos.y, "text-anchor": "middle", "dominant-baseline": "central",
+                    class: "phase-t", transform: `rotate(${rot} ${pos.x} ${pos.y})`,
+                }, g);
+                t.textContent = ph.label;
+                steps.push([`#${sid}-${ph.key}`]);
+            });
+            const lg = el("g", { id: `${sid}-launch`, class: "reveal launch" }, svg);
+            el("path", { d: launchPath(sp.cx), fill: sp.launch }, lg);
+            const yb = CY + RO + 28;
+            el("line", { x1: sp.cx - 8, y1: yb - 12, x2: sp.cx - 8, y2: yb + 12, stroke: "rgba(255,255,255,0.5)", "stroke-width": 1.5 }, lg);
+            const lPlan = el("text", { x: sp.cx - 52, y: yb + 1, "text-anchor": "middle", "dominant-baseline": "central", class: "launch-t" }, lg);
+            lPlan.textContent = "PLAN";
+            const lLaunch = el("text", { x: sp.cx + 38, y: yb + 1, "text-anchor": "middle", "dominant-baseline": "central", class: "launch-t" }, lg);
+            lLaunch.textContent = "LAUNCH";
+            steps.push([`#${sid}-launch`]);
+        });
+        return steps;
+    }
+
+    // ──────────────────────────── V-MODEL ────────────────────────────
+    function buildVModel(svg) {
+        const steps = [];
+        const LEVELS = [
+            { y: 90,
+              left:  { key: "req",  lines: ["Requirement", "Gathering"], cx: 210, color: "#c1673c" },
+              right: { key: "acc",  lines: ["Acceptance", "Testing"],    cx: 690, color: "#5f8c92" } },
+            { y: 168,
+              left:  { key: "sysa", lines: ["System", "Analysis"],       cx: 255, color: "#d6a04e" },
+              right: { key: "syst", lines: ["System", "Testing"],        cx: 645, color: "#6f9aa0" } },
+            { y: 246,
+              left:  { key: "swd",  lines: ["Software", "Design"],       cx: 300, color: "#cf9a63" },
+              right: { key: "intt", lines: ["Integration", "Testing"],   cx: 600, color: "#7ba6a6" } },
+            { y: 324,
+              left:  { key: "mod",  lines: ["Module", "Design"],         cx: 345, color: "#b27d4a" },
+              right: { key: "unit", lines: ["Unit", "Testing"],          cx: 555, color: "#87b0ad" } },
+        ];
+        const CODING = { cx: 450, cy: 438, color: "#8a5a3c" };
+        const BW = 120, BH = 48, SHEAR = 10;
+        function boxPts(cx, cy, w, h, s) {
+            const hw = w / 2, hh = h / 2;
+            return [[cx - hw + s, cy - hh], [cx + hw + s, cy - hh],
+                    [cx + hw - s, cy + hh], [cx - hw - s, cy + hh]]
+                .map(p => p.map(v => v.toFixed(1)).join(",")).join(" ");
+        }
+        function addBox(id, cls, cx, cy, color, lines, shear) {
+            const g = el("g", { id, class: `reveal box ${cls}` }, svg);
+            el("polygon", { points: boxPts(cx, cy, BW, BH, shear), fill: color }, g);
+            const oy = lines.length > 1 ? -5 : 5;
+            lines.forEach((ln, i) => {
+                const t = el("text", { x: cx, y: cy + oy + i * 17 + 5, "text-anchor": "middle", class: "box-t" }, g);
+                t.textContent = ln;
+            });
+            return g;
+        }
+        function armBand(sx, sy, ex, ey, halfW, headLen, headW) {
+            const dx = ex - sx, dy = ey - sy, len = Math.hypot(dx, dy);
+            const ux = dx / len, uy = dy / len, px = -uy, py = ux;
+            const bx = ex - ux * headLen, by = ey - uy * headLen;
+            const pts = [
+                [sx + px * halfW, sy + py * halfW],
+                [bx + px * halfW, by + py * halfW],
+                [bx + px * headW, by + py * headW],
+                [ex, ey],
+                [bx - px * headW, by - py * headW],
+                [bx - px * halfW, by - py * halfW],
+                [sx - px * halfW, sy - py * halfW],
+            ];
+            return pts.map(p => p.map(v => v.toFixed(1)).join(",")).join(" ");
+        }
+        function addArm(id, sx, sy, ex, ey, color, label) {
+            const g = el("g", { id, class: "reveal arm" }, svg);
+            el("polygon", { points: armBand(sx, sy, ex, ey, 22, 34, 33), fill: color }, g);
+            const mx = sx + (ex - sx) * 0.46, my = sy + (ey - sy) * 0.46;
+            let ang = Math.atan2(ey - sy, ex - sx) * 180 / Math.PI;
+            const t = el("text", { x: mx, y: my, "text-anchor": "middle", "dominant-baseline": "central",
+                                   class: "arm-t", transform: `rotate(${ang.toFixed(1)} ${mx} ${my})` }, g);
+            t.textContent = label;
+            return g;
+        }
+        function addLink(id, x1, x2, y) {
+            const g = el("g", { id, class: "reveal link" }, svg);
+            el("line", { x1: x1 + 9, y1: y, x2: x2 - 9, y2: y, stroke: "var(--link, #8a8f98)",
+                         "stroke-width": 2.5, "stroke-dasharray": "6 5", "stroke-linecap": "round" }, g);
+            el("polygon", { points: `${x1},${y} ${x1 + 11},${y - 6} ${x1 + 11},${y + 6}`, fill: "var(--link, #8a8f98)" }, g);
+            el("polygon", { points: `${x2},${y} ${x2 - 11},${y - 6} ${x2 - 11},${y + 6}`, fill: "var(--link, #8a8f98)" }, g);
+            return g;
+        }
+        addArm("arm-left",  95, 66, 372, 500, "#b9824f", "Verification Phase");
+        addArm("arm-right", 528, 500, 805, 66, "#7c9ea0", "Validation Phase");
+        steps.push(["#arm-left", "#arm-right"]);
+        LEVELS.forEach((lv, i) => {
+            addBox(`L${i}-left`,  "left",  lv.left.cx,  lv.y, lv.left.color,  lv.left.lines,  -SHEAR);
+            addBox(`L${i}-right`, "right", lv.right.cx, lv.y, lv.right.color, lv.right.lines,  SHEAR);
+            addLink(`link${i}`, lv.left.cx + BW / 2 - SHEAR + 4, lv.right.cx - BW / 2 + SHEAR - 4, lv.y);
+            steps.push([`#L${i}-left`]);
+            steps.push([`#L${i}-right`]);
+            steps.push([`#link${i}`]);
+        });
+        const cg = el("g", { id: "coding", class: "reveal coding" }, svg);
+        el("polygon", { points: boxPts(CODING.cx, CODING.cy, 150, 50, 0), fill: CODING.color }, cg);
+        const ct = el("text", { x: CODING.cx, y: CODING.cy + 5, "text-anchor": "middle", class: "box-t" }, cg);
+        ct.textContent = "Coding";
+        steps.push(["#coding"]);
+        return steps;
+    }
+
+    // ─────────────────── generic step-reveal player ───────────────────
+    // Plays the diagram once, holds, clears, replays — but only while the
+    // block is on screen (the IntersectionObserver starts/stops it).
+    function makePlayer(svg, steps, timing) {
+        const allEls = () => svg.querySelectorAll('.reveal, .arrow-shaft, .arrow-head');
+        const clearAll  = () => allEls().forEach(e => e.classList.remove('show'));
+        const revealAll = () => allEls().forEach(e => e.classList.add('show'));
+        let timers = [];
+        let running = false;
+        const arm = (fn, ms) => { const t = setTimeout(fn, ms); timers.push(t); return t; };
+        function cancel() { timers.forEach(clearTimeout); timers = []; }
+        function playOnce() {
+            steps.forEach((group, i) => arm(() => {
+                group.forEach(sel => svg.querySelector(sel)?.classList.add('show'));
+            }, i * timing.STEP));
+        }
+        function loop() {
+            playOnce();
+            const total = steps.length * timing.STEP + timing.HOLD;
+            arm(() => { clearAll(); arm(loop, timing.GAP); }, total);
+        }
+        return {
+            start() {
+                if (running) return;
+                running = true;
+                if (reduce) { revealAll(); return; }
+                clearAll();
+                loop();
+            },
+            stop() { running = false; cancel(); clearAll(); }
+        };
+    }
+
+    // ───────────────────────────── wire-up ────────────────────────────
+    const wfSvg = document.getElementById('anim-wf-svg');
+    const agSvg = document.getElementById('anim-agile-svg');
+    const vmSvg = document.getElementById('anim-vmodel-svg');
+
+    const players = new Map();
+    if (wfSvg) players.set(wfSvg, makePlayer(wfSvg, wfSteps, { STEP: 620, HOLD: 2600, GAP: 700 }));
+    if (agSvg) players.set(agSvg, makePlayer(agSvg, buildAgile(agSvg), { STEP: 420, HOLD: 2800, GAP: 700 }));
+    if (vmSvg) players.set(vmSvg, makePlayer(vmSvg, buildVModel(vmSvg), { STEP: 430, HOLD: 2800, GAP: 700 }));
+
+    if (reduce) {
+        // No motion preference: just show every diagram fully.
+        players.forEach(p => p.start());
+    } else if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                const p = players.get(e.target);
+                if (!p) return;
+                if (e.isIntersecting) p.start();
+                else p.stop();
+            });
+        }, { threshold: 0.35 });
+        players.forEach((_, svg) => io.observe(svg));
+    } else {
+        // Old browsers without IntersectionObserver: play immediately.
+        players.forEach(p => p.start());
+    }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Tutorial Builder</title>
+<link rel="stylesheet" href="styles.css?v=3">
+</head>
+<body>
+<header>
+  <h1>Interactive Tutorial Builder</h1>
+  <span class="tag">Agentic Workflow</span>
+  <span id="status-pill" class="pill running hidden"></span>
+  <button id="cost-toggle" class="cost-chip" type="button">₹ Cost ▾</button>
+  <div id="cost-panel" class="cost-panel hidden">
+    <h3>API cost — this app</h3>
+    <div id="cost-body" class="muted">Loading…</div>
+    <div id="cost-note" class="cost-note"></div>
+  </div>
+</header>
+
+<!-- Tabs: Builder (do the work) · Pipeline (read-only live progress map) -->
+<nav class="tabs">
+  <button class="tab active" data-tab="builder">Builder</button>
+  <button class="tab" data-tab="pipeline">Execution pipeline</button>
+</nav>
+
+<main>
+  <!-- ════════════════════ BUILDER TAB ════════════════════ -->
+  <section id="tab-builder">
+
+  <!-- 1. Upload -->
+  <div class="card" id="upload-card">
+    <h2>1 · Upload a session</h2>
+    <label>Session file (.html or .pptx)</label>
+    <input type="file" id="file" accept=".html,.htm,.pptx,.ppt">
+    <p class="muted" style="margin-top:6px;">PPTX decks are parsed for text <em>and</em> images; every
+      image is auto-described (placement + whether it's worth animating) before the agents run.</p>
+    <div class="row">
+      <div><label>Course <span style="color:var(--red)">*</span></label><input type="text" id="course" value="Practical Software Engineering" placeholder="e.g. Practical Software Engineering"></div>
+      <div><label>Session name <span style="color:var(--red)">*</span></label><input type="text" id="session" placeholder="e.g. Software Development Models"></div>
+    </div>
+    <div>
+      <label>Learning objectives (comma-separated, optional)</label>
+      <input type="text" id="objectives">
+    </div>
+    <p class="muted" style="margin-top:8px;">Saved to <code>generated_tutorials/&lt;course&gt;/&lt;session&gt;.html</code> — rebuilds are versioned (<code>_v2</code>, <code>_v3</code>…).</p>
+    <div class="actions"><button id="start-btn">Start build →</button></div>
+  </div>
+
+  <!-- 2. Progress -->
+  <div class="card hidden" id="progress-card">
+    <div class="spin-wrap"><div class="spinner"></div><span id="progress-msg">Building your tutorial… this can take a moment.</span></div>
+  </div>
+
+  <!-- 3. GATE 1 — block division -->
+  <div class="card hidden" id="block-card">
+    <h2>👤 Gate 1 · Review block division</h2>
+    <div class="banner info">Approve the division, or write feedback (e.g. “merge blocks 2 &amp; 3”, “split Agile”) to re-divide.</div>
+    <div id="reasoning" class="muted" style="margin-bottom:10px;"></div>
+    <div class="structure"><div class="s-cap">Block division</div><div id="tree"></div></div>
+    <label>Feedback for re-division (leave empty to accept)</label>
+    <textarea id="block-feedback" placeholder="e.g. Merge blocks 2 and 3; split the Agile block into Scrum and Kanban"></textarea>
+    <div class="actions">
+      <button class="green" id="accept-blocks">Accept division</button>
+      <button class="ghost" id="feedback-blocks">Send feedback &amp; re-divide</button>
+    </div>
+  </div>
+
+  <!-- 4. GATE 2 — content (Agent 1) -->
+  <div class="card hidden" id="content-card">
+    <h2>👤 Gate 2 · Review content (Agent 1)</h2>
+    <div class="banner info">Agent 1 authored each block. Review the content, then accept — or refine
+      with feedback to re-write all blocks.</div>
+    <div id="content-metrics" class="metrics"></div>
+    <div id="content-blocks"></div>
+    <label>Refinement feedback (leave empty to accept)</label>
+    <textarea id="content-feedback" placeholder="e.g. Block 2 is too shallow — add a worked example; simplify the intro."></textarea>
+    <div class="actions">
+      <button class="green" id="accept-content">Accept content</button>
+      <button class="ghost" id="refine-content">Refine &amp; re-write</button>
+    </div>
+  </div>
+
+  <!-- 5. GATE 3 — animations (Agent 2) -->
+  <div class="card hidden" id="animation-card">
+    <h2>👤 Gate 3 · Review animations (Agent 2)</h2>
+    <div class="banner info">Agent 2 turned concept diagrams into inline animations. Check them below,
+      then accept — or refine to regenerate.</div>
+    <div id="animation-metrics" class="metrics"></div>
+    <div id="animation-list"></div>
+    <label>Refinement feedback (leave empty to accept)</label>
+    <textarea id="animation-feedback" placeholder="e.g. The waterfall animation should reveal phases one at a time; slow it down."></textarea>
+    <div class="actions">
+      <button class="green" id="accept-animation">Accept animations</button>
+      <button class="ghost" id="refine-animation">Refine &amp; regenerate</button>
+    </div>
+  </div>
+
+  <!-- 6. GATE 4 — MCQs (Agent 3) -->
+  <div class="card hidden" id="mcq-card">
+    <h2>👤 Gate 4 · Review MCQs (Agent 3)</h2>
+    <div class="banner info">Accept the questions for each content block, or refine to regenerate them.</div>
+    <div id="mcq-metrics" class="metrics"></div>
+    <div id="mcq-list"></div>
+    <label>Refinement feedback (leave empty to accept)</label>
+    <textarea id="mcq-feedback" placeholder="e.g. Block 1 Q2 is ambiguous; add a question on the V-model."></textarea>
+    <div class="actions">
+      <button class="green" id="accept-mcq">Accept MCQs</button>
+      <button class="ghost" id="refine-mcq">Refine &amp; regenerate</button>
+    </div>
+  </div>
+
+  <!-- 7. GATE 5 — final review + assessment -->
+  <div class="card hidden" id="final-card">
+    <h2>👤 Gate 5 · Final review &amp; assessment</h2>
+    <div class="banner info">Review the quality metrics, the assembled draft, and the end-of-session
+      assessment questions. Approve to publish, or send back to re-divide.</div>
+    <div id="quality"></div>
+    <div id="final-assessment"></div>
+    <p style="margin:10px 0;"><a class="link" id="preview-link" href="#" target="_blank">↗ Open rendered draft in a new tab</a></p>
+    <label>Reviewer notes (saved to memory)</label>
+    <textarea id="final-notes" placeholder="Notes / corrections…"></textarea>
+    <div class="actions">
+      <button class="green" id="approve-final">Approve &amp; publish</button>
+      <button class="red" id="reject-final">Reject → re-divide</button>
+    </div>
+  </div>
+
+  <!-- 8. Done -->
+  <div class="card hidden" id="done-card">
+    <h2>✅ Tutorial ready 🎉</h2>
+    <p class="muted" id="done-path"></p>
+    <div class="actions">
+      <button id="open-tutorial">Open tutorial</button>
+      <button class="ghost" id="download-tutorial">Download .html</button>
+    </div>
+  </div>
+
+  </section>
+
+  <!-- ════════════════════ PIPELINE TAB ════════════════════ -->
+  <section id="tab-pipeline" class="hidden">
+    <div class="card">
+      <h2>Execution pipeline</h2>
+      <p class="muted" style="margin-bottom:6px;">A live map of the workflow. <span class="leg-auto">⚙</span>
+        steps run automatically; <span class="leg-human">👤</span> steps wait for you. The highlighted
+        step is where the run is right now.</p>
+      <div class="pipe-legend">
+        <span><i class="dot done"></i> done</span>
+        <span><i class="dot active"></i> in progress</span>
+        <span><i class="dot wait"></i> waiting for you</span>
+        <span><i class="dot pending"></i> pending</span>
+      </div>
+      <ol id="pipeline" class="pipeline"></ol>
+    </div>
+  </section>
+
+</main>
+<script src="app.js?v=3"></script>
+</body>
+</html>

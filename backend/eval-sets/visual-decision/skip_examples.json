@@ -1,0 +1,34 @@
+[
+  {
+    "alt": "NxtWave",
+    "src_hint": "companyLogo.png",
+    "occurrences": 32,
+    "reason": "Logo/branding repeated across many slides — decorative, not concept-bearing.",
+    "decision": "skip"
+  },
+  {
+    "alt": "",
+    "src_hint": "bullet1.png",
+    "occurrences": 96,
+    "reason": "Bullet icon repeated dozens of times — pure chrome.",
+    "decision": "skip"
+  },
+  {
+    "alt": "Person thinking, like a chef choosing recipes",
+    "occurrences": 1,
+    "reason": "Analogy illustration — supports an analogy, does not encode the technical concept.",
+    "decision": "skip"
+  },
+  {
+    "alt": "Screenshot of the finished to-do app's home page (final result only)",
+    "occurrences": 1,
+    "reason": "Plain result screenshot — shows only a finished UI, no process or structure to build. (NOTE: a screenshot that DOES show a process/workflow — e.g. an n8n flow — is a content image and must be animated, not skipped.)",
+    "decision": "skip"
+  },
+  {
+    "alt": "Abstract gradient background shapes",
+    "occurrences": 1,
+    "reason": "Decorative background art.",
+    "decision": "skip"
+  }
+]

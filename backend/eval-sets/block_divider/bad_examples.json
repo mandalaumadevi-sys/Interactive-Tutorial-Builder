@@ -1,0 +1,324 @@
+{
+  "agent_id": "block_divider",
+  "agent_name": "Block Divider — LLM Stage",
+  "version": "1.0",
+  "examples": [
+    {
+      "example_id": "bd_bad_001",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "source_h2_sections": [
+          "Why Not One SDLC for All?",
+          "What are Software Development Models?",
+          "Waterfall Model",
+          "Agile Model",
+          "V-Model"
+        ],
+        "source_word_count_estimate": 1100
+      },
+      "output": {
+        "session_name": "Software Development Models",
+        "total_blocks": 8,
+        "division_reasoning": "Each H2 section was given its own block. Agile and its frameworks were each given separate blocks per H3.",
+        "blocks": [
+          { "block_id": 1, "title": "Why Not One SDLC for All?", "h2_sections_included": ["Why Not One SDLC for All?"], "word_count_estimate": 180 },
+          { "block_id": 2, "title": "What are Software Development Models?", "h2_sections_included": ["What are Software Development Models?"], "word_count_estimate": 100 },
+          { "block_id": 3, "title": "Waterfall Model", "h2_sections_included": ["Waterfall Model"], "word_count_estimate": 210 },
+          { "block_id": 4, "title": "Agile Model", "h2_sections_included": ["Agile Model — overview only"], "word_count_estimate": 120 },
+          { "block_id": 5, "title": "Agile Workflow and Teams", "h2_sections_included": ["Behind the Scenes", "Agile Workflow"], "word_count_estimate": 140 },
+          { "block_id": 6, "title": "When to Use Agile and Advantages", "h2_sections_included": ["When to Use Agile", "Advantages", "Disadvantages"], "word_count_estimate": 130 },
+          { "block_id": 7, "title": "Scrum", "h2_sections_included": ["Scrum"], "word_count_estimate": 140 },
+          { "block_id": 8, "title": "Kanban and V-Model", "h2_sections_included": ["Kanban", "V-Model"], "word_count_estimate": 210 }
+        ]
+      },
+      "scores": {
+        "concept_boundary_correctness": 3,
+        "merge_split_rule_adherence": 1,
+        "block_count_range": 1,
+        "block_size_balance": 4,
+        "block_title_quality": 3,
+        "image_assignment_correctness": 4,
+        "content_completeness": 7,
+        "weighted_average": 2.8
+      },
+      "failure_labels": [
+        {
+          "dimension": "block_count_range",
+          "reason": "8 blocks were produced for a session that warrants 5. The rule states 3–7 blocks maximum. This output exceeds the upper limit by splitting the Agile section into 4 separate micro-blocks (blocks 4, 5, 6, and then frameworks into 7 and part of 8)."
+        },
+        {
+          "dimension": "merge_split_rule_adherence",
+          "reason": "Rule 2 (merge small related H2s) was completely ignored. 'Why Not One SDLC for All?' (180 words) and 'What are Software Development Models?' (100 words) are tightly related intro sections that must be merged — Block 1 and Block 2 should be one block. Additionally, the Agile section was over-split: the core Agile concept, workflow, and when-to-use were split across three separate blocks (4, 5, 6) when they form one cohesive unit."
+        },
+        {
+          "dimension": "concept_boundary_correctness",
+          "reason": "Block 8 merges Kanban and V-Model — two completely unrelated concepts. Kanban is an Agile framework; V-Model is a separate sequential model. These cannot share a block. A learner would be confused about what Block 8 is about. This violates Rule 1: each block must contain one cohesive concept."
+        },
+        {
+          "dimension": "block_title_quality",
+          "reason": "Block 1 title 'Why Not One SDLC for All?' is the raw heading text copied verbatim — a question that reads awkwardly as a tutorial block title. It should be rephrased to something learner-facing like 'Why Different Projects Need Different Approaches'. Block 2 title is also a verbatim copy of a raw heading."
+        }
+      ],
+      "notes": "The most common failure mode: treating every H2 as its own block, then arbitrarily merging unrelated sections to reduce count. The fix: apply merge rules first (related small sections), apply split rules only when a section genuinely exceeds 600 words with 4+ H3s, enforce the 3–7 count, and never merge unrelated concepts just to hit a number."
+    },
+    {
+      "example_id": "bd_bad_002",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Prompt Engineering",
+        "source_h2_sections": [
+          "Prompt Engineering Fundamentals",
+          "1. Prompt Engineering",
+          "3. Basic Prompt Structure",
+          "Example Prompt Templates",
+          "Tricks and Tips",
+          "Additional Exploration"
+        ],
+        "source_word_count_estimate": 1400
+      },
+      "output": {
+        "session_name": "Prompt Engineering",
+        "total_blocks": 3,
+        "division_reasoning": "Merged all intro content into Block 1, merged the framework and templates into Block 2, and put tips and exploration in Block 3.",
+        "blocks": [
+          {
+            "block_id": 1,
+            "title": "Introduction",
+            "h2_sections_included": [
+              "Prompt Engineering Fundamentals",
+              "1. Prompt Engineering",
+              "Why Prompt Engineering?",
+              "Be Clear and Direct"
+            ],
+            "word_count_estimate": 460,
+            "learning_objectives_hint": ["Learn about prompts"]
+          },
+          {
+            "block_id": 2,
+            "title": "Framework and Templates",
+            "h2_sections_included": [
+              "3. Basic Prompt Structure",
+              "The RCATF Framework",
+              "Role",
+              "Context",
+              "Action/Task",
+              "Format",
+              "Tone",
+              "Example Prompt Templates"
+            ],
+            "word_count_estimate": 700,
+            "learning_objectives_hint": ["Understand the framework"]
+          },
+          {
+            "block_id": 3,
+            "title": "Tips",
+            "h2_sections_included": [
+              "Tricks and Tips",
+              "Separating Data from Instructions",
+              "Why Separate Data from Instructions?",
+              "Additional Exploration"
+            ],
+            "word_count_estimate": 280,
+            "learning_objectives_hint": ["Get tips"]
+          }
+        ]
+      },
+      "scores": {
+        "concept_boundary_correctness": 5,
+        "merge_split_rule_adherence": 2,
+        "block_count_range": 6,
+        "block_size_balance": 2,
+        "block_title_quality": 2,
+        "image_assignment_correctness": 7,
+        "content_completeness": 9,
+        "weighted_average": 3.9
+      },
+      "failure_labels": [
+        {
+          "dimension": "merge_split_rule_adherence",
+          "reason": "Rule 2 was over-applied. Block 1 merged four sections (Fundamentals + What Is Prompt Engineering + Why + Be Clear and Direct) when these do not all form one unit — 'Prompt Engineering Fundamentals' is a distinct introductory section that stands alone (~180 words). More critically, Block 2 at ~700 words exceeds the 600-word maximum. 'Example Prompt Templates' was incorrectly merged into the RCATF block — templates are a separate practical application section, not a component of the framework."
+        },
+        {
+          "dimension": "block_size_balance",
+          "reason": "Block 2 is estimated at 700 words — 100 words over the 600-word maximum. This creates an overloaded block that a learner cannot complete comfortably in one sitting. The correct action was to keep 'Example Prompt Templates' in Block 4 (with Tips and Exploration) as shown in the good example."
+        },
+        {
+          "dimension": "block_title_quality",
+          "reason": "All three block titles are vague and uninformative. 'Introduction' tells a learner nothing about what they will learn. 'Framework and Templates' combines two different things. 'Tips' is a single generic word. Compare with the good example: 'What is Prompt Engineering and Why Does It Matter', 'The RCATF Framework — Structuring Your Prompts', 'Prompt Templates, Tips, and Further Exploration'."
+        },
+        {
+          "dimension": "concept_boundary_correctness",
+          "reason": "Block 2 mixes the RCATF framework (a conceptual learning unit) with Example Prompt Templates (a practical application unit). These are different phases of learning — understanding the framework vs applying it. The concept boundary should fall between the Tone H3 and Example Prompt Templates."
+        }
+      ],
+      "notes": "Over-merging is the opposite failure mode from over-splitting. The result is blocks that are too large and titles that are too vague. The learning_objectives_hint entries 'Learn about prompts' and 'Understand the framework' are also examples of poor hints — they are not actionable and do not help downstream agents understand what a block covers."
+    },
+    {
+      "example_id": "bd_bad_003",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Introduction to AI Agents",
+        "source_h2_sections": [
+          "What is an AI Agent?",
+          "Core Components of an AI Agent",
+          "How Agents Work — The ReAct Pattern",
+          "Building Your First Agent"
+        ],
+        "source_word_count_estimate": 720
+      },
+      "output": {
+        "session_name": "Introduction to AI Agents",
+        "total_blocks": 4,
+        "division_reasoning": "Divided by H2 headings.",
+        "blocks": [
+          {
+            "block_id": 1,
+            "title": "What is an AI Agent?",
+            "h2_sections_included": ["What is an AI Agent?"],
+            "images": [],
+            "word_count_estimate": 150,
+            "learning_objectives_hint": ["Define AI agent"]
+          },
+          {
+            "block_id": 2,
+            "title": "AI Model",
+            "h2_sections_included": ["Core Components — AI Model only"],
+            "images": [],
+            "word_count_estimate": 80,
+            "learning_objectives_hint": ["Understand AI Model component"]
+          },
+          {
+            "block_id": 3,
+            "title": "Tools and Memory",
+            "h2_sections_included": ["Core Components — Tools", "Core Components — Memory"],
+            "images": [],
+            "word_count_estimate": 140,
+            "learning_objectives_hint": ["Understand tools", "Understand memory"]
+          },
+          {
+            "block_id": 4,
+            "title": "How Agents Work and Building Your First Agent",
+            "h2_sections_included": ["How Agents Work — The ReAct Pattern", "Building Your First Agent"],
+            "images": [],
+            "word_count_estimate": 380,
+            "learning_objectives_hint": ["Learn ReAct pattern", "Build an agent"]
+          }
+        ]
+      },
+      "scores": {
+        "concept_boundary_correctness": 2,
+        "merge_split_rule_adherence": 2,
+        "block_count_range": 6,
+        "block_size_balance": 2,
+        "block_title_quality": 4,
+        "image_assignment_correctness": 7,
+        "content_completeness": 8,
+        "weighted_average": 3.1
+      },
+      "failure_labels": [
+        {
+          "dimension": "concept_boundary_correctness",
+          "reason": "The 'Core Components of an AI Agent' H2 section was incorrectly split across Block 2 and Block 3 — 'AI Model' in one block, 'Tools and Memory' in another. This directly violates Rule 4: never split H3s away from their parent H2 unless that H2 section is too long. The Core Components section is ~220 words total — far below the 600-word split threshold. All three components (AI Model, Tools, Memory) must stay in one block."
+        },
+        {
+          "dimension": "merge_split_rule_adherence",
+          "reason": "Two violations: (1) Core Components was over-split — its three H3 sub-sections were distributed across two blocks when the section is only ~220 words and all three components form one inseparable concept. (2) 'How Agents Work' and 'Building Your First Agent' were merged into Block 4 when they are clearly distinct concepts (how agents operate vs how to build one). These should remain as separate blocks."
+        },
+        {
+          "dimension": "block_size_balance",
+          "reason": "Block 2 has only ~80 words — well below the 100-word minimum. A block about only the AI Model component, without the context of Tools and Memory, is a stub that provides incomplete learning. Block 4 at ~380 words is the largest block but contains two unrelated topics, making the size misleading."
+        },
+        {
+          "dimension": "concept_boundary_correctness",
+          "reason": "Block 4 merges 'How Agents Work — The ReAct Pattern' (a conceptual explanation of agent operation) with 'Building Your First Agent' (a practical getting-started section). These are conceptually distinct: understanding how agents work vs knowing how to build one. They should be separate blocks."
+        }
+      ],
+      "notes": "This example shows H3 fragmentation — splitting H3 sub-sections away from their parent H2. The AI Model, Tools, and Memory are not three independent topics; they are three components of one concept (AI Agent Architecture). Splitting them breaks the coherence of the learning unit. The 80-word stub in Block 2 is a clear signal that an H3 was incorrectly promoted to block-level."
+    },
+    {
+      "example_id": "bd_bad_004",
+      "source": "human_authored",
+      "added_by": "curriculum_review_team",
+      "added_date": "2026-06-01",
+      "context": {
+        "session_name": "Software Development Models",
+        "source_h2_sections": [
+          "Why Not One SDLC for All?",
+          "What are Software Development Models?",
+          "Waterfall Model",
+          "Agile Model",
+          "V-Model"
+        ],
+        "source_word_count_estimate": 1100
+      },
+      "output": {
+        "session_name": "Software Development Models",
+        "total_blocks": 2,
+        "division_reasoning": "Split into sequential vs iterative models.",
+        "blocks": [
+          {
+            "block_id": 1,
+            "title": "Sequential Models",
+            "h2_sections_included": [
+              "Why Not One SDLC for All?",
+              "What are Software Development Models?",
+              "Waterfall Model",
+              "V-Model"
+            ],
+            "images": [],
+            "word_count_estimate": 650,
+            "learning_objectives_hint": [
+              "Understand sequential development models"
+            ]
+          },
+          {
+            "block_id": 2,
+            "title": "Iterative Models",
+            "h2_sections_included": ["Agile Model"],
+            "images": [],
+            "word_count_estimate": 450,
+            "learning_objectives_hint": [
+              "Understand iterative development models"
+            ]
+          }
+        ]
+      },
+      "scores": {
+        "concept_boundary_correctness": 2,
+        "merge_split_rule_adherence": 1,
+        "block_count_range": 1,
+        "block_size_balance": 3,
+        "block_title_quality": 3,
+        "image_assignment_correctness": 5,
+        "content_completeness": 8,
+        "weighted_average": 2.3
+      },
+      "failure_labels": [
+        {
+          "dimension": "block_count_range",
+          "reason": "Only 2 blocks produced — below the 3-block minimum. A session covering 5 major topics (intro + 3 models + sub-frameworks) cannot be adequately divided into 2 blocks. The minimum is 3."
+        },
+        {
+          "dimension": "merge_split_rule_adherence",
+          "reason": "The LLM invented a grouping schema (sequential vs iterative) not derived from the content structure or heading rules. Block 1 merges the intro sections, Waterfall Model, and V-Model — three distinct topics — purely based on a thematic category. The block division rules are based on heading structure and content volume, not thematic classification. The Waterfall Model and V-Model are each standalone concepts that warrant their own blocks."
+        },
+        {
+          "dimension": "concept_boundary_correctness",
+          "reason": "Block 1 contains the introductory context sections plus two complete models (Waterfall and V-Model). A learner completing Block 1 would be exposed to three different major concepts: why models exist, how Waterfall works, and how V-Model works. This violates the one-concept-per-block principle."
+        },
+        {
+          "dimension": "block_size_balance",
+          "reason": "Block 1 at ~650 words exceeds the 600-word maximum. Merging intro content + Waterfall (~390 words combined) + V-Model (~160 words) into one block creates an overloaded unit."
+        }
+      ],
+      "notes": "This example shows a creative but wrong approach — the LLM invented a thematic classification schema (sequential vs iterative) instead of following the heading-structure-based division rules. The rules are explicit: use H2 headings as candidate boundaries, apply merge/split based on word count and conceptual relationship — not based on invented categorical groupings. Division reasoning must reference the rules, not invent new criteria."
+    }
+  ]
+}

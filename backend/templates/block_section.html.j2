@@ -1,0 +1,10 @@
+{# One content block. Agent 1 has already placed any animation inline in content_html. #}
+<div class="step{% if is_first %} active{% endif %}" data-kind="content" id="block-{{ block.block_id }}">
+  <div class="header">
+    <div class="header-accent"></div>
+    <div class="header-content">
+      <h1>{{ block.title }}</h1>
+    </div>
+  </div>
+  {{ block.content_html | safe }}
+</div>

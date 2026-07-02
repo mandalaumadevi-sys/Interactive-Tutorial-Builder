@@ -1,0 +1,74 @@
+{
+  "agent_id": "assessment_qa_generator",
+  "agent_name": "Assessment Question and Answer Generator",
+  "version": "2.0",
+  "pass_threshold": 7,
+  "dimensions": [
+    {
+      "id": "material_alignment",
+      "name": "Material alignment — answer uses only session content",
+      "description": "Does the answer use only information explicitly present in the session material? Does it avoid adding technical terms, explanations from other courses, or examples not taught in the session?",
+      "weight": 0.30,
+      "anchors": {
+        "1": "The answer contains significant information not in the session — terminology the session never used, explanations from other courses, industry knowledge beyond the slides, or entire sections about topics mentioned only in passing. Students who studied only the session would not recognise most of this answer.",
+        "5": "The answer is mostly from the session but adds one or two extra points not explicitly in the material — a slightly expanded definition, an example not from the slides, or a sub-point that sounds relevant but was not taught.",
+        "10": "Every sentence in the answer can be traced to a specific statement or example in the session material. No extra technical terms. No content from other sessions or courses. Exact session terminology used throughout."
+      }
+    },
+    {
+      "id": "question_validity",
+      "name": "Question validity — topic is covered in the session, tested directly (not via analogy)",
+      "description": "Is the topic explicitly and substantively covered in the session? Would a student who studied only this session be able to answer it completely? The question must test the concept directly using the session's terminology, NOT be framed around an analogy or story the session used to explain the concept.",
+      "weight": 0.20,
+      "anchors": {
+        "1": "The question asks about a topic not present in the session — either completely absent, or mentioned in one passing sentence while the question asks for detailed explanation — OR the question is built around an analogy/story (e.g. 'in the chef analogy, what does the chef represent?') instead of the concept itself. Students who studied the session would have no basis to answer.",
+        "5": "The topic is in the session but the question asks for depth not covered. For example, the session briefly defines something but the question asks to elaborate or compare at length.",
+        "10": "The question asks about a topic clearly and substantively covered in the session and tests the concept directly with the session's own terminology (no analogy framing). A student who studied the material thoroughly could answer it completely from what they were taught."
+      }
+    },
+    {
+      "id": "blooms_alignment",
+      "name": "Bloom's level alignment — verb matches level",
+      "description": "Does the question verb match the stated Bloom's level? K1 = define/list/state. K2 = explain/describe/discuss. K4 = compare/contrast/elaborate. K6 = prepare/design/construct.",
+      "weight": 0.15,
+      "anchors": {
+        "1": "Verb and Bloom's level are clearly mismatched — e.g. Explain for K1, or Define for K4, or Prepare a report stated as K2.",
+        "5": "Verb is close but imprecise — e.g. Discuss used where Define was needed for K1.",
+        "10": "Verb exactly matches the Bloom's level with no ambiguity."
+      }
+    },
+    {
+      "id": "answer_depth_match",
+      "name": "Answer depth matches question type — short vs long",
+      "description": "For short questions: is the answer 2–4 sentences with no sub-headings? For long questions: is the answer structured and thorough, covering all major aspects the session taught — without padding?",
+      "weight": 0.20,
+      "anchors": {
+        "1": "Answer depth is completely wrong for the question type. A short question has an answer with multiple sub-headings and nested bullets. Or a long question has a 2-sentence answer.",
+        "5": "Answer is slightly off. A short answer that runs to 5–6 sentences, or a long answer that covers only half the aspects the session taught.",
+        "10": "Short question answers are 2–4 clean sentences. Long question answers cover all major aspects the session taught, structured clearly, with no padding or repetition."
+      }
+    },
+    {
+      "id": "answer_not_revealed_in_question",
+      "name": "Answer not revealed in the question",
+      "description": "Does the question ask without revealing the answer? Is the key concept or definition kept out of the question text?",
+      "weight": 0.10,
+      "anchors": {
+        "1": "The question contains the answer — e.g. What is Stable Diffusion, a free open-source model? A student can extract the answer from the question itself.",
+        "5": "The question provides a strong hint that narrows the answer significantly.",
+        "10": "The question asks without revealing or hinting. The student must recall the information entirely from studying the session."
+      }
+    },
+    {
+      "id": "short_answer_conciseness",
+      "name": "Short answer conciseness — no padding or sub-headings",
+      "description": "For short questions only: is the answer concise and free of sub-headings, nested bullets, and padding?",
+      "weight": 0.05,
+      "anchors": {
+        "1": "A short question answer contains sub-headings, nested bullet points, or 6+ separate points. It reads like a long answer crammed into a short format.",
+        "5": "Mostly concise but adds one unnecessary bullet list or sub-heading.",
+        "10": "2–4 clean sentences. No sub-headings. No nested bullets. Definition plus one supporting point from the session."
+      }
+    }
+  ]
+}
