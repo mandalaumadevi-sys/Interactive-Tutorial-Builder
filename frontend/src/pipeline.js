@@ -1,19 +1,19 @@
 // The execution-pipeline map (read-only live view) and the node/gate → step wiring.
 
 export const PIPELINE = [
-  { id: "ingest", label: "Ingest + image descriptions", kind: "auto" },
-  { id: "divide", label: "Divide into content blocks", kind: "auto" },
-  { id: "block", label: "Review block division", kind: "human" },
-  { id: "content", label: "Agent 1 · Author block content", kind: "auto" },
-  { id: "reviewContent", label: "Review content", kind: "human" },
-  { id: "animation", label: "Agent 2 · Generate animations", kind: "auto" },
-  { id: "reviewAnimation", label: "Review animations", kind: "human" },
-  { id: "mcq", label: "Agent 3 · Generate MCQs", kind: "auto" },
-  { id: "reviewMcq", label: "Review MCQs (accept per block)", kind: "human" },
-  { id: "assessment", label: "Agent 4 · Generate assessment", kind: "auto" },
-  { id: "final", label: "Review assessment", kind: "human" },
-  { id: "finalReview", label: "Final review (whole tutorial)", kind: "human" },
-  { id: "assemble", label: "Publish tutorial", kind: "auto" },
+  { id: "ingest", label: "Ingest + image descriptions", kind: "auto", icon: "📥", phase: "Prepare" },
+  { id: "divide", label: "Divide into content blocks", kind: "auto", icon: "🧩", phase: "Prepare" },
+  { id: "block", label: "Review block division", kind: "human", icon: "👤", phase: "Prepare" },
+  { id: "content", label: "Agent 1 · Author block content", kind: "auto", icon: "✍️", phase: "Per block" },
+  { id: "reviewContent", label: "Review content", kind: "human", icon: "👤", phase: "Per block" },
+  { id: "animation", label: "Agent 2 · Generate animations", kind: "auto", icon: "🎬", phase: "Per block" },
+  { id: "reviewAnimation", label: "Review animations", kind: "human", icon: "👤", phase: "Per block" },
+  { id: "mcq", label: "Agent 3 · Generate MCQs", kind: "auto", icon: "🧠", phase: "Per block" },
+  { id: "reviewMcq", label: "Review MCQs (accept per block)", kind: "human", icon: "👤", phase: "Per block" },
+  { id: "assessment", label: "Agent 4 · Generate assessment", kind: "auto", icon: "🎯", phase: "Wrap up" },
+  { id: "final", label: "Review assessment", kind: "human", icon: "👤", phase: "Wrap up" },
+  { id: "finalReview", label: "Final review (whole tutorial)", kind: "human", icon: "👀", phase: "Wrap up" },
+  { id: "assemble", label: "Publish tutorial", kind: "auto", icon: "🚀", phase: "Wrap up" },
 ];
 
 export const NODE_TO_STEP = {
