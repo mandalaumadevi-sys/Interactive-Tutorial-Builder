@@ -77,10 +77,10 @@ export default function UploadCard({ disabled, onStart }) {
   };
 
   return (
-    <div className="card upload agentic">
-      {/* ── HERO: animated mascot + agent pipeline preview ── */}
-      <div className="upload-hero2">
-        <div className="hero-bot"><TutiBot size={104} /></div>
+    <div className="upload-wrap">
+      {/* Tuti — OUT of the box, floating above the form (no boundary) */}
+      <div className="upload-intro">
+        <div className="hero-bot"><TutiBot size={108} /></div>
         <div className="hero-copy">
           <span className="hero-eyebrow">Agentic Tutorial Builder</span>
           <h2>New tutorial</h2>
@@ -89,7 +89,8 @@ export default function UploadCard({ disabled, onStart }) {
         </div>
       </div>
 
-      {/* ── FORM: clean step sections ── */}
+      {/* ── FORM: clean step sections, inside a card ── */}
+      <div className="card upload agentic">
       <div className="upload-body">
       <div className="step-card">
       <div className="up-group-head"><span className="up-step">1</span> Where does it belong?</div>
@@ -188,6 +189,7 @@ export default function UploadCard({ disabled, onStart }) {
         </button>
       </div>
       </div>{/* /upload-body */}
+      </div>{/* /card */}
     </div>
   );
 }

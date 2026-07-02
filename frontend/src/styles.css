@@ -347,8 +347,8 @@ iframe.frag{width:100%;border:1px solid var(--line);border-radius:10px;backgroun
 /* ── New-tutorial: agentic hero + animated Tuti mascot ──────────────────────── */
 .upload.agentic{padding:0;overflow:hidden;}
 
-.upload-hero2{position:relative;overflow:hidden;display:flex;align-items:center;gap:22px;
-  padding:24px 34px;border-bottom:1px solid var(--line);background:#fafbfd;}
+/* Tuti guide sits OUTSIDE the form card — no box, no border, transparent */
+.upload-intro{display:flex;align-items:center;gap:22px;margin:0 2px 20px;padding:0;background:none;border:none;}
 .hero-blob{position:absolute;border-radius:50%;filter:blur(48px);opacity:.5;pointer-events:none;z-index:0;}
 .hero-blob.hb1{width:270px;height:270px;top:-96px;right:6%;background:#c9dbff;}
 .hero-blob.hb2{width:220px;height:220px;bottom:-120px;left:26%;background:#e9d5ff;}
@@ -445,9 +445,7 @@ iframe.frag{width:100%;border:1px solid var(--line);border-radius:10px;backgroun
   .hero-deco{display:none;}
 }
 @media (max-width:720px){
-  .upload-hero2{flex-direction:column;text-align:center;gap:14px;padding:26px 20px;}
-  .hero-sub{max-width:none;}
-  .hero-pipeline{justify-content:center;}
+  .upload-intro{flex-direction:column;text-align:center;gap:14px;}
   .tuti-bubble::before{display:none;}
 }
 
@@ -464,8 +462,9 @@ iframe.frag{width:100%;border:1px solid var(--line);border-radius:10px;backgroun
 .leg-auto{font-weight:700;color:var(--primary);} .leg-human{font-weight:700;color:var(--purple-ink);}
 
 /* ── workflow as an SVG flowchart, with a travelling Tuti guide in the left gutter ── */
-.wf{position:relative;padding-left:250px;margin-top:6px;}
-.wf-svg{display:block;width:100%;height:auto;}
+.wf{position:relative;padding-left:220px;margin-top:6px;}
+/* cap the diagram so the nodes + labels render at a comfortable (smaller) size */
+.wf-svg{display:block;width:100%;max-width:660px;height:auto;}
 /* Tuti + speech bubble; slides down (by height) to line up with the active node */
 .wf-guide{position:absolute;left:0;top:0;width:238px;display:flex;align-items:center;gap:10px;
   transform:translateY(-50%);transition:top .55s cubic-bezier(.4,0,.2,1);z-index:3;}
