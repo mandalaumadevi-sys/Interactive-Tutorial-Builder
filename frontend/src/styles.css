@@ -464,8 +464,8 @@ iframe.frag{width:100%;border:1px solid var(--line);border-radius:10px;backgroun
 /* ── workflow as an SVG flowchart, with a travelling Tuti guide in the left gutter ── */
 /* reserve a clear left lane for the Tuti guide so it never overlaps the diagram */
 .wf{position:relative;padding-left:280px;margin-top:6px;}
-/* cap + centre the diagram in the remaining space (sits centre / slightly right) */
-.wf-svg{display:block;width:100%;max-width:640px;height:auto;margin-inline:auto;}
+/* cap + centre the diagram (large enough for labels to stay readable) */
+.wf-svg{display:block;width:100%;max-width:900px;height:auto;margin-inline:auto;}
 /* Tuti + speech bubble; slides down (by height) to line up with the active node */
 .wf-guide{position:absolute;left:0;top:0;width:238px;display:flex;align-items:center;gap:10px;
   transform:translateY(-50%);transition:top .55s cubic-bezier(.4,0,.2,1);z-index:3;}

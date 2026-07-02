@@ -32,17 +32,19 @@
 
 ## SLIDE 2 — The Problem  (~50 sec)
 
-> "Let me start with the problem I set out to solve."
+> "In our current system, most of the learning content is written in **markdown** files."
 
-> "Right now, all our reading material in the courses is written in **markdown**. And markdown has real limits."
+> "Now, markdown is great for *writing* — but it has a few real limitations when it comes to the learning *experience*."
 
-> "**One — it's just text to read.** You can't really make markdown *visually appealing*. There's no room for rich visuals or interaction — it's plain content, top to bottom."
+**(point to the "static" cards)**
+> "First, markdown is completely **static**. It only supports text and basic formatting."
 
-> "**Two — adding a visual is painful.** If I want to include even one image, I have to convert it, upload it to **S3**, and then manually link it into the markdown. That's slow, and it doesn't scale."
+> "So even if the concept is complex, it still looks like a long scroll of text — no interaction, no step-by-step learning, no engagement."
 
-> "**Three — even our existing tutorials are stuck in markdown.** Some of them already have content *and* MCQs — but because they live in markdown, they carry the exact same limitations."
+> "So the real problem is this: we already have good learning content — but it's **trapped in a static, text-only format**."
 
-> "So here's the goal: take that reading material and turn it into proper **tutorials in HTML** — visual, interactive, with quizzes and assessments built right in."
+**(transition to the goal)**
+> "The goal of Tuti is to convert this into a guided, **interactive tutorial experience** — where content, visuals, quizzes, and assessments all work together as a single flow."
 
 **➡️ NEXT**
 
