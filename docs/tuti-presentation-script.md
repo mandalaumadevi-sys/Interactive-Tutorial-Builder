@@ -203,3 +203,34 @@
 
 ### If someone asks: "Can it handle any subject?"
 > "Yes — it works from whatever's in the deck or reading material, so it's subject-agnostic. I tested it on things like SDLC models and AI agents."
+
+---
+
+## 🏗️ Architecture — the agentic workflow (for a technical deep-dive / Q&A)
+
+*Use this if someone asks "how is it actually built?" Say it simply, in this order.*
+
+**1. It's a state machine, not a script.**
+> "The whole thing runs on **LangGraph**. Think of it as a flow chart the computer actually follows — there's one shared 'state' (the session, the blocks, the content, the quizzes), and each step reads that state and adds to it. Because the state is saved at every step, a run can **pause and resume** exactly where it stopped."
+
+**2. Specialized agents — each with one job.**
+> "Instead of one giant prompt, the work is split across small agents, and each has its own quality bar:"
+> - **Block Divider** — groups the raw session into a few clean teaching blocks.
+> - **Agent 1 · Content** — rewrites each block into house-style HTML. It works in two passes: first it writes the text using the **source only**, then it places the visuals. Nothing invented.
+> - **Agent 2 · Animation** — a **vision** model. It actually *looks* at the diagram in your slide and rebuilds it as a clean, labelled animation.
+> - **Agent 3 · MCQs** — writes the per-block quizzes that gate progress.
+> - **Agent 4 · Assessment** — writes the session-wide final questions with model answers.
+> - **The Judge** — scores every agent's output against a rubric and tells it to fix its own work.
+
+**3. Human-in-the-loop — 6 gates.**
+> "After the key steps the graph **interrupts itself** and waits for me. There are **six** of these gates — block division, content, animations, MCQs, assessment, and a final whole-tutorial review. At each one I can **accept**, **reject**, or **improve**. If I ask for a change, it loops back and regenerates *just that one piece* — not the whole tutorial."
+
+**4. Two support systems around the pipeline.**
+> - **Course memory** — a small store, scoped to the course. It's **read at the start** and **written at the end**. So any feedback I give is remembered and applied *once* — it never asks me the same thing twice.
+> - **Eval-sets + self-validation** — every stage is scored against a rubric by an LLM judge. If a score is **below the bar, that stage regenerates automatically**, before it ever reaches me.
+
+**5. How the pieces run.**
+> "The backend is **FastAPI**, and it streams live progress to the browser over **SSE**, so you watch each step happen. The frontend is **React**. Everything — checkpoints, memory, run history, cost — is persisted in **Supabase (Postgres)**, which is why any run is resumable. The models are **Claude**, called through **OpenRouter**."
+
+**One-line summary if they want it short:**
+> "A LangGraph state machine runs a team of specialized Claude agents; every stage is scored by evals and reviewed by a human at six gates; memory and checkpoints make it consistent and resumable."
